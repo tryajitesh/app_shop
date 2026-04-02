@@ -1,0 +1,5274 @@
+<!doctype html>
+<html lang="hi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>Om Traders</title>
+    <meta name="theme-color" content="#1e3a5f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Om Traders" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #1e3a5f;
+        --primary-l: #e8f0fb;
+        --primary-d: #0f2440;
+        --primary-mid: #2563a8;
+        --accent: #2563a8;
+        --accent-l: #dbeafe;
+        --green: #16653a;
+        --green-l: #dcfce7;
+        --green-d: #0f4226;
+        --gold: #92690a;
+        --gold-l: #fef9c3;
+        --amber: #b45309;
+        --amber-l: #fef3c7;
+        --red: #991b1b;
+        --red-l: #fee2e2;
+        --blue: #1e40af;
+        --blue-l: #eff6ff;
+        --purple: #5b21b6;
+        --purple-l: #ede9fe;
+        --teal: #0f766e;
+        --teal-l: #ccfbf1;
+        --orange: #c2410c;
+        --orange-l: #ffedd5;
+        --bg: #f1f5f9;
+        --surface: #ffffff;
+        --text: #0f172a;
+        --text2: #64748b;
+        --border: #cbd5e1;
+        --sh:
+          0 1px 3px rgba(15, 36, 64, 0.08), 0 1px 2px rgba(15, 36, 64, 0.05);
+        --sh2: 0 4px 20px rgba(15, 36, 64, 0.14);
+        --r: 14px;
+        --r-sm: 9px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+      html,
+      body {
+        height: 100%;
+        font-family: "Noto Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        max-width: 480px;
+        margin: 0 auto;
+        overflow-x: hidden;
+      }
+
+      /* ── AUTH ── */
+      #auth-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 24px;
+        background: linear-gradient(
+          160deg,
+          #0f2440 0%,
+          #1e3a5f 50%,
+          #1e40af 100%
+        );
+      }
+      .auth-logo {
+        font-family: "Baloo 2", cursive;
+        font-size: 30px;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+        text-align: center;
+        line-height: 1.1;
+      }
+      .auth-logo .auth-subname {
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.65);
+        font-family: "Noto Sans", sans-serif;
+        margin-top: 4px;
+        letter-spacing: 0.3px;
+        font-style: italic;
+      }
+      .auth-box {
+        background: var(--surface);
+        border-radius: 20px;
+        padding: 28px 22px;
+        width: 100%;
+        max-width: 360px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+      }
+      .auth-tabs {
+        display: flex;
+        border-radius: var(--r-sm);
+        overflow: hidden;
+        border: 1.5px solid var(--border);
+        margin-bottom: 20px;
+      }
+      .auth-tab {
+        flex: 1;
+        padding: 9px;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: var(--text2);
+        transition: all 0.2s;
+      }
+      .auth-tab.active {
+        background: var(--primary);
+        color: white;
+      }
+      .auth-title {
+        font-family: "Baloo 2", cursive;
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--text);
+      }
+      .auth-note {
+        font-size: 11px;
+        color: var(--text2);
+        text-align: center;
+        margin-top: 14px;
+        line-height: 1.5;
+      }
+      .sync-note {
+        background: var(--blue-l);
+        border-radius: var(--r-sm);
+        padding: 10px 12px;
+        font-size: 11px;
+        color: var(--blue);
+        margin-top: 12px;
+        line-height: 1.5;
+      }
+
+      /* ── APP SHELL ── */
+      #app-shell {
+        display: none;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      /* ── HEADER ── */
+      .header {
+        background: linear-gradient(105deg, #1e3a5f 0%, #0f2440 100%);
+        color: white;
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+      }
+      .hd-name {
+        font-family: "Baloo 2", cursive;
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: 0.3px;
+      }
+      .hd-by {
+        font-size: 9.5px;
+        opacity: 0.65;
+        font-style: italic;
+        margin-top: 1px;
+      }
+      .hd-right {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .hd-date {
+        font-size: 11px;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.14);
+        padding: 3px 9px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .hd-user-btn {
+        background: rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: white;
+        border-radius: 6px;
+        padding: 4px 10px;
+        font-size: 11px;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* ── NAV ── */
+      .nav {
+        display: flex;
+        background: var(--surface);
+        border-bottom: 2px solid var(--border);
+        overflow-x: auto;
+        scrollbar-width: none;
+        flex-shrink: 0;
+      }
+      .nav::-webkit-scrollbar {
+        display: none;
+      }
+      .nav-btn {
+        flex: 1;
+        min-width: 52px;
+        padding: 8px 4px 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -2px;
+        transition: all 0.18s;
+        color: var(--text2);
+      }
+      .nav-btn svg {
+        width: 21px;
+        height: 21px;
+        transition: transform 0.18s;
+      }
+      .nav-btn .nl {
+        font-size: 9px;
+        font-weight: 600;
+        font-family: "Noto Sans", sans-serif;
+        white-space: nowrap;
+      }
+      .nav-btn.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+      }
+      .nav-btn.active svg {
+        transform: scale(1.12);
+      }
+
+      /* ── SCREENS ── */
+      .screens {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .screen {
+        display: none;
+        padding: 14px;
+      }
+      .screen.active {
+        display: block;
+      }
+
+      /* ── CARDS ── */
+      .card {
+        background: var(--surface);
+        border-radius: var(--r);
+        box-shadow: var(--sh);
+        padding: 14px;
+        margin-bottom: 10px;
+        border: 1px solid var(--border);
+      }
+      .card-hd {
+        font-family: "Baloo 2", cursive;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .sec-hd {
+        font-family: "Baloo 2", cursive;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* ── FORM ── */
+      .fg {
+        margin-bottom: 10px;
+      }
+      .fl {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text2);
+        margin-bottom: 4px;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r-sm);
+        font-size: 13px;
+        font-family: "Noto Sans", sans-serif;
+        background: white;
+        color: var(--text);
+        outline: none;
+        transition:
+          border-color 0.18s,
+          box-shadow 0.18s;
+        line-height: 1.5;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+      }
+      input::placeholder {
+        color: #94a3b8;
+      }
+      textarea {
+        resize: none;
+      }
+      .ir {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .ir > * {
+        flex: 1;
+      }
+      .ir3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .ir4 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 6px;
+        margin-bottom: 10px;
+      }
+
+      /* ── BUTTONS ── */
+      .btn {
+        padding: 10px 16px;
+        border-radius: var(--r-sm);
+        border: none;
+        cursor: pointer;
+        font-size: 13px;
+        font-family: "Baloo 2", cursive;
+        font-weight: 700;
+        transition: all 0.18s;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
+      .btn-p {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 2px 8px rgba(30, 58, 95, 0.2);
+      }
+      .btn-p:hover {
+        background: #254d7a;
+      }
+      .btn-p:active {
+        background: var(--primary-d);
+        transform: scale(0.98);
+      }
+      .btn-g {
+        background: var(--green);
+        color: white;
+        box-shadow: 0 2px 8px rgba(22, 101, 58, 0.2);
+      }
+      .btn-g:hover {
+        background: #1a7a45;
+      }
+      .btn-g:active {
+        background: var(--green-d);
+        transform: scale(0.98);
+      }
+      .btn-o {
+        background: none;
+        border: 1.5px solid var(--border);
+        color: var(--text2);
+      }
+      .btn-o:hover {
+        background: var(--bg);
+        border-color: var(--text2);
+      }
+      .btn-wa {
+        background: #25d366;
+        color: white;
+        box-shadow: 0 2px 8px rgba(37, 211, 102, 0.25);
+      }
+      .btn-wa:hover {
+        background: #1ebe5a;
+      }
+      .btn-amber {
+        background: var(--amber);
+        color: white;
+      }
+      /* ── SAVE PRODUCT BUTTON ── */
+      .btn-save-product {
+        background: linear-gradient(135deg, var(--primary-mid) 0%, var(--primary) 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 13px 20px;
+        font-family: "Baloo 2", cursive;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(30, 58, 95, 0.28);
+        transition: all 0.2s cubic-bezier(0.34, 1.4, 0.64, 1);
+        letter-spacing: 0.2px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      .btn-save-product:hover {
+        background: linear-gradient(135deg, #2d74c7 0%, #254d7a 100%);
+        box-shadow: 0 6px 18px rgba(30, 58, 95, 0.38);
+        transform: translateY(-1px);
+      }
+      .btn-save-product:active {
+        transform: scale(0.97) translateY(0);
+        box-shadow: 0 2px 8px rgba(30, 58, 95, 0.2);
+      }
+      .btn-deposit {
+        background: var(--green-l);
+        color: var(--green-d);
+        border: 1.5px solid #86efac;
+        font-size: 11.5px;
+        padding: 5px 11px;
+        border-radius: 7px;
+      }
+      .btn-sm {
+        padding: 5px 11px;
+        font-size: 11.5px;
+      }
+      .btn-xs {
+        padding: 3px 8px;
+        font-size: 11px;
+      }
+      .fw {
+        width: 100%;
+      }
+
+      /* ── BADGE ── */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        border-radius: 20px;
+        font-size: 10.5px;
+        font-weight: 600;
+      }
+      .b-red {
+        background: var(--red-l);
+        color: var(--red);
+      }
+      .b-green {
+        background: var(--green-l);
+        color: var(--green-d);
+      }
+      .b-gold {
+        background: var(--amber-l);
+        color: var(--gold);
+      }
+      .b-blue {
+        background: var(--blue-l);
+        color: var(--blue);
+      }
+      .b-purple {
+        background: var(--purple-l);
+        color: var(--purple);
+      }
+      .b-navy {
+        background: var(--primary-l);
+        color: var(--primary);
+      }
+
+      /* ── STATS ── */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .stat-box {
+        border-radius: 12px;
+        padding: 14px 10px;
+        text-align: center;
+      }
+      .sv {
+        font-family: "Baloo 2", cursive;
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1.1;
+      }
+      .sl {
+        font-size: 10px;
+        margin-top: 2px;
+        opacity: 0.85;
+      }
+
+      /* ── LIST ── */
+      .li {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--border);
+        gap: 8px;
+      }
+      .li:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .li-name {
+        font-weight: 700;
+        font-size: 13.5px;
+      }
+      .li-sub {
+        font-size: 11.5px;
+        color: var(--text2);
+        margin-top: 3px;
+        line-height: 1.5;
+      }
+      .li-right {
+        display: flex;
+        gap: 6px;
+        flex-shrink: 0;
+        align-items: center;
+      }
+
+      /* ── THREE-DOT MENU ── */
+      .menu-wrap {
+        position: relative;
+      }
+      .three-dot {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--text2);
+        padding: 4px 7px;
+        border-radius: 8px;
+        line-height: 1;
+      }
+      .three-dot:active {
+        background: var(--border);
+      }
+      .dropdown {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 4px);
+        background: white;
+        border-radius: var(--r);
+        box-shadow: var(--sh2);
+        border: 1px solid var(--border);
+        z-index: 200;
+        min-width: 160px;
+        overflow: hidden;
+      }
+      .dropdown.hidden {
+        display: none;
+      }
+      .dd-item {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 10px 14px;
+        font-size: 13px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        width: 100%;
+        text-align: left;
+        font-family: "Noto Sans", sans-serif;
+        color: var(--text);
+      }
+      .dd-item:active {
+        background: var(--bg);
+      }
+      .dd-item.danger {
+        color: var(--red);
+      }
+
+      /* ── EMPTY ── */
+      .empty {
+        text-align: center;
+        padding: 32px 16px;
+        color: var(--text2);
+      }
+      .empty .ei {
+        font-size: 38px;
+        margin-bottom: 10px;
+      }
+      .empty p {
+        font-size: 13px;
+      }
+
+      /* ── TOAST ── */
+      #toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #0f172a;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 24px;
+        font-size: 12.5px;
+        font-weight: 500;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+        white-space: nowrap;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      }
+      #toast.show {
+        opacity: 1;
+      }
+
+      /* ── MODAL ── */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 500;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal-box {
+        background: white;
+        border-radius: 20px 20px 0 0;
+        padding: 20px 18px 36px;
+        width: 100%;
+        max-width: 480px;
+        max-height: 88vh;
+        overflow-y: auto;
+      }
+      .modal-hd {
+        font-family: "Baloo 2", cursive;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .modal-close {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        font-size: 16px;
+        cursor: pointer;
+        color: var(--text2);
+        line-height: 1;
+        padding: 5px 9px;
+        border-radius: 8px;
+      }
+
+      /* ── DELETE CONFIRMATION MODAL (centered true modal) ── */
+      #delete-confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 900;
+        align-items: center;
+        justify-content: center;
+        animation: fadeInBd 0.2s ease;
+      }
+      #delete-confirm-overlay.open {
+        display: flex;
+      }
+      @keyframes fadeInBd {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .delete-modal-box {
+        background: white;
+        border-radius: 18px;
+        padding: 28px 24px 24px;
+        width: calc(100% - 48px);
+        max-width: 340px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        animation: scaleInModal 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @keyframes scaleInModal {
+        from {
+          transform: scale(0.85);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .delete-modal-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: var(--red-l);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 14px;
+        font-size: 24px;
+      }
+      .delete-modal-title {
+        font-family: "Baloo 2", cursive;
+        font-size: 17px;
+        font-weight: 800;
+        color: var(--text);
+        text-align: center;
+        margin-bottom: 8px;
+      }
+      .delete-modal-msg {
+        font-size: 13px;
+        color: var(--text2);
+        text-align: center;
+        line-height: 1.6;
+        margin-bottom: 22px;
+      }
+      .delete-modal-btns {
+        display: flex;
+        gap: 10px;
+      }
+      .delete-modal-btns .btn-cancel-del {
+        flex: 1;
+        padding: 11px;
+        border-radius: 10px;
+        border: 1.5px solid var(--border);
+        background: none;
+        color: var(--text2);
+        font-size: 13.5px;
+        font-family: "Baloo 2", cursive;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .delete-modal-btns .btn-cancel-del:active {
+        background: var(--bg);
+      }
+      .delete-modal-btns .btn-confirm-del {
+        flex: 1;
+        padding: 11px;
+        border-radius: 10px;
+        border: none;
+        background: #dc2626;
+        color: white;
+        font-size: 13.5px;
+        font-family: "Baloo 2", cursive;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.15s;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+      }
+      .delete-modal-btns .btn-confirm-del:active {
+        background: #b91c1c;
+        transform: scale(0.98);
+      }
+
+      /* ── WA MULTI-SEND ── */
+      .wa-send-all-btn {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #25d366, #128c7e);
+        color: white;
+        border: none;
+        border-radius: 14px;
+        font-family: "Baloo 2", cursive;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+        transition: all 0.18s;
+        margin-top: 12px;
+      }
+      .wa-send-all-btn:active {
+        transform: scale(0.98);
+      }
+
+      /* ── HOME ── */
+      .stats-banner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .stat-banner-box {
+        background: linear-gradient(135deg, #1e3a5f 0%, #0f2440 100%);
+        border-radius: 16px;
+        padding: 18px 14px;
+        text-align: center;
+        box-shadow: 0 4px 16px rgba(15, 36, 64, 0.22);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .stat-banner-val {
+        font-family: "Baloo 2", cursive;
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 1;
+        color: #fff;
+      }
+      .stat-banner-lbl {
+        font-size: 11px;
+        opacity: 0.72;
+        margin-top: 4px;
+        color: #fff;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+      }
+      .stat-banner-icon {
+        font-size: 20px;
+        margin-bottom: 6px;
+        display: block;
+      }
+      .qgrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .qcard {
+        border-radius: var(--r);
+        padding: 16px 12px;
+        cursor: pointer;
+        text-align: center;
+        border: none;
+        font-family: inherit;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        box-shadow: var(--sh);
+      }
+      .qcard:active {
+        transform: scale(0.97);
+      }
+      .qci {
+        font-size: 26px;
+        margin-bottom: 7px;
+        line-height: 1;
+      }
+      .qct {
+        font-family: "Baloo 2", cursive;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .qcs {
+        font-size: 10.5px;
+        margin-top: 3px;
+        opacity: 0.85;
+      }
+      .qc-a {
+        background: linear-gradient(135deg, #991b1b, #7f1d1d);
+        color: white;
+      }
+      .qc-b {
+        background: linear-gradient(135deg, #1e3a5f, #0f2440);
+        color: white;
+      }
+      .qc-c {
+        background: linear-gradient(135deg, #1e40af, #1e3a8a);
+        color: white;
+      }
+      .qc-d {
+        background: linear-gradient(135deg, #0f766e, #134e4a);
+        color: white;
+      }
+      .qc-e {
+        background: linear-gradient(135deg, #5b21b6, #4c1d95);
+        color: white;
+      }
+      .qcard-wide {
+        width: 100%;
+        border-radius: var(--r);
+        padding: 15px 18px;
+        cursor: pointer;
+        border: none;
+        font-family: inherit;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-align: left;
+        box-shadow: var(--sh);
+        transition: transform 0.15s;
+        margin-bottom: 10px;
+      }
+      .qcard-wide:active {
+        transform: scale(0.98);
+      }
+
+      /* ── RESTOCK ALERT (HOME) — professional redesign ── */
+      .restock-alert-card {
+        background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        border: 1px solid #fde68a;
+        border-left: 5px solid var(--amber);
+        border-radius: var(--r);
+        padding: 16px 16px 14px;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 16px rgba(180, 83, 9, 0.12), 0 1px 4px rgba(180, 83, 9, 0.06);
+        position: relative;
+        overflow: hidden;
+      }
+      .restock-alert-card::before {
+        content: "⚠️";
+        position: absolute;
+        right: -6px;
+        top: -4px;
+        font-size: 52px;
+        opacity: 0.06;
+        pointer-events: none;
+      }
+      .restock-alert-title {
+        font-family: "Baloo 2", cursive;
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--amber);
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 12px;
+        letter-spacing: 0.2px;
+      }
+      .restock-alert-title svg {
+        flex-shrink: 0;
+      }
+      .restock-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-bottom: 2px;
+      }
+      .restock-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: white;
+        border: 1.5px solid #fcd34d;
+        border-radius: 20px;
+        padding: 4px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--amber);
+        cursor: pointer;
+        box-shadow: 0 1px 4px rgba(180, 83, 9, 0.1);
+        transition: all 0.15s;
+      }
+      .restock-chip:active {
+        transform: scale(0.97);
+        background: var(--amber-l);
+      }
+      .restock-view-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--amber);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 8px 16px;
+        font-family: "Baloo 2", cursive;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 12px;
+        box-shadow: 0 2px 8px rgba(180, 83, 9, 0.25);
+        transition: all 0.18s;
+        letter-spacing: 0.2px;
+      }
+      .restock-view-btn:hover {
+        background: #a84d06;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(180, 83, 9, 0.35);
+      }
+      .restock-view-btn:active {
+        transform: scale(0.97);
+      }
+
+      /* ── PRODUCT ADD ── */
+      .add-prod-btn {
+        background: var(--primary-l);
+        border: 2px dashed #93c5fd;
+        border-radius: var(--r);
+        padding: 13px 16px;
+        width: 100%;
+        text-align: center;
+        cursor: pointer;
+        margin-bottom: 10px;
+        font-family: "Baloo 2", cursive;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.18s;
+      }
+      .add-prod-form {
+        display: none;
+      }
+      .add-prod-form.open {
+        display: block;
+      }
+      .section-divider {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        margin-bottom: 8px;
+      }
+      .bulk-section {
+        background: #f8fafc;
+        border-radius: var(--r-sm);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid var(--border);
+      }
+      .unit-section {
+        background: #f0f9ff;
+        border-radius: var(--r-sm);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #bae6fd;
+      }
+
+      /* ── UNIT DROPDOWN WITH OTHER ── */
+      .unit-sel-wrap {
+        position: relative;
+      }
+
+      /* ── RESTOCK BUTTON STATES ── */
+      .rstock-btn-pending {
+        background: var(--amber-l);
+        color: var(--amber);
+        border: 1px solid #fde68a;
+        border-radius: 8px;
+        padding: 4px 9px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: "Baloo 2", cursive;
+      }
+      .rstock-btn-added {
+        background: var(--green-l);
+        color: var(--green-d);
+        border: 1px solid #86efac;
+        border-radius: 7px;
+        padding: 4px 9px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: "Baloo 2", cursive;
+      }
+
+      /* ── SEARCH ── */
+      .search-wrap {
+        position: relative;
+        margin-bottom: 10px;
+      }
+      .search-wrap input {
+        padding-left: 36px;
+      }
+      .si {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 15px;
+        pointer-events: none;
+      }
+
+      /* ── BUY LIST ROW ── */
+      .buy-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .buy-row:last-child {
+        border-bottom: none;
+      }
+      .buy-row input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+        flex-shrink: 0;
+        border-radius: 4px;
+      }
+      .buy-name {
+        font-weight: 600;
+        font-size: 13px;
+        min-width: 0;
+      }
+      .buy-name.done {
+        text-decoration: line-through;
+        color: var(--text2);
+      }
+      .buy-price-badge {
+        background: var(--amber-l);
+        color: var(--amber);
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 20px;
+        white-space: nowrap;
+      }
+      .buy-qty-inp {
+        width: 56px !important;
+        padding: 5px 7px !important;
+        font-size: 12px !important;
+        text-align: center;
+        flex-shrink: 0 !important;
+      }
+
+      /* ── PRODUCT CARD ── */
+      .prod-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        box-shadow: var(--sh);
+      }
+      .prod-cat-header {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--primary);
+        background: var(--primary-l);
+        padding: 8px 14px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        user-select: none;
+        border-bottom: 1px solid rgba(30, 58, 95, 0.1);
+      }
+      .prod-cat-toggle {
+        font-size: 14px;
+        transition: transform 0.25s;
+        color: var(--primary);
+        font-weight: 700;
+      }
+      .prod-cat-toggle.collapsed {
+        transform: rotate(-90deg);
+      }
+      .prod-cat-label {
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--primary);
+        background: var(--primary-l);
+        padding: 4px 10px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+      .prod-cat-body {
+        overflow: hidden;
+        transition: max-height 0.32s ease;
+      }
+      .prod-item {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .prod-item:last-child {
+        border-bottom: none;
+      }
+      .prod-top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+      .prod-name {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--text);
+        line-height: 1.3;
+        flex: 1;
+        min-width: 0;
+      }
+      .prod-actions {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        flex-shrink: 0;
+      }
+      .prod-pricing-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 6px;
+      }
+      .pricing-block {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 10px;
+      }
+      .pricing-block-label {
+        font-size: 9.5px;
+        font-weight: 700;
+        color: var(--text2);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+      }
+      .pricing-block-buy {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.2;
+      }
+      .pricing-block-sell {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--green-d);
+        line-height: 1.2;
+        margin-top: 2px;
+      }
+      .pricing-block-unit {
+        font-size: 10px;
+        color: var(--text2);
+        font-weight: 400;
+        margin-top: 1px;
+      }
+      .margin-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: var(--green-l);
+        border: 1px solid #86efac;
+        border-radius: 20px;
+        padding: 3px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--green-d);
+      }
+      .prod-in-list-badge {
+        background: var(--amber-l);
+        border: 1px solid #fde68a;
+        color: var(--amber);
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 20px;
+      }
+      .price-tag {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 5px 10px;
+        font-size: 11.5px;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .price-tag span {
+        color: var(--text2);
+        font-weight: 400;
+        font-size: 10px;
+        display: block;
+      }
+      .margin-tag {
+        background: var(--green-l);
+        border: 1px solid #86efac;
+        border-radius: 8px;
+        padding: 5px 10px;
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--green-d);
+      }
+
+      /* ── UDHAR CARD ── */
+      .udhar-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 14px;
+        margin-bottom: 8px;
+        box-shadow: var(--sh);
+        cursor: pointer;
+        transition: box-shadow 0.18s;
+      }
+      .udhar-card:hover {
+        box-shadow: var(--sh2);
+      }
+      .udhar-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .udhar-name {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--text);
+      }
+      .udhar-amount {
+        font-family: "Baloo 2", cursive;
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--red);
+        line-height: 1;
+      }
+      .udhar-item {
+        font-size: 12px;
+        color: var(--text2);
+        margin-top: 4px;
+      }
+      .udhar-date {
+        font-size: 11.5px;
+        color: var(--text2);
+        margin-top: 2px;
+      }
+      .udhar-remaining {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--green-d);
+        background: var(--green-l);
+        padding: 3px 9px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .udhar-actions {
+        display: flex;
+        gap: 7px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .btn-wa-reminder {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: #25d366;
+        color: white;
+        border: none;
+        border-radius: 7px;
+        padding: 5px 11px;
+        font-size: 11.5px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: "Baloo 2", cursive;
+        flex-shrink: 0;
+      }
+
+      /* ── CUSTOMER CARD ── */
+      .cust-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .cust-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary-l);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Baloo 2", cursive;
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--primary);
+        flex-shrink: 0;
+      }
+      .cust-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .cust-name {
+        font-weight: 700;
+        font-size: 13.5px;
+      }
+      .cust-phone {
+        font-size: 12px;
+        color: var(--text2);
+        margin-top: 1px;
+      }
+      .cust-actions {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .wa-btn-pro {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: #25d366;
+        color: white;
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+        border: none;
+        font-family: "Baloo 2", cursive;
+      }
+
+      /* ── WA ── */
+      .wa-modal-box {
+        background: white;
+        border-radius: 20px 20px 0 0;
+        padding: 20px 18px 36px;
+        width: 100%;
+        max-width: 480px;
+        max-height: 92vh;
+        overflow-y: auto;
+      }
+      .cust-opt {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .cust-opt:last-child {
+        border-bottom: none;
+      }
+      .cust-opt input[type="checkbox"] {
+        accent-color: var(--primary);
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+      }
+      .wa-send-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(135deg, #25d366, #128c7e);
+        color: white;
+        border-radius: 12px;
+        padding: 12px 16px;
+        text-decoration: none;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 13.5px;
+        font-family: "Baloo 2", cursive;
+        transition: transform 0.15s;
+        box-shadow: 0 2px 8px rgba(37, 211, 102, 0.25);
+      }
+      .wa-send-btn:active {
+        transform: scale(0.98);
+      }
+      .wa-send-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .wa-send-name {
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .wa-send-num {
+        font-size: 11px;
+        opacity: 0.85;
+        font-family: "Noto Sans", sans-serif;
+      }
+
+      /* ── CALC BOX ── */
+      .calc-box {
+        background: var(--primary-l);
+        border-radius: var(--r-sm);
+        padding: 9px 12px;
+        margin-bottom: 10px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--primary);
+        display: none;
+        border-left: 3px solid var(--primary);
+      }
+
+      /* ── PURCHASE HISTORY CARD ── */
+      .hist-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 14px;
+        margin-bottom: 10px;
+      }
+      .hist-product-name {
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 8px;
+        color: var(--text);
+      }
+      .hist-entry {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 7px 10px;
+        border-radius: 8px;
+        margin-bottom: 4px;
+        font-size: 12px;
+      }
+      .hist-entry:last-child {
+        margin-bottom: 0;
+      }
+      .hist-entry-current {
+        background: var(--primary-l);
+        color: var(--primary);
+      }
+      .hist-entry-old {
+        background: var(--bg);
+        color: var(--text2);
+      }
+
+      /* ── INFO NOTE ── */
+      .info-note {
+        background: var(--primary-l);
+        border-left: 3px solid var(--primary);
+        border-radius: 0 var(--r-sm) var(--r-sm) 0;
+        padding: 9px 12px;
+        font-size: 12px;
+        color: var(--primary-d);
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+
+      /* ── UNIT CHIP ── */
+      .rstock-unit-sel {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-top: 4px;
+      }
+      .unit-chip {
+        padding: 4px 9px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        border: 1.5px solid var(--border);
+        background: white;
+        cursor: pointer;
+        color: var(--text2);
+        transition: all 0.15s;
+      }
+      .unit-chip.sel {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      /* ── PHOTO ── */
+      .photo-thumb {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        object-fit: cover;
+        border: 1px solid var(--border);
+      }
+      .photo-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border: 1.5px dashed var(--border);
+        border-radius: var(--r-sm);
+        cursor: pointer;
+        font-size: 12px;
+        color: var(--text2);
+        background: none;
+      }
+
+      /* ── UDHAR HISTORY MODAL ── */
+      .txn-entry {
+        padding: 10px 12px;
+        border-radius: 10px;
+        margin-bottom: 6px;
+        border: 1px solid var(--border);
+      }
+      .txn-debit {
+        background: #fff5f5;
+        border-color: #fecaca;
+      }
+      .txn-credit {
+        background: #f0fdf4;
+        border-color: #86efac;
+      }
+      .txn-amount-debit {
+        color: var(--red);
+        font-family: "Baloo 2", cursive;
+        font-size: 16px;
+        font-weight: 800;
+      }
+      .txn-amount-credit {
+        color: var(--green-d);
+        font-family: "Baloo 2", cursive;
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      /* ── HOME STATS CLICKABLE CARDS ── */
+      .home-stats-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .stat-click-card {
+        background: linear-gradient(135deg, #1e3a5f 0%, #0f2440 100%);
+        border-radius: 16px;
+        padding: 18px 14px;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 16px rgba(15, 36, 64, 0.22);
+        transition:
+          transform 0.18s,
+          box-shadow 0.18s;
+        position: relative;
+        overflow: hidden;
+      }
+      .stat-click-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0);
+        transition: background 0.18s;
+      }
+      .stat-click-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(15, 36, 64, 0.32);
+      }
+      .stat-click-card:hover::before {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .stat-click-card:active {
+        transform: scale(0.97);
+      }
+      .stat-click-icon {
+        font-size: 22px;
+        margin-bottom: 6px;
+        display: block;
+      }
+      .stat-click-val {
+        font-family: "Baloo 2", cursive;
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 1;
+        color: #fff;
+      }
+      .stat-click-lbl {
+        font-size: 11px;
+        opacity: 0.72;
+        margin-top: 4px;
+        color: #fff;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+      }
+      .stat-click-hint {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.45);
+        margin-top: 5px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      /* ── PRODUCT FORM TABS ── */
+      .prod-form-tabs {
+        display: flex;
+        border-radius: var(--r-sm);
+        overflow: hidden;
+        border: 1.5px solid var(--border);
+        margin-bottom: 10px;
+      }
+      .prod-tab {
+        flex: 1;
+        padding: 9px;
+        text-align: center;
+        font-size: 12.5px;
+        font-weight: 700;
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: var(--text2);
+        font-family: "Baloo 2", cursive;
+        transition: all 0.18s;
+      }
+      .prod-tab.active {
+        background: var(--primary);
+        color: white;
+      }
+
+      /* ── PRODUCT BOTTOM ROW (restock + alert) ── */
+      .prod-bottom-row {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+      }
+      .restock-alert-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: var(--bg);
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        padding: 3px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text2);
+        cursor: pointer;
+        transition: all 0.18s;
+        font-family: "Baloo 2", cursive;
+      }
+      .restock-alert-badge:hover {
+        border-color: var(--amber);
+        color: var(--amber);
+      }
+      .restock-alert-badge.active {
+        background: var(--amber-l);
+        border-color: #fde68a;
+        color: var(--amber);
+      }
+
+      /* ── RESTOCK BUY LIST QTY — clickable button style ── */
+      .buy-qty-btn {
+        min-width: 64px;
+        padding: 6px 10px;
+        background: var(--bg);
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: var(--text);
+        text-align: center;
+        cursor: pointer;
+        font-family: "Baloo 2", cursive;
+        transition: all 0.15s;
+      }
+      .buy-qty-btn:hover {
+        border-color: var(--primary);
+        background: var(--primary-l);
+        color: var(--primary);
+      }
+      .buy-qty-btn.editing {
+        border-color: var(--primary);
+        background: var(--primary-l);
+      }
+      .buy-qty-display {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+      .buy-qty-multiply {
+        font-size: 11px;
+        color: var(--text2);
+        font-weight: 600;
+      }
+
+      /* ── PWA INSTALL BANNER ── */
+      #pwa-banner {
+        display: none;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        z-index: 2000;
+        background: linear-gradient(105deg, #1e3a5f 0%, #0f2440 100%);
+        color: white;
+        padding: 14px 16px;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+        align-items: center;
+        gap: 12px;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+      #pwa-banner.show { display: flex; }
+      .pwa-banner-icon {
+        width: 42px; height: 42px;
+        background: rgba(255,255,255,0.15);
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 22px; flex-shrink: 0;
+      }
+      .pwa-banner-text { flex: 1; }
+      .pwa-banner-title { font-family: "Baloo 2", cursive; font-size: 14px; font-weight: 700; }
+      .pwa-banner-sub { font-size: 11px; opacity: 0.75; margin-top: 2px; }
+      .pwa-banner-btns { display: flex; gap: 7px; flex-shrink: 0; }
+      .pwa-install-btn {
+        background: white; color: var(--primary);
+        border: none; border-radius: 8px;
+        padding: 8px 14px; font-size: 12px;
+        font-family: "Baloo 2", cursive; font-weight: 700;
+        cursor: pointer; white-space: nowrap;
+      }
+      .pwa-dismiss-btn {
+        background: rgba(255,255,255,0.15); color: white;
+        border: 1px solid rgba(255,255,255,0.3); border-radius: 8px;
+        padding: 8px 10px; font-size: 12px; cursor: pointer;
+      }
+
+      /* ── BACKUP MODAL ── */
+      .backup-modal-overlay {
+        position: fixed; inset: 0;
+        background: rgba(15,36,64,0.55);
+        z-index: 1500;
+        display: none; align-items: flex-end; justify-content: center;
+      }
+      .backup-modal-overlay.open { display: flex; }
+      .backup-sheet {
+        background: var(--surface);
+        border-radius: 24px 24px 0 0;
+        width: 100%; max-width: 480px;
+        padding: 0 0 32px;
+        box-shadow: 0 -8px 40px rgba(0,0,0,0.2);
+      }
+      .backup-sheet-handle {
+        width: 40px; height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        margin: 14px auto 0;
+      }
+      .backup-sheet-hd {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 16px 20px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .backup-sheet-title {
+        font-family: "Baloo 2", cursive;
+        font-size: 18px; font-weight: 800; color: var(--text);
+      }
+      .backup-sheet-close {
+        background: var(--bg); border: none; border-radius: 50%;
+        width: 32px; height: 32px; font-size: 16px;
+        cursor: pointer; color: var(--text2);
+        display: flex; align-items: center; justify-content: center;
+      }
+      .backup-sheet-body { padding: 16px 20px; }
+      .backup-info-box {
+        background: var(--blue-l); border-radius: 12px;
+        padding: 12px 14px; margin-bottom: 16px;
+        font-size: 12px; color: var(--blue); line-height: 1.6;
+      }
+      .backup-info-box strong { font-weight: 700; display: block; margin-bottom: 3px; }
+      .backup-action-card {
+        border: 1.5px solid var(--border); border-radius: 14px;
+        padding: 16px; margin-bottom: 12px;
+        display: flex; align-items: center; gap: 14px;
+        cursor: pointer; transition: border-color 0.18s, box-shadow 0.18s;
+        background: var(--surface);
+      }
+      .backup-action-card:hover {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(30,58,95,0.08);
+      }
+      .backup-action-icon {
+        width: 48px; height: 48px; border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 22px; flex-shrink: 0;
+      }
+      .bai-export { background: var(--green-l); }
+      .bai-import { background: var(--blue-l); }
+      .backup-action-text { flex: 1; }
+      .backup-action-title {
+        font-family: "Baloo 2", cursive;
+        font-size: 15px; font-weight: 700; color: var(--text);
+      }
+      .backup-action-sub { font-size: 11.5px; color: var(--text2); margin-top: 3px; line-height: 1.4; }
+      .backup-action-arrow { color: var(--text2); font-size: 18px; flex-shrink: 0; }
+      .backup-stats {
+        display: grid; grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px; margin-bottom: 16px;
+      }
+      .backup-stat {
+        background: var(--bg); border-radius: 10px;
+        padding: 10px 8px; text-align: center;
+      }
+      .backup-stat-val {
+        font-family: "Baloo 2", cursive;
+        font-size: 20px; font-weight: 800; color: var(--primary);
+      }
+      .backup-stat-lbl { font-size: 10px; color: var(--text2); margin-top: 2px; }
+      .last-backup-note {
+        font-size: 11px; color: var(--text2);
+        text-align: center; margin-top: 8px;
+      }
+
+      /* ── CUSTOM SELECT ── */
+      .custom-sel-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r-sm);
+        background: white;
+        cursor: pointer;
+        font-size: 13px;
+        font-family: "Noto Sans", sans-serif;
+        color: var(--text);
+        transition: border-color 0.18s, box-shadow 0.18s;
+        user-select: none;
+        min-height: 42px;
+      }
+      .custom-sel-trigger:active {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(30,58,95,0.1);
+      }
+      .custom-sel-trigger svg {
+        color: var(--text2);
+        flex-shrink: 0;
+        transition: transform 0.2s;
+      }
+      .custom-sel-val {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      /* ── CUSTOMER PICKER ── */
+      .cust-picker-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r-sm);
+        background: white;
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--text);
+        transition: border-color 0.18s;
+        min-height: 42px;
+        user-select: none;
+      }
+      .cust-picker-val {
+        color: #94a3b8;
+        flex: 1;
+      }
+      .cust-picker-val.selected {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* ── POPUP OVERLAY (generic) ── */
+      .sel-popup-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15,36,64,0.5);
+        z-index: 1100;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      .sel-popup-sheet {
+        background: white;
+        border-radius: 20px 20px 0 0;
+        width: 100%;
+        max-width: 480px;
+        max-height: 72vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 -4px 30px rgba(0,0,0,0.18);
+      }
+      .sel-popup-hd {
+        padding: 16px 18px 10px;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      .sel-popup-title {
+        font-family: "Baloo 2", cursive;
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .sel-popup-close {
+        background: var(--bg);
+        border: none;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
+        cursor: pointer;
+        color: var(--text2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .sel-popup-search {
+        width: 100%;
+        padding: 9px 12px;
+        border: 1.5px solid var(--border);
+        border-radius: 9px;
+        font-size: 13px;
+        font-family: "Noto Sans", sans-serif;
+        outline: none;
+      }
+      .sel-popup-search:focus {
+        border-color: var(--primary);
+      }
+      .sel-popup-body {
+        overflow-y: auto;
+        flex: 1;
+        padding: 8px 0 16px;
+      }
+      .sel-popup-opt {
+        padding: 13px 18px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: background 0.12s;
+        border-bottom: 1px solid var(--bg);
+      }
+      .sel-popup-opt:hover, .sel-popup-opt:active {
+        background: var(--primary-l);
+      }
+      .sel-popup-opt.active {
+        background: var(--primary-l);
+        color: var(--primary);
+        font-weight: 700;
+      }
+      .sel-popup-opt .opt-check {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        opacity: 0;
+      }
+      .sel-popup-opt.active .opt-check {
+        opacity: 1;
+      }
+      .sel-popup-type-row {
+        padding: 10px 18px 4px;
+        border-top: 1px solid var(--border);
+        flex-shrink: 0;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .sel-popup-type-inp {
+        flex: 1;
+        padding: 9px 12px;
+        border: 1.5px solid var(--border);
+        border-radius: 9px;
+        font-size: 13px;
+        font-family: "Noto Sans", sans-serif;
+        outline: none;
+      }
+      .sel-popup-type-inp:focus {
+        border-color: var(--primary);
+      }
+      .sel-popup-type-btn {
+        padding: 9px 14px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 9px;
+        font-family: "Baloo 2", cursive;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      /* ── WA SEND OPTIONS ── */
+      .wa-send-options {
+        display: flex;
+        gap: 8px;
+        margin-top: 4px;
+      }
+      .wa-opt-btn {
+        flex: 1;
+        padding: 10px 8px;
+        border-radius: 10px;
+        border: 2px solid var(--border);
+        background: white;
+        font-size: 12.5px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: "Baloo 2", cursive;
+        color: var(--text2);
+        transition: all 0.18s;
+        text-align: center;
+      }
+      .wa-opt-btn.active {
+        border-color: #25d366;
+        background: #f0fdf4;
+        color: #166534;
+      }
+      .wa-opt-btn:active {
+        transform: scale(0.98);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ══════════ AUTH ══════════ -->
+    <div id="auth-screen">
+      <div class="auth-logo">
+        Om Traders<span class="auth-subname">by Roopesh Kumar Verma</span>
+      </div>
+      <div class="auth-box">
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchAuthTab('login')">
+            Login
+          </button>
+          <button class="auth-tab" onclick="switchAuthTab('signup')">
+            Sign Up
+          </button>
+        </div>
+        <div id="auth-login">
+          <div class="auth-title">नमस्ते! Login करें</div>
+          <div class="fg">
+            <label class="fl">Username</label
+            ><input id="l-user" type="text" placeholder="username डालें" />
+          </div>
+          <div class="fg">
+            <label class="fl">Password</label
+            ><input id="l-pass" type="password" placeholder="Password" />
+          </div>
+          <button class="btn btn-p fw" onclick="doLogin()">Login करें →</button>
+          <div class="auth-note">पहली बार? Sign Up करें।</div>
+        </div>
+        <div id="auth-signup" style="display: none">
+          <div class="auth-title">नया Account बनाएं</div>
+          <div class="fg">
+            <label class="fl">आपका नाम</label
+            ><input
+              id="s-uname"
+              type="text"
+              placeholder="Roopesh Kumar Verma"
+            />
+          </div>
+          <div class="fg">
+            <label class="fl">Username</label
+            ><input id="s-user" type="text" placeholder="roopesh123" />
+          </div>
+          <div class="fg">
+            <label class="fl">Password (6+ characters)</label
+            ><input id="s-pass" type="password" placeholder="Password" />
+          </div>
+          <button class="btn btn-p fw" onclick="doSignup()">
+            Account बनाएं ✓
+          </button>
+          <div class="sync-note">
+            💡 Backup feature से किसी भी device पर data restore कर सकते हैं।
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ APP ══════════ -->
+    <div id="app-shell">
+      <div class="header">
+        <div>
+          <div class="hd-name">Om Traders</div>
+          <div class="hd-by">by Roopesh Kumar Verma</div>
+        </div>
+        <div class="hd-right">
+          <div class="hd-date" id="hd-date"></div>
+          <button class="hd-user-btn" onclick="openBackupModal()" style="background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.25);" title="Backup / Restore">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            Backup
+          </button>
+          <button class="hd-user-btn" onclick="openModal('logout-modal')">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <div class="nav" id="main-nav">
+        <button class="nav-btn active" onclick="showScreen('home')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          <span class="nl">Home</span>
+        </button>
+        <button class="nav-btn" onclick="showScreen('udhar')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+          </svg>
+          <span class="nl">उधार</span>
+        </button>
+        <button class="nav-btn" onclick="showScreen('products')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <span class="nl">Products</span>
+        </button>
+        <button class="nav-btn" onclick="showScreen('sales')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="12" y1="1" x2="12" y2="23" />
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+          </svg>
+          <span class="nl">Sales</span>
+        </button>
+        <button class="nav-btn" onclick="showScreen('restock')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path
+              d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+            />
+          </svg>
+          <span class="nl">Restock</span>
+        </button>
+        <button class="nav-btn" onclick="showScreen('customers')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span class="nl">Customers</span>
+        </button>
+      </div>
+
+      <div class="screens">
+        <!-- ── HOME ── -->
+        <div class="screen active" id="screen-home">
+          <div class="sec-hd" id="home-greet">नमस्ते!</div>
+          <!-- Hidden elements to maintain JS compatibility -->
+          <div style="display:none" id="home-stats-banner">
+            <div id="h-products-count">0</div>
+            <div id="h-customers-count">0</div>
+          </div>
+          <div class="qgrid">
+            <button class="qcard qc-b" onclick="showScreen('products')">
+              <div class="qci">📦</div>
+              <div class="qct">Products</div>
+              <div class="qcs">Price book</div>
+            </button>
+            <button class="qcard qc-a" onclick="showScreen('udhar')">
+              <div class="qci">📒</div>
+              <div class="qct">उधार बही</div>
+              <div class="qcs">Credit tracker</div>
+            </button>
+            <button class="qcard qc-c" onclick="showScreen('sales')">
+              <div class="qci">💰</div>
+              <div class="qct">Sales Log</div>
+              <div class="qcs">Daily income</div>
+            </button>
+            <button class="qcard qc-d" onclick="showScreen('restock')">
+              <div class="qci">🛒</div>
+              <div class="qct">Restock</div>
+              <div class="qcs">Buy list</div>
+            </button>
+          </div>
+          <button class="qcard-wide qc-e" onclick="showScreen('customers')">
+            <span style="font-size: 26px">💬</span>
+            <div>
+              <div class="qct" style="font-size: 15px">WhatsApp Customers</div>
+              <div class="qcs" style="font-size: 11px">
+                Loyal customers को offer भेजें
+              </div>
+            </div>
+          </button>
+          <!-- Restock Alert — professional style -->
+          <div
+            id="home-restock-alert"
+            class="restock-alert-card"
+            style="display: none"
+          >
+            <div class="restock-alert-title">
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+                />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              Restock Alert — ये खरीदना है
+            </div>
+            <div class="restock-chips" id="home-restock-chips"></div>
+            <button
+              class="restock-view-btn"
+              onclick="showScreen('restock')"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              Restock List देखें →
+            </button>
+          </div>
+          <!-- Backup reminder card -->
+          <div id="home-backup-card" style="margin-top:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:14px;box-shadow:var(--sh);display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="openBackupModal()">
+            <div style="width:42px;height:42px;background:var(--green-l);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">💾</div>
+            <div style="flex:1;">
+              <div style="font-family:'Baloo 2',cursive;font-size:14px;font-weight:700;color:var(--text);">Data Backup</div>
+              <div id="home-backup-sub" style="font-size:11.5px;color:var(--text2);margin-top:2px;">Data safe रखें — backup लें</div>
+            </div>
+            <div style="color:var(--text2);font-size:18px;">›</div>
+          </div>
+        </div>
+
+        <!-- ── UDHAR ── -->
+        <div class="screen" id="screen-udhar">
+          <div class="sec-hd">उधार बही</div>
+          <div class="stats-grid">
+            <div
+              class="stat-box"
+              style="background: var(--red-l); color: var(--red)"
+            >
+              <div class="sv" id="u-total-disp">₹0</div>
+              <div class="sl">कुल उधार</div>
+            </div>
+            <div
+              class="stat-box"
+              style="background: var(--amber-l); color: var(--gold)"
+            >
+              <div class="sv" id="u-count-disp">0</div>
+              <div class="sl">लोग बाकी</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-hd">नया उधार जोड़ें</div>
+            <div class="fg">
+              <label class="fl">ग्राहक का नाम *</label>
+              <div class="cust-picker-wrap" id="udhar-name-picker" onclick="openCustPicker()">
+                <span class="cust-picker-val" id="udhar-name-display">नाम चुनें या टाइप करें...</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <input type="hidden" id="u-name" />
+            </div>
+            <div class="ir">
+              <div>
+                <label class="fl">रकम (₹) *</label
+                ><input id="u-amount" type="number" placeholder="500" />
+              </div>
+              <div>
+                <label class="fl">चीज़ (optional)</label
+                ><input id="u-item" type="text" placeholder="आटा, चीनी..." />
+              </div>
+            </div>
+            <div class="fg">
+              <label class="photo-btn"
+                ><span>📷</span> परचे की Photo (optional)<input
+                  type="file"
+                  accept="image/*"
+                  id="u-photo"
+                  style="display: none"
+                  onchange="previewUdharPhoto(this)"
+              /></label>
+              <img
+                id="u-photo-preview"
+                style="display: none; margin-top: 8px"
+                class="photo-thumb"
+              />
+            </div>
+            <button class="btn btn-p fw" onclick="addUdhar()">
+              उधार जोड़ें ✓
+            </button>
+          </div>
+          <div class="search-wrap">
+            <span class="si">🔍</span
+            ><input
+              type="text"
+              placeholder="नाम से खोजें..."
+              oninput="renderUdhar(this.value)"
+            />
+          </div>
+          <div id="udhar-list"></div>
+        </div>
+
+        <!-- ── PRODUCTS ── -->
+        <div class="screen" id="screen-products">
+          <div class="sec-hd">Product Price Book</div>
+          <button
+            class="add-prod-btn"
+            id="prod-add-toggle"
+            onclick="toggleAddProd()"
+          >
+            <span>＋</span> Product जोड़ें / Update करें
+          </button>
+          <div class="card add-prod-form" id="prod-add-form">
+            <div class="card-hd">Product Details भरें</div>
+            <div class="fg" style="margin-bottom:10px">
+              <label class="fl">Product का नाम *</label>
+              <input id="p-name" type="text" placeholder="जैसे: Basmati Chawal" />
+            </div>
+            <div class="fg" style="margin-bottom:10px">
+              <label class="fl">Category</label>
+              <div class="custom-sel-trigger" id="p-cat-trigger" onclick="openCustomSel('p-cat-sel','p-cat',this)">
+                <span class="custom-sel-val" id="p-cat-display">अनाज / Grains</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <input type="hidden" id="p-cat" value="अनाज / Grains" />
+            </div>
+
+            <!-- BULK / UNIT TABS -->
+            <div class="prod-form-tabs">
+              <button
+                class="prod-tab active"
+                id="tab-bulk"
+                onclick="switchProdTab('bulk')"
+              >
+                📦 Bulk (थोक)
+              </button>
+              <button
+                class="prod-tab"
+                id="tab-unit"
+                onclick="switchProdTab('unit')"
+              >
+                🔹 Unit (फुटकर)
+              </button>
+            </div>
+
+            <!-- BULK SECTION -->
+            <div class="bulk-section" id="prod-bulk-section">
+              <div class="ir">
+                <div>
+                  <label class="fl">Buy Price ₹</label
+                  ><input
+                    id="p-buy"
+                    type="number"
+                    placeholder="1200"
+                    oninput="calcPrices()"
+                  />
+                </div>
+                <div>
+                  <label class="fl">Sell Price ₹</label
+                  ><input
+                    id="p-sell"
+                    type="number"
+                    placeholder="1400"
+                    oninput="calcPrices()"
+                  />
+                </div>
+              </div>
+              <div class="ir">
+                <div>
+                  <label class="fl">Qty</label
+                  ><input
+                    id="p-qty"
+                    type="number"
+                    placeholder="50"
+                    oninput="calcPrices()"
+                  />
+                </div>
+                <div>
+                  <label class="fl">Bulk Unit</label>
+                  <div class="custom-sel-trigger" id="p-bulk-unit-trigger" onclick="openCustomSel('p-bulk-unit-sel','p-bulk-unit',this)">
+                    <span class="custom-sel-val" id="p-bulk-unit-display">kg</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                  <input type="hidden" id="p-bulk-unit" value="kg" />
+                </div>
+              </div>
+              <div id="p-bulk-unit-other-wrap" style="display: none" class="fg">
+                <label class="fl">Custom Unit लिखें</label>
+                <input
+                  id="p-bulk-unit-other"
+                  type="text"
+                  placeholder="जैसे: quintal, crate..."
+                />
+              </div>
+            </div>
+
+            <!-- UNIT SECTION -->
+            <div
+              class="unit-section"
+              id="prod-unit-section"
+              style="display: none"
+            >
+              <div class="ir">
+                <div>
+                  <label class="fl">Buy Price ₹</label
+                  ><input
+                    id="p-unit-buy"
+                    type="number"
+                    placeholder="per unit"
+                  />
+                </div>
+                <div>
+                  <label class="fl">Sell Price ₹</label
+                  ><input
+                    id="p-unit-sell"
+                    type="number"
+                    placeholder="per unit"
+                  />
+                </div>
+              </div>
+              <div class="ir">
+                <div>
+                  <label class="fl">Qty</label
+                  ><input id="p-unit-qty" type="number" placeholder="e.g. 1" />
+                </div>
+                <div>
+                  <label class="fl">Unit</label>
+                  <div class="custom-sel-trigger" id="p-unit-trigger" onclick="openCustomSel('p-unit-sel','p-unit',this)">
+                    <span class="custom-sel-val" id="p-unit-display">kg</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                  <input type="hidden" id="p-unit" value="kg" />
+                </div>
+              </div>
+              <div id="p-unit-other-wrap" style="display: none" class="fg">
+                <label class="fl">Custom Unit लिखें</label>
+                <input
+                  id="p-unit-other"
+                  type="text"
+                  placeholder="जैसे: bottle, strip..."
+                />
+              </div>
+            </div>
+
+            <div id="price-calc-box" class="calc-box"></div>
+
+            <button class="btn btn-save-product fw" onclick="addProduct()">
+              ✓ Product Save करें
+            </button>
+            <input type="hidden" id="p-notes" value="" />
+          </div>
+          <div class="search-wrap">
+            <span class="si">🔍</span
+            ><input
+              type="text"
+              placeholder="Product खोजें..."
+              oninput="renderProducts(this.value)"
+            />
+          </div>
+          <div id="product-list"></div>
+        </div>
+
+        <!-- ── SALES ── -->
+        <div class="screen" id="screen-sales">
+          <div class="sec-hd">Sales Log</div>
+          <div class="card">
+            <div class="card-hd">बिक्री दर्ज करें</div>
+            <div class="fg">
+              <label class="fl">Date *</label><input id="s-date" type="date" />
+            </div>
+            <div class="ir">
+              <div>
+                <label class="fl">Cash (₹)</label
+                ><input
+                  id="s-cash"
+                  type="number"
+                  placeholder="0"
+                  oninput="calcSalesTotal()"
+                />
+              </div>
+              <div>
+                <label class="fl">Online (₹)</label
+                ><input
+                  id="s-online"
+                  type="number"
+                  placeholder="0"
+                  oninput="calcSalesTotal()"
+                />
+              </div>
+            </div>
+            <div
+              id="sales-total-preview"
+              style="
+                display: none;
+                background: var(--primary-l);
+                border-radius: var(--r-sm);
+                padding: 9px 12px;
+                margin-bottom: 10px;
+                font-size: 13px;
+                font-weight: 700;
+                color: var(--primary);
+              "
+            ></div>
+            <div class="fg">
+              <label class="fl">Note (optional)</label
+              ><input
+                id="s-note"
+                type="text"
+                placeholder="जैसे: Festival day"
+              />
+            </div>
+            <button class="btn btn-p fw" onclick="addSale()">
+              Save Sales ✓
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-hd">Summary</div>
+            <div class="stats-grid" style="margin-bottom: 0">
+              <div
+                class="stat-box"
+                style="background: var(--green-l); color: var(--green-d)"
+              >
+                <div class="sv" id="week-total">₹0</div>
+                <div class="sl">This Week</div>
+              </div>
+              <div
+                class="stat-box"
+                style="background: var(--blue-l); color: var(--blue)"
+              >
+                <div class="sv" id="month-total">₹0</div>
+                <div class="sl">This Month</div>
+              </div>
+            </div>
+          </div>
+          <div id="sales-list"></div>
+        </div>
+
+        <!-- ── RESTOCK ── -->
+        <div class="screen" id="screen-restock">
+          <div class="sec-hd">Restock List</div>
+          <button
+            class="add-prod-btn"
+            id="restock-add-toggle"
+            onclick="toggleRestockForm()"
+          >
+            <span>＋</span> Item जोड़ें
+          </button>
+          <div class="card add-prod-form" id="restock-add-form">
+            <div class="card-hd">Item जोड़ें</div>
+            <div class="fg">
+              <label class="fl">Product का नाम *</label
+              ><input id="r-item" type="text" placeholder="Item का नाम" />
+            </div>
+            <div class="fg">
+              <label class="fl">Unit चुनें</label>
+              <div class="rstock-unit-sel" id="r-unit-chips">
+                <span class="unit-chip sel" onclick="selectUnit(this, 'bori')"
+                  >Bori</span
+                >
+                <span class="unit-chip" onclick="selectUnit(this, 'kg')"
+                  >kg</span
+                >
+                <span class="unit-chip" onclick="selectUnit(this, 'gm')"
+                  >gm</span
+                >
+                <span class="unit-chip" onclick="selectUnit(this, 'piece')"
+                  >Piece</span
+                >
+                <span class="unit-chip" onclick="selectUnit(this, 'litre')"
+                  >Litre</span
+                >
+                <span class="unit-chip" onclick="selectUnit(this, 'other')"
+                  >Other...</span
+                >
+              </div>
+            </div>
+            <div id="r-unit-other-wrap" style="display: none" class="fg">
+              <label class="fl">Unit का नाम लिखें</label>
+              <input
+                id="r-unit-other"
+                type="text"
+                placeholder="जैसे: packet, crate..."
+              />
+            </div>
+            <div class="ir">
+              <div>
+                <label class="fl">कितना चाहिए? (Qty)</label
+                ><input id="r-howmuch" type="number" placeholder="जैसे: 5" />
+              </div>
+              <div>
+                <label class="fl">Price (₹) optional</label
+                ><input id="r-price" type="number" placeholder="जैसे: 1200" />
+              </div>
+            </div>
+            <button class="btn btn-p fw" onclick="addRestock()">
+              List में जोड़ें ✓
+            </button>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 8px;
+            "
+          >
+            <div
+              style="
+                font-family: &quot;Baloo 2&quot;, cursive;
+                font-size: 15px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+              "
+            >
+              Buy List <span id="r-count" class="badge b-red">0</span>
+            </div>
+            <div style="display: flex; gap: 6px">
+              <button class="btn btn-o btn-sm" onclick="pullFromProducts()">
+                ⚡ Auto-Pull
+              </button>
+              <button class="btn btn-o btn-sm" onclick="clearDoneRestock()">
+                Done हटाएं
+              </button>
+            </div>
+          </div>
+          <div class="card" id="restock-list-card">
+            <div id="restock-list"></div>
+          </div>
+
+          <!-- Purchase History - professional card -->
+          <div class="card-hd" style="margin-top: 6px">Purchase History</div>
+          <div id="purchase-history-list"></div>
+        </div>
+
+        <!-- ── CUSTOMERS ── -->
+        <div class="screen" id="screen-customers">
+          <div class="sec-hd">Customers</div>
+          <div class="card">
+            <div class="card-hd">Customer जोड़ें</div>
+            <div class="ir">
+              <div>
+                <label class="fl">नाम *</label
+                ><input id="c-name" type="text" placeholder="Customer का नाम" />
+              </div>
+              <div>
+                <label class="fl">WhatsApp No.</label
+                ><input id="c-phone" type="tel" placeholder="91XXXXXXXXXX" />
+              </div>
+            </div>
+            <div class="fg">
+              <label class="fl">Type</label>
+              <div class="custom-sel-trigger" id="c-type-trigger" onclick="openCustomSel('c-type-sel','c-type',this)">
+                <span class="custom-sel-val" id="c-type-display">⭐ Loyal Customer</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <input type="hidden" id="c-type" value="loyal" />
+            </div>
+            <button class="btn btn-p fw" onclick="addCustomer()">
+              Customer Save करें ✓
+            </button>
+          </div>
+          <button
+            class="btn btn-wa fw"
+            style="
+              margin-bottom: 12px;
+              font-size: 13.5px;
+              padding: 14px;
+              border-radius: var(--r);
+            "
+            onclick="openModal('wa-modal')"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+              />
+            </svg>
+            WhatsApp पर Product Offer भेजें
+          </button>
+          <button
+            class="add-prod-btn"
+            id="cust-list-toggle"
+            onclick="toggleCustList()"
+            style="margin-bottom:10px"
+          >
+            <span id="cust-list-toggle-icon">👥</span> <span id="cust-list-toggle-label">Customers देखें</span> <span id="cust-list-count" class="badge b-navy" style="font-size:11px"></span>
+          </button>
+          <div id="customer-list" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ MODALS ══════════ -->
+    <div class="modal-overlay" id="rename-modal">
+      <div class="modal-box">
+        <div class="modal-hd">
+          <span id="rename-title">Edit</span
+          ><button class="modal-close" onclick="closeModal('rename-modal')">
+            ✕
+          </button>
+        </div>
+        <div class="fg">
+          <label class="fl">नया नाम / Value</label
+          ><input id="rename-input" type="text" />
+        </div>
+        <button class="btn btn-p fw" onclick="doRename()">Save करें ✓</button>
+      </div>
+    </div>
+
+    <!-- UDHAR HISTORY MODAL -->
+    <div class="modal-overlay" id="udhar-history-modal">
+      <div class="modal-box">
+        <div class="modal-hd">
+          <span id="udhar-hist-name">Transaction History</span
+          ><button
+            class="modal-close"
+            onclick="closeModal('udhar-history-modal')"
+          >
+            ✕
+          </button>
+        </div>
+        <div
+          id="udhar-hist-summary"
+          style="
+            margin-bottom: 14px;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: 10px;
+          "
+        ></div>
+        <div class="fg">
+          <label class="fl">Deposit जोड़ें (Payment मिला)</label>
+          <div class="ir" style="margin-bottom: 8px">
+            <input
+              id="dep-amount"
+              type="number"
+              placeholder="₹ amount"
+              style="margin-bottom: 0"
+            />
+            <button class="btn btn-g" onclick="addDeposit()">जमा करें ✓</button>
+          </div>
+        </div>
+        <div
+          style="
+            font-family: &quot;Baloo 2&quot;, cursive;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text);
+          "
+        >
+          Transaction History
+        </div>
+        <div id="udhar-hist-list"></div>
+      </div>
+    </div>
+
+    <!-- EDIT RESTOCK MODAL -->
+    <div class="modal-overlay" id="edit-restock-modal">
+      <div class="modal-box">
+        <div class="modal-hd">
+          <span>Item Edit करें</span
+          ><button
+            class="modal-close"
+            onclick="closeModal('edit-restock-modal')"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="fg">
+          <label class="fl">Product का नाम</label
+          ><input id="er-name" type="text" />
+        </div>
+        <div class="ir">
+          <div>
+            <label class="fl">Qty</label><input id="er-qty" type="number" />
+          </div>
+          <div>
+            <label class="fl">Rate (₹) optional</label
+            ><input id="er-rate" type="number" placeholder="Optional" />
+          </div>
+        </div>
+        <button class="btn btn-p fw" onclick="saveEditRestock()">
+          Save करें ✓
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="edit-cust-modal">
+      <div class="modal-box">
+        <div class="modal-hd">
+          <span>Customer Edit करें</span
+          ><button class="modal-close" onclick="closeModal('edit-cust-modal')">
+            ✕
+          </button>
+        </div>
+        <div class="fg">
+          <label class="fl">नाम</label><input id="ec-name" type="text" />
+        </div>
+        <div class="fg">
+          <label class="fl">WhatsApp No.</label
+          ><input id="ec-phone" type="tel" />
+        </div>
+        <div class="fg">
+          <label class="fl">Type</label>
+          <div class="custom-sel-trigger" id="ec-type-trigger" onclick="openCustomSel('ec-type-sel','ec-type',this)">
+            <span class="custom-sel-val" id="ec-type-display">⭐ Loyal</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <input type="hidden" id="ec-type" value="loyal" />
+        </div>
+        <button class="btn btn-p fw" onclick="saveEditCustomer()">
+          Save करें ✓
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="wa-modal">
+      <div class="wa-modal-box">
+        <div class="modal-hd">
+          <span>WhatsApp Offer भेजें</span
+          ><button class="modal-close" onclick="closeModal('wa-modal')">
+            ✕
+          </button>
+        </div>
+        <div class="info-note">
+          Product details भरें → Send option चुनें → भेजें
+        </div>
+        <div class="fg">
+          <label class="fl">Product / Offer का नाम *</label
+          ><input
+            id="wa-product"
+            type="text"
+            placeholder="जैसे: Fresh Kaju आया नया!"
+          />
+        </div>
+        <div class="ir">
+          <div>
+            <label class="fl">Price (₹)</label
+            ><input id="wa-price" type="text" placeholder="250/kg" />
+          </div>
+          <div>
+            <label class="fl">Availability</label
+            ><input id="wa-qty" type="text" placeholder="Limited stock" />
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl">Extra detail</label
+          ><textarea
+            id="wa-detail"
+            rows="2"
+            placeholder="बहुत ताज़ा है, आज ही आया"
+          ></textarea>
+        </div>
+        <div class="fg">
+          <label class="fl">Message Preview</label>
+          <div
+            style="
+              background: #e8f5e9;
+              border-radius: var(--r-sm);
+              padding: 12px;
+              font-size: 12px;
+              color: #1b5e20;
+              white-space: pre-wrap;
+              line-height: 1.6;
+            "
+            id="wa-preview"
+          >
+            Product details भरें...
+          </div>
+        </div>
+
+        <!-- SEND OPTIONS -->
+        <div class="fg">
+          <label class="fl">कहाँ भेजें?</label>
+          <div class="wa-send-options">
+            <button
+              class="wa-opt-btn active"
+              id="wa-opt-individual"
+              onclick="selectWaOpt('individual')"
+            >
+              👤 Individual Customers
+            </button>
+            <button
+              class="wa-opt-btn"
+              id="wa-opt-group"
+              onclick="selectWaOpt('group')"
+            >
+              👥 WhatsApp Group
+            </button>
+          </div>
+        </div>
+
+        <!-- INDIVIDUAL SEND AREA -->
+        <div id="wa-individual-area">
+          <div class="fg">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+              "
+            >
+              <label class="fl" style="margin: 0">Customers चुनें</label>
+              <div style="display: flex; gap: 6px">
+                <button class="btn btn-o btn-xs" onclick="selAllWa()">
+                  सभी
+                </button>
+                <button class="btn btn-o btn-xs" onclick="selLoyalWa()">
+                  Loyal
+                </button>
+                <button class="btn btn-o btn-xs" onclick="deselWa()">
+                  Clear
+                </button>
+              </div>
+            </div>
+            <div
+              style="
+                border: 1.5px solid var(--border);
+                border-radius: var(--r-sm);
+                max-height: 180px;
+                overflow-y: auto;
+              "
+              id="wa-cust-list"
+            ></div>
+          </div>
+          <div id="wa-send-area"></div>
+        </div>
+
+        <!-- GROUP SEND AREA -->
+        <div id="wa-group-area" style="display: none">
+          <div class="fg">
+            <label class="fl">WhatsApp Group Link</label>
+            <input
+              id="wa-group-link"
+              type="text"
+              placeholder="https://chat.whatsapp.com/..."
+            />
+            <div style="font-size: 11px; color: var(--text2); margin-top: 4px">
+              Group invite link paste करें, या नीचे सीधे WhatsApp open करें
+            </div>
+          </div>
+          <button
+            class="wa-send-all-btn"
+            onclick="sendToGroup()"
+            style="margin-top: 8px"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+              />
+            </svg>
+            WhatsApp Group में भेजें
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="photo-modal">
+      <div class="modal-box" style="text-align: center">
+        <div class="modal-hd">
+          <span>परचे की Photo</span
+          ><button class="modal-close" onclick="closeModal('photo-modal')">
+            ✕
+          </button>
+        </div>
+        <img
+          id="photo-modal-img"
+          style="max-width: 100%; border-radius: var(--r-sm)"
+        />
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="logout-modal">
+      <div class="modal-box">
+        <div class="modal-hd">
+          <span>Logout करें?</span
+          ><button class="modal-close" onclick="closeModal('logout-modal')">
+            ✕
+          </button>
+        </div>
+        <p style="font-size: 13px; color: var(--text2); margin-bottom: 16px">
+          Data safe रहेगा। अगली बार login करने पर वापस मिलेगा।
+        </p>
+        <div style="display: flex; gap: 8px">
+          <button class="btn btn-o fw" onclick="closeModal('logout-modal')">
+            Cancel</button
+          ><button class="btn btn-p fw" onclick="doLogout()">
+            Logout करें
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ BACKUP MODAL ══════════ -->
+    <div class="backup-modal-overlay" id="backup-modal">
+      <div class="backup-sheet">
+        <div class="backup-sheet-handle"></div>
+        <div class="backup-sheet-hd">
+          <div class="backup-sheet-title">💾 Data Backup & Restore</div>
+          <button class="backup-sheet-close" onclick="closeBackupModal()">✕</button>
+        </div>
+        <div class="backup-sheet-body">
+          <div class="backup-info-box">
+            <strong>📌 Backup क्यों जरूरी है?</strong>
+            Data सिर्फ इस phone में है। Browser clear या phone reset होने पर data जा सकता है। हफ्ते में एक बार backup लें और WhatsApp पर खुद को भेज दें।
+          </div>
+          <div class="backup-stats" id="backup-stats-row"></div>
+          <div class="backup-action-card" onclick="doExportBackup()">
+            <div class="backup-action-icon bai-export">📤</div>
+            <div class="backup-action-text">
+              <div class="backup-action-title">Backup लें (Export)</div>
+              <div class="backup-action-sub">सारा data .json file में download होगा। WhatsApp या Google Drive पर save करें।</div>
+            </div>
+            <div class="backup-action-arrow">›</div>
+          </div>
+          <div class="backup-action-card" onclick="document.getElementById('import-file-input').click()">
+            <div class="backup-action-icon bai-import">📥</div>
+            <div class="backup-action-text">
+              <div class="backup-action-title">Restore करें (Import)</div>
+              <div class="backup-action-sub">पुरानी backup file से सारा data वापस लाएं। नए phone पर भी काम करेगा।</div>
+            </div>
+            <div class="backup-action-arrow">›</div>
+          </div>
+          <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="doImportBackup(this)" />
+          <div class="last-backup-note" id="last-backup-note"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ PWA INSTALL BANNER ══════════ -->
+    <div id="pwa-banner">
+      <div class="pwa-banner-icon">🏪</div>
+      <div class="pwa-banner-text">
+        <div class="pwa-banner-title">App Install करें</div>
+        <div class="pwa-banner-sub">Home Screen पर add करें — offline भी चलेगा</div>
+      </div>
+      <div class="pwa-banner-btns">
+        <button class="pwa-install-btn" onclick="installPWA()">Install</button>
+        <button class="pwa-dismiss-btn" onclick="dismissPWA()">✕</button>
+      </div>
+    </div>
+
+    <!-- ══════════ DELETE CONFIRMATION MODAL ══════════ -->
+    <div id="delete-confirm-overlay">
+      <div class="delete-modal-box">
+        <div class="delete-modal-icon">🗑️</div>
+        <div class="delete-modal-title">Confirm Delete</div>
+        <div class="delete-modal-msg" id="delete-modal-msg">
+          Are you sure you want to delete this item? This action cannot be
+          undone.
+        </div>
+        <div class="delete-modal-btns">
+          <button class="btn-cancel-del" onclick="cancelDelete()">
+            Cancel
+          </button>
+          <button class="btn-confirm-del" onclick="confirmDelete()">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+      let user = null;
+      let data = {
+        udhar: [],
+        products: [],
+        sales: [],
+        restock: [],
+        customers: [],
+      };
+      let selectedUnit = "bori",
+        editRestockId = null,
+        editCustId = null,
+        renameTarget = null,
+        renameType = null,
+        activeUdharId = null;
+
+      // ── DELETE CONFIRMATION SYSTEM ──
+      let _deleteCallback = null;
+      function showDeleteConfirm(msg, cb) {
+        _deleteCallback = cb;
+        document.getElementById("delete-modal-msg").textContent =
+          msg || "Are you sure you want to delete this item?";
+        document.getElementById("delete-confirm-overlay").classList.add("open");
+      }
+      function cancelDelete() {
+        document
+          .getElementById("delete-confirm-overlay")
+          .classList.remove("open");
+        _deleteCallback = null;
+      }
+      function confirmDelete() {
+        document
+          .getElementById("delete-confirm-overlay")
+          .classList.remove("open");
+        if (_deleteCallback) _deleteCallback();
+        _deleteCallback = null;
+      }
+      function sKey(k) {
+        return `ot_${user?.username || "guest"}_${k}`;
+      }
+      function save() {
+        localStorage.setItem(sKey("data"), JSON.stringify(data));
+      }
+      function loadData() {
+        const d = localStorage.getItem(sKey("data"));
+        if (d) data = JSON.parse(d);
+        else
+          data = {
+            udhar: [],
+            products: [],
+            sales: [],
+            restock: [],
+            customers: [],
+          };
+      }
+
+      // ── AUTH ──
+      function switchAuthTab(tab) {
+        document
+          .querySelectorAll(".auth-tab")
+          .forEach((t) => t.classList.remove("active"));
+        document.getElementById("auth-login").style.display =
+          tab === "login" ? "" : "none";
+        document.getElementById("auth-signup").style.display =
+          tab === "signup" ? "" : "none";
+        document
+          .querySelectorAll(".auth-tab")
+          [tab === "login" ? 0 : 1].classList.add("active");
+      }
+      function doSignup() {
+        const name = document.getElementById("s-uname").value.trim(),
+          u = document.getElementById("s-user").value.trim().toLowerCase(),
+          p = document.getElementById("s-pass").value;
+        if (!name || !u || p.length < 6) {
+          toast("⚠️ सभी fields भरें, password 6+ chars");
+          return;
+        }
+        const users = JSON.parse(localStorage.getItem("ot_users") || "{}");
+        if (users[u]) {
+          toast("⚠️ Username already taken");
+          return;
+        }
+        users[u] = { name, password: p, created: new Date().toISOString() };
+        localStorage.setItem("ot_users", JSON.stringify(users));
+        toast("✅ Account बन गया! Login करें");
+        switchAuthTab("login");
+        document.getElementById("l-user").value = u;
+      }
+      function doLogin() {
+        const u = document.getElementById("l-user").value.trim().toLowerCase(),
+          p = document.getElementById("l-pass").value;
+        const users = JSON.parse(localStorage.getItem("ot_users") || "{}");
+        if (!users[u] || users[u].password !== p) {
+          toast("⚠️ Username या Password गलत");
+          return;
+        }
+        user = { username: u, name: users[u].name };
+        localStorage.setItem("ot_session", JSON.stringify(user));
+        loadData();
+        startApp();
+      }
+      function doLogout() {
+        localStorage.removeItem("ot_session");
+        user = null;
+        closeModal("logout-modal");
+        document.getElementById("app-shell").style.display = "none";
+        document.getElementById("auth-screen").style.display = "flex";
+      }
+      (function () {
+        const s = localStorage.getItem("ot_session");
+        if (s) {
+          user = JSON.parse(s);
+          loadData();
+          startApp();
+        }
+      })();
+
+      function startApp() {
+        document.getElementById("auth-screen").style.display = "none";
+        document.getElementById("app-shell").style.display = "flex";
+        document.getElementById("hd-date").textContent =
+          new Date().toLocaleDateString("hi-IN", {
+            day: "numeric",
+            month: "short",
+          });
+        document.getElementById("home-greet").innerHTML =
+          'नमस्ते, <span style="color:var(--accent)">' +
+          (user?.name?.split(" ")[0] || "दुकानदार") +
+          "</span>!";
+        document.getElementById("s-date").value = today();
+        ["wa-product", "wa-price", "wa-qty", "wa-detail"].forEach((id) =>
+          document
+            .getElementById(id)
+            .addEventListener("input", updateWaPreview),
+        );
+        updateHome();
+        renderRestock();
+        renderPurchaseHistory();
+      }
+
+      // ── UTILS ──
+      function toast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2400);
+      }
+      function today() {
+        return new Date().toISOString().split("T")[0];
+      }
+      function fmtDate(d) {
+        return new Date(d).toLocaleDateString("hi-IN", {
+          day: "numeric",
+          month: "short",
+          year: "2-digit",
+        });
+      }
+      function genId() {
+        return (
+          Date.now().toString(36) + Math.random().toString(36).substr(2, 4)
+        );
+      }
+      function esc(s) {
+        return String(s).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+      }
+
+      function showScreen(id) {
+        // Auto-close and clear product form when navigating away
+        if (id !== "products") {
+          const form = document.getElementById("prod-add-form");
+          const btn = document.getElementById("prod-add-toggle");
+          if (form && form.classList.contains("open")) {
+            form.classList.remove("open");
+            btn.innerHTML = "<span>＋</span> Product जोड़ें / Update करें";
+          }
+          // Clear all product form fields
+          ["p-name","p-buy","p-sell","p-qty","p-unit-buy","p-unit-sell","p-unit-qty","p-bulk-unit-other","p-unit-other"].forEach(fid => {
+            const el = document.getElementById(fid);
+            if (el) el.value = "";
+          });
+          const pcb = document.getElementById("price-calc-box");
+          if (pcb) pcb.style.display = "none";
+          const bouWrap = document.getElementById("p-bulk-unit-other-wrap");
+          if (bouWrap) bouWrap.style.display = "none";
+          const uoWrap = document.getElementById("p-unit-other-wrap");
+          if (uoWrap) uoWrap.style.display = "none";
+        }
+        // Auto-close restock add form when navigating away
+        if (id !== "restock") {
+          const rf = document.getElementById("restock-add-form");
+          const rb = document.getElementById("restock-add-toggle");
+          if (rf && rf.classList.contains("open")) {
+            rf.classList.remove("open");
+            rb.innerHTML = "<span>＋</span> Item जोड़ें";
+          }
+        }
+        document
+          .querySelectorAll(".screen")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("screen-" + id).classList.add("active");
+        const map = [
+          "home",
+          "udhar",
+          "products",
+          "sales",
+          "restock",
+          "customers",
+        ];
+        const i = map.indexOf(id);
+        if (i >= 0)
+          document.querySelectorAll(".nav-btn")[i].classList.add("active");
+        const r = {
+          home: updateHome,
+          udhar: renderUdhar,
+          products: renderProducts,
+          sales: renderSales,
+          restock: () => {
+            renderRestock();
+            renderPurchaseHistory();
+          },
+          customers: () => {
+            renderCustomers();
+            renderWaCustList();
+          },
+        };
+        r[id]?.();
+      }
+      function openModal(id) {
+        document.getElementById(id).classList.add("open");
+        closeAllDD();
+      }
+      function closeModal(id) {
+        document.getElementById(id).classList.remove("open");
+      }
+      function closeAllDD() {
+        document
+          .querySelectorAll(".dropdown")
+          .forEach((d) => d.classList.add("hidden"));
+      }
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".menu-wrap")) closeAllDD();
+      });
+      function toggleDD(id) {
+        const el = document.getElementById(id);
+        document.querySelectorAll(".dropdown").forEach((d) => {
+          if (d.id !== id) d.classList.add("hidden");
+        });
+        el.classList.toggle("hidden");
+      }
+
+      // ── HOME ──
+      function updateHome() {
+        document.getElementById("h-products-count").textContent =
+          data.products.length;
+        document.getElementById("h-customers-count").textContent =
+          data.customers.length;
+        const ra = data.products.filter((p) => p.restock);
+        const ad = document.getElementById("home-restock-alert");
+        const chips = document.getElementById("home-restock-chips");
+        if (ra.length) {
+          ad.style.display = "block";
+          chips.innerHTML = ra
+            .map(
+              (p) =>
+                `<span class="restock-chip" onclick="showScreen('restock')">${p.name}</span>`,
+            )
+            .join("");
+        } else {
+          ad.style.display = "none";
+        }
+      }
+
+      // ── UDHAR ──
+      function previewUdharPhoto(input) {
+        const f = input.files[0];
+        if (!f) return;
+        if (f.size > 500 * 1024) {
+          toast("⚠️ Photo 500KB से छोटी रखें");
+          input.value = "";
+          return;
+        }
+        const r = new FileReader();
+        r.onload = (e) => {
+          const img = document.getElementById("u-photo-preview");
+          img.src = e.target.result;
+          img.style.display = "block";
+        };
+        r.readAsDataURL(f);
+      }
+      function addUdhar() {
+        const name = document.getElementById("u-name").value.trim(),
+          amount = parseFloat(document.getElementById("u-amount").value),
+          item = document.getElementById("u-item").value.trim();
+        if (!name || !amount) {
+          toast("⚠️ नाम और रकम भरें");
+          return;
+        }
+        const photoEl = document.getElementById("u-photo-preview");
+        const photo = photoEl.style.display !== "none" ? photoEl.src : "";
+        const ex = data.udhar.find(
+          (u) => u.name.toLowerCase() === name.toLowerCase(),
+        );
+        if (ex) {
+          ex.entries = ex.entries || [
+            {
+              type: "debit",
+              amount: ex.amount,
+              item: ex.item || "",
+              date: ex.date,
+              photo: ex.photo || "",
+            },
+          ];
+          ex.entries.push({
+            type: "debit",
+            amount,
+            item,
+            date: today(),
+            photo,
+          });
+          ex.amount += amount;
+          ex.photo = ex.photo || photo;
+        } else {
+          data.udhar.push({
+            id: genId(),
+            name,
+            amount,
+            item,
+            date: today(),
+            photo,
+            deposits: 0,
+            entries: [{ type: "debit", amount, item, date: today(), photo }],
+          });
+        }
+        save();
+        toast("✅ उधार जोड़ा!");
+        document.getElementById("u-name").value = "";
+        document.getElementById("u-amount").value = "";
+        document.getElementById("u-item").value = "";
+        document.getElementById("u-photo-preview").style.display = "none";
+        document.getElementById("u-photo").value = "";
+        // Reset picker display
+        const disp = document.getElementById("udhar-name-display");
+        if (disp) { disp.textContent = "नाम चुनें या टाइप करें..."; disp.classList.remove("selected"); }
+        renderUdhar();
+        updateHome();
+      }
+      function addDeposit() {
+        const amt = parseFloat(document.getElementById("dep-amount").value);
+        if (!amt || amt <= 0) {
+          toast("⚠️ Amount भरें");
+          return;
+        }
+        const u = data.udhar.find((x) => x.id === activeUdharId);
+        if (!u) return;
+        u.entries = u.entries || [];
+        u.entries.push({ type: "credit", amount: amt, date: today() });
+        u.deposits = (u.deposits || 0) + amt;
+        u.amount = Math.max(0, u.amount - amt);
+        save();
+        toast("✅ Deposit जोड़ा! बाकी: ₹" + u.amount);
+        document.getElementById("dep-amount").value = "";
+        openUdharHistory(activeUdharId);
+        renderUdhar();
+        updateHome();
+      }
+      function openUdharHistory(id) {
+        const u = data.udhar.find((x) => x.id === id);
+        if (!u) return;
+        activeUdharId = id;
+        document.getElementById("udhar-hist-name").textContent =
+          u.name + " — History";
+        const remaining = u.amount;
+        const totalDebit = (u.entries || [])
+          .filter((e) => e.type === "debit")
+          .reduce((s, e) => s + e.amount, 0);
+        const totalCredit = (u.entries || [])
+          .filter((e) => e.type === "credit")
+          .reduce((s, e) => s + e.amount, 0);
+        document.getElementById("udhar-hist-summary").innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
+      <div><div style="font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:var(--red)">₹${totalDebit}</div><div style="font-size:10px;color:var(--text2)">कुल उधार</div></div>
+      <div><div style="font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:var(--green-d)">₹${totalCredit}</div><div style="font-size:10px;color:var(--text2)">जमा हुआ</div></div>
+      <div><div style="font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:${remaining > 0 ? "var(--red)" : "var(--green-d)"}">₹${remaining}</div><div style="font-size:10px;color:var(--text2)">बाकी है</div></div>
+    </div>`;
+        const entries = [...(u.entries || [])].reverse();
+        document.getElementById("udhar-hist-list").innerHTML = entries.length
+          ? entries
+              .map(
+                (e) => `
+    <div class="txn-entry ${e.type === "credit" ? "txn-credit" : "txn-debit"}">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:10.5px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.3px">${e.type === "credit" ? "जमा (Deposit)" : "उधार (Debit)"}</div>
+          ${e.item ? `<div style="font-size:12px;color:var(--text2);margin-top:2px">${e.item}</div>` : ""}
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">${fmtDate(e.date)}</div>
+        </div>
+        <div class="${e.type === "credit" ? "txn-amount-credit" : "txn-amount-debit"}">${e.type === "credit" ? "+" : "-"}₹${e.amount}</div>
+      </div>
+    </div>`,
+              )
+              .join("")
+          : `<div class="empty" style="padding:20px 0"><p>कोई transaction नहीं</p></div>`;
+        openModal("udhar-history-modal");
+      }
+      function clearUdhar(id, e) {
+        e.stopPropagation();
+        showDeleteConfirm("उधार clear करें? यह action undo नहीं होगा।", () => {
+          data.udhar = data.udhar.filter((u) => u.id !== id);
+          save();
+          toast("✅ Cleared!");
+          renderUdhar();
+          updateHome();
+        });
+      }
+      function deleteUdhar(id) {
+        showDeleteConfirm("इस उधार record को delete करें?", () => {
+          data.udhar = data.udhar.filter((u) => u.id !== id);
+          save();
+          toast("🗑️ Deleted");
+          renderUdhar();
+          updateHome();
+        });
+      }
+      function renameUdhar(id) {
+        const u = data.udhar.find((x) => x.id === id);
+        if (!u) return;
+        renameTarget = id;
+        renameType = "udhar";
+        document.getElementById("rename-input").value = u.name;
+        document.getElementById("rename-title").textContent = "Rename Customer";
+        openModal("rename-modal");
+      }
+      function doRename() {
+        const val = document.getElementById("rename-input").value.trim();
+        if (!val) {
+          toast("⚠️ नाम भरें");
+          return;
+        }
+        if (renameType === "udhar") {
+          const u = data.udhar.find((x) => x.id === renameTarget);
+          if (u) u.name = val;
+        }
+        if (renameType === "product") {
+          const p = data.products.find((x) => x.id === renameTarget);
+          if (p) p.name = val;
+        }
+        if (renameType === "restock") {
+          const r = data.restock.find((x) => x.id === renameTarget);
+          if (r) r.item = val;
+        }
+        if (renameType === "sale") {
+          const s = data.sales.find((x) => x.id === renameTarget);
+          if (s) s.note = val;
+        }
+        save();
+        closeModal("rename-modal");
+        toast("✅ Rename हो गया!");
+        if (renameType === "udhar") renderUdhar();
+        if (renameType === "product") renderProducts();
+        if (renameType === "restock") renderRestock();
+        if (renameType === "sale") renderSales();
+      }
+      function viewPhoto(src) {
+        document.getElementById("photo-modal-img").src = src;
+        openModal("photo-modal");
+      }
+      function renderUdhar(filter = "") {
+        // Populate customer name datalist
+        const dl = document.getElementById("udhar-cust-datalist");
+        if (dl) {
+          const names = [...new Set([
+            ...data.customers.map(c => c.name),
+            ...data.udhar.map(u => u.name)
+          ])];
+          dl.innerHTML = names.map(n => `<option value="${n}">`).join("");
+        }
+        const total = data.udhar.reduce((s, u) => s + u.amount, 0);
+        document.getElementById("u-total-disp").textContent = "₹" + total;
+        document.getElementById("u-count-disp").textContent = data.udhar.filter(
+          (u) => u.amount > 0,
+        ).length;
+        const fl = filter.toLowerCase();
+        const items = data.udhar.filter(
+          (u) => !fl || u.name.toLowerCase().includes(fl),
+        );
+        const list = document.getElementById("udhar-list");
+        if (!items.length) {
+          list.innerHTML = `<div class="empty"><div class="ei">${filter ? "🔍" : "🎉"}</div><p>${filter ? "कोई record नहीं" : "कोई उधार नहीं!"}</p></div>`;
+          return;
+        }
+        list.innerHTML = items
+          .map((u) => {
+            const totalDebit = (
+              u.entries || [{ type: "debit", amount: u.amount }]
+            )
+              .filter((e) => e.type === "debit")
+              .reduce((s, e) => s + e.amount, 0);
+            const paid = u.deposits || 0;
+            return `
+    <div class="udhar-card" onclick="openUdharHistory('${u.id}')">
+      <div class="udhar-top">
+        <div>
+          <div class="udhar-name">${u.name}</div>
+          ${u.item ? `<div class="udhar-item">📦 ${u.item}</div>` : ""}
+          <div class="udhar-date">📅 ${fmtDate(u.date)}</div>
+          
+        </div>
+        <div style="text-align:right">
+          <div class="udhar-amount">₹${u.amount}</div>
+          ${u.entries && u.entries.length > 1 ? `<div style="font-size:10px;color:var(--text2);margin-top:2px">${u.entries.length} entries</div>` : ""}
+        </div>
+      </div>
+      <div class="udhar-actions" onclick="event.stopPropagation()">
+        <button class="btn btn-deposit" onclick="openUdharHistory('${u.id}');event.stopPropagation()">+ Deposit</button>
+        <button class="btn-wa-reminder" onclick="sendUdharReminderFromCard('${u.id}');event.stopPropagation()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Remind
+        </button>
+        ${u.photo ? `<button onclick="viewPhoto('${esc(u.photo)}');event.stopPropagation()" style="background:var(--blue-l);border:1px solid #BAE6FD;border-radius:7px;padding:4px 9px;font-size:11px;color:var(--blue);cursor:pointer;font-weight:600">📸 परचा</button>` : ""}
+        <div class="menu-wrap" style="margin-left:auto">
+          <button class="three-dot" onclick="toggleDD('ddu${u.id}');event.stopPropagation()">⋮</button>
+          <div class="dropdown hidden" id="ddu${u.id}">
+            <button class="dd-item" onclick="renameUdhar('${u.id}');closeAllDD()">✏️ Rename</button>
+            <button class="dd-item" onclick="clearUdhar('${u.id}',event);closeAllDD()">✅ Clear Udhar</button>
+            <button class="dd-item danger" onclick="deleteUdhar('${u.id}');closeAllDD()">🗑️ Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+          })
+          .join("");
+      }
+
+      // ── PRODUCTS ──
+      function checkBulkUnitOther() {
+        document.getElementById("p-bulk-unit-other-wrap").style.display =
+          document.getElementById("p-bulk-unit").value === "other" ? "block" : "none";
+      }
+      function checkUnitOther() {
+        document.getElementById("p-unit-other-wrap").style.display =
+          document.getElementById("p-unit").value === "other" ? "block" : "none";
+      }
+      function getUnit(selId, otherId) {
+        const v = document.getElementById(selId).value;
+        return v === "other"
+          ? document.getElementById(otherId).value.trim() || "unit"
+          : v;
+      }
+      function toggleAddProd() {
+        const form = document.getElementById("prod-add-form"),
+          btn = document.getElementById("prod-add-toggle");
+        const isOpen = form.classList.contains("open");
+        form.classList.toggle("open", !isOpen);
+        btn.innerHTML = isOpen
+          ? "<span>＋</span> Product जोड़ें / Update करें"
+          : "<span>−</span> Form बंद करें";
+        if (!isOpen) document.querySelector(".screens").scrollTop = 0;
+      }
+      function toggleRestockForm() {
+        const form = document.getElementById("restock-add-form"),
+          btn = document.getElementById("restock-add-toggle");
+        const isOpen = form.classList.contains("open");
+        form.classList.toggle("open", !isOpen);
+        btn.innerHTML = isOpen
+          ? "<span>＋</span> Item जोड़ें"
+          : "<span>−</span> Form बंद करें";
+        if (!isOpen) document.querySelector(".screens").scrollTop = 0;
+      }
+
+      function calcPrices() {
+        const buy = parseFloat(document.getElementById("p-buy").value) || 0;
+        const qty = parseFloat(document.getElementById("p-qty").value) || 0;
+        const sell = parseFloat(document.getElementById("p-sell").value) || 0;
+        const box = document.getElementById("price-calc-box");
+        if (buy > 0 && qty > 0) {
+          const ub = parseFloat((buy / qty).toFixed(2));
+          document.getElementById("p-unit-buy").value = ub;
+          if (sell > 0) {
+            const us = parseFloat((sell / qty).toFixed(2));
+            document.getElementById("p-unit-sell").value = us;
+            box.style.display = "block";
+            box.innerHTML = `Auto-calc → Unit Buy: ₹${ub} | Unit Sell: ₹${us} | Margin: ₹${(us - ub).toFixed(2)}`;
+          } else {
+            box.style.display = "block";
+            box.innerHTML = `Auto-calc → Unit Buy: ₹${ub}`;
+          }
+        } else {
+          box.style.display = "none";
+        }
+      }
+      function addProduct() {
+        const name = document.getElementById("p-name").value.trim();
+        if (!name) {
+          toast("⚠️ नाम भरें");
+          return;
+        }
+        const buy = parseFloat(document.getElementById("p-buy").value) || 0,
+          sell = parseFloat(document.getElementById("p-sell").value) || 0,
+          qty = parseFloat(document.getElementById("p-qty").value) || 0;
+        const unitBuy =
+            parseFloat(document.getElementById("p-unit-buy").value) || 0,
+          unitSell =
+            parseFloat(document.getElementById("p-unit-sell").value) || 0;
+        const unitQty =
+          parseFloat(document.getElementById("p-unit-qty").value) || 0;
+        const bulkUnit = getUnit("p-bulk-unit", "p-bulk-unit-other");
+        const unit = getUnit("p-unit", "p-unit-other");
+        const cat = document.getElementById("p-cat").value,
+          notes = "";
+        const ex = data.products.find(
+          (p) => p.name.toLowerCase() === name.toLowerCase(),
+        );
+        if (ex) {
+          ex.history = ex.history || [];
+          if (ex.buy)
+            ex.history.push({
+              buy: ex.buy,
+              sell: ex.sell,
+              unitBuy: ex.unitBuy || 0,
+              qty: ex.qty || 0,
+              unit: ex.unit || "",
+              date: ex.updated || today(),
+            });
+          if (ex.history.length > 5) ex.history.shift();
+          Object.assign(ex, {
+            buy,
+            sell,
+            qty,
+            unitBuy,
+            unitSell,
+            unitQty,
+            bulkUnit,
+            unit,
+            cat,
+            notes,
+            updated: today(),
+          });
+          save();
+          toast("✅ Product update!");
+        } else {
+          data.products.push({
+            id: genId(),
+            name,
+            buy,
+            sell,
+            qty,
+            unitBuy,
+            unitSell,
+            unitQty,
+            bulkUnit,
+            unit,
+            cat,
+            notes,
+            restock: false,
+            inBuyList: false,
+            history: [],
+            updated: today(),
+          });
+          save();
+          toast("✅ Product जोड़ा!");
+        }
+        [
+          "p-name",
+          "p-buy",
+          "p-sell",
+          "p-qty",
+          "p-unit-buy",
+          "p-unit-sell",
+          "p-unit-qty",
+          "p-bulk-unit-other",
+          "p-unit-other",
+        ].forEach((id) => (document.getElementById(id).value = ""));
+        document.getElementById("price-calc-box").style.display = "none";
+        renderProducts();
+        updateHome();
+        renderPurchaseHistory();
+      }
+      function deleteProduct(id) {
+        showDeleteConfirm("इस product को delete करें?", () => {
+          data.products = data.products.filter((p) => p.id !== id);
+          save();
+          toast("🗑️ Deleted");
+          renderProducts();
+          updateHome();
+        });
+      }
+      function renameProduct(id) {
+        const p = data.products.find((x) => x.id === id);
+        if (!p) return;
+        renameTarget = id;
+        renameType = "product";
+        document.getElementById("rename-input").value = p.name;
+        document.getElementById("rename-title").textContent = "Product Rename";
+        openModal("rename-modal");
+      }
+      function editProduct(p) {
+        document.getElementById("p-name").value = p.name;
+        document.getElementById("p-buy").value = p.buy;
+        document.getElementById("p-sell").value = p.sell;
+        document.getElementById("p-qty").value = p.qty || "";
+        document.getElementById("p-unit-buy").value = p.unitBuy || "";
+        document.getElementById("p-unit-sell").value = p.unitSell || "";
+        document.getElementById("p-unit-qty").value = p.unitQty || "";
+        const bu = p.bulkUnit || p.unit || "kg";
+        const knownBulk = ["kg","gram","litre","piece","packet","dozen","bori"];
+        if (knownBulk.includes(bu)) {
+          document.getElementById("p-bulk-unit").value = bu;
+          const d = document.getElementById("p-bulk-unit-display");
+          if (d) d.textContent = bu;
+          document.getElementById("p-bulk-unit-other-wrap").style.display = "none";
+        } else {
+          document.getElementById("p-bulk-unit").value = "other";
+          const d = document.getElementById("p-bulk-unit-display");
+          if (d) d.textContent = "Other";
+          document.getElementById("p-bulk-unit-other").value = bu;
+          document.getElementById("p-bulk-unit-other-wrap").style.display = "block";
+        }
+        const u = p.unit || "kg";
+        const known = ["kg","gram","litre","piece","packet","dozen","bori"];
+        if (known.includes(u)) {
+          document.getElementById("p-unit").value = u;
+          const d = document.getElementById("p-unit-display");
+          if (d) d.textContent = u;
+          document.getElementById("p-unit-other-wrap").style.display = "none";
+        } else {
+          document.getElementById("p-unit").value = "other";
+          const d = document.getElementById("p-unit-display");
+          if (d) d.textContent = "Other";
+          document.getElementById("p-unit-other").value = u;
+          document.getElementById("p-unit-other-wrap").style.display = "block";
+        }
+        document.getElementById("p-cat").value = p.cat || "अनाज / Grains";
+        const catDisp = document.getElementById("p-cat-display");
+        if (catDisp) catDisp.textContent = p.cat || "अनाज / Grains";
+        calcPrices();
+        switchProdTab("bulk");
+        document.getElementById("prod-add-form").classList.add("open");
+        document.getElementById("prod-add-toggle").innerHTML = "<span>−</span> Form बंद करें";
+        document.querySelector(".screens").scrollTop = 0;
+        toast("ℹ️ Edit करके Save करें");
+      }
+      function togglePRestock(id) {
+        const p = data.products.find((x) => x.id === id);
+        if (!p) return;
+        p.restock = !p.restock;
+        save();
+        renderProducts();
+        updateHome();
+        toast(p.restock ? "⚠️ Restock marked" : "✅ Stock OK");
+      }
+      function toggleRestockBuyList(id) {
+        const p = data.products.find((x) => x.id === id);
+        if (!p) return;
+        const existing = data.restock.find(
+          (r) => r.item.toLowerCase() === p.name.toLowerCase() && !r.done,
+        );
+        if (existing) {
+          // Remove from buy list
+          data.restock = data.restock.filter(
+            (r) => !(r.item.toLowerCase() === p.name.toLowerCase() && !r.done),
+          );
+          p.inBuyList = false;
+          save();
+          toast("🗑️ Buy list से हटाया");
+        } else {
+          // Add to buy list
+          const price =
+            p.buy && p.qty
+              ? `₹${p.buy}/${p.bulkUnit || p.unit || ""}`
+              : p.unitBuy
+                ? `₹${p.unitBuy}/${p.unit}`
+                : "";
+          data.restock.push({
+            id: genId(),
+            item: p.name,
+            unit: p.bulkUnit || p.unit || "",
+            howmuch: "",
+            price,
+            done: false,
+            date: today(),
+          });
+          p.inBuyList = true;
+          save();
+          toast("✅ Buy list में जोड़ा!");
+        }
+        renderProducts(
+          document.querySelector("#screen-products .search-wrap input")
+            ?.value || "",
+        );
+      }
+      function addToRestockFromProduct(id) {
+        toggleRestockBuyList(id);
+      }
+      // ── CATEGORY COLLAPSE STATE ──
+      const collapsedCats = {};
+      function toggleCat(cat) {
+        collapsedCats[cat] = !collapsedCats[cat];
+        const safe = cat.replace(/[^a-zA-Z0-9]/g, "_");
+        const body = document.getElementById("catbody_" + safe);
+        const arrow = document.getElementById("catarrow_" + safe);
+        if (!body || !arrow) return;
+        if (collapsedCats[cat]) {
+          body.style.maxHeight = body.scrollHeight + "px";
+          requestAnimationFrame(() => {
+            body.style.transition = "max-height .3s ease";
+            body.style.maxHeight = "0";
+          });
+          arrow.classList.add("collapsed");
+        } else {
+          body.style.transition = "max-height .35s ease";
+          body.style.maxHeight = body.scrollHeight + "px";
+          setTimeout(() => {
+            body.style.maxHeight = "2000px";
+          }, 360);
+          arrow.classList.remove("collapsed");
+        }
+      }
+
+      function renderProducts(filter = "") {
+        const fl = filter.toLowerCase();
+        const list = document.getElementById("product-list");
+
+        // When searching, show flat product list directly (no category grouping)
+        if (fl) {
+          const items = data.products.filter((p) =>
+            p.name.toLowerCase().includes(fl),
+          );
+          if (!items.length) {
+            list.innerHTML = `<div class="empty"><div class="ei">🔍</div><p>कोई product नहीं मिला</p></div>`;
+            return;
+          }
+          list.innerHTML =
+            `<div class="prod-card">` +
+            items
+              .map((p) => {
+                const inBL = !!data.restock.find(
+                  (r) =>
+                    r.item.toLowerCase() === p.name.toLowerCase() && !r.done,
+                );
+                const bulkMargin =
+                  p.sell && p.buy ? `+₹${(p.sell - p.buy).toFixed(0)}` : "";
+                const unitMargin =
+                  p.unitSell && p.unitBuy
+                    ? `+₹${((p.unitSell || 0) - (p.unitBuy || 0)).toFixed(2)}`
+                    : "";
+                return buildProductItem(p, inBL, bulkMargin, unitMargin);
+              })
+              .join("") +
+            `</div>`;
+          attachRestockDelegation();
+          return;
+        }
+
+        const items = data.products;
+        if (!items.length) {
+          list.innerHTML = `<div class="empty"><div class="ei">📦</div><p>कोई product नहीं</p></div>`;
+          return;
+        }
+        const bycat = {};
+        items.forEach((p) => {
+          if (!bycat[p.cat]) bycat[p.cat] = [];
+          bycat[p.cat].push(p);
+        });
+
+        list.innerHTML = Object.entries(bycat)
+          .map(([cat, ps]) => {
+            const safe = cat.replace(/[^a-zA-Z0-9]/g, "_");
+            const isCollapsed = !!collapsedCats[cat];
+            return `
+  <div class="prod-card">
+    <div class="prod-cat-header" onclick="toggleCat('${cat.replace(/'/g, "\\'")}')">
+      <span>📁 ${cat} <span style="font-size:10px;font-weight:500;opacity:.7">(${ps.length})</span></span>
+      <span class="prod-cat-toggle ${isCollapsed ? "collapsed" : ""}" id="catarrow_${safe}">▾</span>
+    </div>
+    <div class="prod-cat-body" id="catbody_${safe}" style="max-height:${isCollapsed ? "0" : "2000px"}">
+    ${ps
+      .map((p) => {
+        const inBL = !!data.restock.find(
+          (r) => r.item.toLowerCase() === p.name.toLowerCase() && !r.done,
+        );
+        const bulkMargin =
+          p.sell && p.buy ? `+₹${(p.sell - p.buy).toFixed(0)}` : "";
+        const unitMargin =
+          p.unitSell && p.unitBuy
+            ? `+₹${((p.unitSell || 0) - (p.unitBuy || 0)).toFixed(2)}`
+            : "";
+        return buildProductItem(p, inBL, bulkMargin, unitMargin);
+      })
+      .join("")}
+    </div>
+  </div>`;
+          })
+          .join("");
+
+        attachRestockDelegation();
+      }
+
+      function buildProductItem(p, inBL, bulkMargin, unitMargin) {
+        return `
+  <div class="prod-item" data-pid="${p.id}">
+    <div class="prod-top-row">
+      <span class="prod-name">${p.name}</span>
+      <div class="prod-actions">
+        <button class="${inBL ? "rstock-btn-added" : "rstock-btn-pending"}" data-restock-toggle="${p.id}">
+          ${inBL ? "✓ List" : "🛒 Restock"}
+        </button>
+        <button class="restock-alert-badge ${p.restock ? "active" : ""}" data-restock-alert="${p.id}" title="${p.restock ? "Restock Alert Active" : "Mark as Restock Alert"}">
+          ${p.restock ? "Added" : "Mark Restock"}
+        </button>
+        <div class="menu-wrap">
+          <button class="three-dot" onclick="toggleDD('ddp${p.id}')">⋮</button>
+          <div class="dropdown hidden" id="ddp${p.id}">
+            <button class="dd-item" onclick='editProduct(${JSON.stringify(p).replace(/'/g, "&#39;")});closeAllDD()'>✏️ Edit</button>
+            <button class="dd-item" onclick="renameProduct('${p.id}');closeAllDD()">🔤 Rename</button>
+            <button class="dd-item danger" onclick="deleteProduct('${p.id}');closeAllDD()">🗑️ Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    ${
+      p.buy || p.sell || p.unitBuy || p.unitSell
+        ? `
+    <div class="prod-pricing-grid">
+      ${
+        p.buy || p.sell
+          ? `<div class="pricing-block">
+        <div class="pricing-block-label">📦 Bulk${p.qty && p.bulkUnit ? " · " + p.qty + " " + p.bulkUnit : ""}</div>
+        ${p.buy ? `<div class="pricing-block-buy">Buy: ₹${p.buy}</div>` : ""}
+        ${p.sell ? `<div class="pricing-block-sell">Sell: ₹${p.sell}</div>` : ""}
+      </div>`
+          : ""
+      }
+      ${
+        p.unitBuy || p.unitSell
+          ? `<div class="pricing-block">
+        <div class="pricing-block-label">🔹 Unit${p.unit ? " / " + p.unit : ""}</div>
+        ${p.unitBuy ? `<div class="pricing-block-buy">Buy: ₹${p.unitBuy}</div>` : ""}
+        ${p.unitSell ? `<div class="pricing-block-sell">Sell: ₹${p.unitSell}</div>` : ""}
+      </div>`
+          : ""
+      }
+    </div>
+    `
+        : ""
+    }
+    ${p.notes ? `<div style="font-size:11.5px;color:var(--text2);margin-top:5px;line-height:1.5">📝 ${p.notes}</div>` : ""}
+  </div>`;
+      }
+
+      function attachRestockDelegation() {
+        const list = document.getElementById("product-list");
+        list._delegateAttached = true;
+      }
+
+      // ── EVENT DELEGATION for product buttons ──
+      document.addEventListener("click", function (e) {
+        // Restock toggle button
+        const tbtn = e.target.closest("[data-restock-toggle]");
+        if (tbtn) {
+          e.stopPropagation();
+          toggleRestockBuyList(tbtn.dataset.restockToggle);
+          return;
+        }
+        // Restock alert badge
+        const abtn = e.target.closest("[data-restock-alert]");
+        if (abtn) {
+          e.stopPropagation();
+          togglePRestock(abtn.dataset.restockAlert);
+          return;
+        }
+      });
+
+      // ── SALES ──
+      function calcSalesTotal() {
+        const cash = parseFloat(document.getElementById("s-cash").value) || 0,
+          online = parseFloat(document.getElementById("s-online").value) || 0;
+        const el = document.getElementById("sales-total-preview");
+        if (cash > 0 || online > 0) {
+          el.style.display = "block";
+          el.innerHTML = `Cash: ₹${cash} &nbsp;|&nbsp; Online: ₹${online} &nbsp;|&nbsp; Total: <strong>₹${cash + online}</strong>`;
+        } else el.style.display = "none";
+      }
+      function addSale() {
+        const date = document.getElementById("s-date").value,
+          cash = parseFloat(document.getElementById("s-cash").value) || 0,
+          online = parseFloat(document.getElementById("s-online").value) || 0,
+          note = document.getElementById("s-note").value.trim();
+        if (!date || (cash === 0 && online === 0)) {
+          toast("⚠️ Date और amount भरें");
+          return;
+        }
+        data.sales.push({
+          id: genId(),
+          date,
+          cash,
+          online,
+          amount: cash + online,
+          note,
+        });
+        save();
+        toast("✅ Sales record!");
+        ["s-cash", "s-online", "s-note"].forEach(
+          (id) => (document.getElementById(id).value = ""),
+        );
+        document.getElementById("sales-total-preview").style.display = "none";
+        renderSales();
+        updateHome();
+      }
+      function deleteSale(id) {
+        showDeleteConfirm("इस sales record को delete करें?", () => {
+          data.sales = data.sales.filter((s) => s.id !== id);
+          save();
+          renderSales();
+          updateHome();
+        });
+      }
+      function renameSale(id) {
+        const s = data.sales.find((x) => x.id === id);
+        if (!s) return;
+        renameTarget = id;
+        renameType = "sale";
+        document.getElementById("rename-input").value = s.note || "";
+        document.getElementById("rename-title").textContent = "Note बदलें";
+        openModal("rename-modal");
+      }
+      function renderSales() {
+        const now = new Date(),
+          wa = new Date(now);
+        wa.setDate(wa.getDate() - 7);
+        document.getElementById("week-total").textContent =
+          "₹" +
+          data.sales
+            .filter((s) => new Date(s.date) >= wa)
+            .reduce((s, x) => s + x.amount, 0);
+        document.getElementById("month-total").textContent =
+          "₹" +
+          data.sales
+            .filter((s) => new Date(s.date).getMonth() === now.getMonth())
+            .reduce((s, x) => s + x.amount, 0);
+        const sorted = [...data.sales].sort((a, b) =>
+          b.date.localeCompare(a.date),
+        );
+        const list = document.getElementById("sales-list");
+        if (!sorted.length) {
+          list.innerHTML = `<div class="empty"><div class="ei">💰</div><p>कोई record नहीं</p></div>`;
+          return;
+        }
+        list.innerHTML = sorted
+          .map(
+            (s) => `
+  <div class="card">
+    <div class="li">
+      <div style="flex:1">
+        <div class="li-name">${fmtDate(s.date)}</div>
+        <div class="li-sub">Cash: ₹${s.cash || 0} &nbsp; Online: ₹${s.online || 0}</div>
+        ${s.note ? `<div class="li-sub">📝 ${s.note}</div>` : ""}
+      </div>
+      <div class="li-right">
+        <span style="font-family:'Baloo 2',cursive;font-size:20px;font-weight:800;color:var(--green-d)">₹${s.amount}</span>
+        <div class="menu-wrap">
+          <button class="three-dot" onclick="toggleDD('dds${s.id}')">⋮</button>
+          <div class="dropdown hidden" id="dds${s.id}">
+            <button class="dd-item" onclick="renameSale('${s.id}');closeAllDD()">✏️ Note बदलें</button>
+            <button class="dd-item danger" onclick="deleteSale('${s.id}');closeAllDD()">🗑️ Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`,
+          )
+          .join("");
+      }
+
+      // ── RESTOCK ──
+      function selectUnit(el, unit) {
+        document
+          .querySelectorAll("#r-unit-chips .unit-chip")
+          .forEach((c) => c.classList.remove("sel"));
+        el.classList.add("sel");
+        selectedUnit = unit;
+        document.getElementById("r-unit-other-wrap").style.display =
+          unit === "other" ? "block" : "none";
+      }
+      function addRestock() {
+        const item = document.getElementById("r-item").value.trim();
+        if (!item) {
+          toast("⚠️ नाम भरें");
+          return;
+        }
+        let unit = selectedUnit;
+        if (unit === "other") {
+          unit =
+            document.getElementById("r-unit-other").value.trim() || "other";
+        }
+        const howmuch = document.getElementById("r-howmuch").value.trim();
+        const price = document.getElementById("r-price").value.trim();
+        data.restock.push({
+          id: genId(),
+          item,
+          unit,
+          howmuch,
+          price,
+          done: false,
+          date: today(),
+        });
+        save();
+        toast("✅ जोड़ा!");
+        document.getElementById("r-item").value = "";
+        document.getElementById("r-howmuch").value = "";
+        document.getElementById("r-price").value = "";
+        // Close the form after adding
+        const form = document.getElementById("restock-add-form");
+        const btn = document.getElementById("restock-add-toggle");
+        form.classList.remove("open");
+        btn.innerHTML = "<span>＋</span> Item जोड़ें";
+        renderRestock();
+      }
+      function toggleRestock(id) {
+        const r = data.restock.find((x) => x.id === id);
+        if (r) {
+          r.done = !r.done;
+          save();
+          renderRestock();
+        }
+      }
+      function clearDoneRestock() {
+        data.restock = data.restock.filter((r) => !r.done);
+        save();
+        toast("✅ Done items हटाए");
+        renderRestock();
+      }
+      function openEditRestockModal(id) {
+        const r = data.restock.find((x) => x.id === id);
+        if (!r) return;
+        editRestockId = id;
+        document.getElementById("er-name").value = r.item;
+        document.getElementById("er-qty").value = r.howmuch || "";
+        document.getElementById("er-rate").value = r.price
+          ? r.price.replace(/[₹/]/g, "").split(" ")[0]
+          : "";
+        openModal("edit-restock-modal");
+      }
+      function saveEditRestock() {
+        const r = data.restock.find((x) => x.id === editRestockId);
+        if (!r) return;
+        r.item = document.getElementById("er-name").value.trim() || r.item;
+        r.howmuch = document.getElementById("er-qty").value.trim();
+        const rate = document.getElementById("er-rate").value.trim();
+        r.price = rate ? "₹" + rate : "";
+        save();
+        closeModal("edit-restock-modal");
+        toast("✅ Updated!");
+        renderRestock();
+      }
+      function deleteRestock(id) {
+        showDeleteConfirm("इस item को buy list से delete करें?", () => {
+          data.restock = data.restock.filter((r) => r.id !== id);
+          save();
+          toast("🗑️ Deleted");
+          renderRestock();
+        });
+      }
+      function pullFromProducts() {
+        const rp = data.products.filter((p) => p.restock);
+        if (!rp.length) {
+          toast("⚠️ कोई product restock mark नहीं");
+          return;
+        }
+        let added = 0;
+        rp.forEach((p) => {
+          if (
+            !data.restock.find(
+              (r) => r.item.toLowerCase() === p.name.toLowerCase() && !r.done,
+            )
+          ) {
+            const price =
+              p.buy && p.qty
+                ? `₹${p.buy}/${p.bulkUnit || p.unit || ""}`
+                : p.unitBuy
+                  ? `₹${p.unitBuy}/${p.unit}`
+                  : "";
+            data.restock.push({
+              id: genId(),
+              item: p.name,
+              unit: p.bulkUnit || p.unit || "",
+              howmuch: "",
+              price,
+              done: false,
+              date: today(),
+            });
+            p.inBuyList = true;
+            added++;
+          }
+        });
+        save();
+        toast(`✅ ${added} items जोड़े!`);
+        renderRestock();
+        renderProducts();
+      }
+      function renderRestock() {
+        const pending = data.restock.filter((r) => !r.done).length;
+        document.getElementById("r-count").textContent = pending;
+        const list = document.getElementById("restock-list");
+        if (!data.restock.length) {
+          list.innerHTML = `<div class="empty"><div class="ei">🛒</div><p>List खाली है</p></div>`;
+          return;
+        }
+        list.innerHTML = data.restock
+          .map((r) => {
+            // r.price stored as "₹222/kg" or plain number — strip for display
+            const priceClean = r.price ? r.price.replace(/[₹]/g, "").split("/")[0].trim() : "";
+            // Build qty display button content
+            let qtyLabel;
+            if (priceClean && r.howmuch) {
+              qtyLabel = `<span style="color:var(--primary-mid);font-weight:800">₹${priceClean}</span><span style="color:var(--text2);font-weight:600;font-size:11px"> × </span><span style="color:var(--text);font-weight:700">${r.howmuch}</span>`;
+            } else if (priceClean) {
+              qtyLabel = `<span style="color:var(--primary-mid);font-weight:800">₹${priceClean}</span>`;
+            } else if (r.howmuch) {
+              qtyLabel = `<span style="color:var(--text);font-weight:700">${r.howmuch}</span>`;
+            } else {
+              qtyLabel = `<span style="color:var(--text2)">Qty?</span>`;
+            }
+            return `
+  <div class="buy-row">
+    <input type="checkbox" ${r.done ? "checked" : ""} onchange="toggleRestock('${r.id}')">
+    <div style="flex:1;min-width:0">
+      <div class="buy-name ${r.done ? "done" : ""}">${r.item}</div>
+    </div>
+    <button class="buy-qty-btn" onclick="openRestockQtyPopup('${r.id}')" title="Qty set करें">
+      ${qtyLabel}
+    </button>
+    <div class="menu-wrap">
+      <button class="three-dot" onclick="toggleDD('ddr${r.id}')">⋮</button>
+      <div class="dropdown hidden" id="ddr${r.id}">
+        <button class="dd-item" onclick="openEditRestockModal('${r.id}');closeAllDD()">✏️ Edit</button>
+        <button class="dd-item danger" onclick="deleteRestock('${r.id}');closeAllDD()">🗑️ Delete</button>
+      </div>
+    </div>
+  </div>`;
+          })
+          .join("");
+      }
+
+      // ── RESTOCK QTY POPUP ──
+      function openRestockQtyPopup(id) {
+        const r = data.restock.find((x) => x.id === id);
+        if (!r) return;
+        // Clean stored price for display (strip ₹ and /unit)
+        const priceClean = r.price ? r.price.replace(/[₹]/g, "").split("/")[0].trim() : "";
+        const overlay = document.createElement("div");
+        overlay.id = "qty-popup-overlay";
+        overlay.style.cssText = "position:fixed;inset:0;background:rgba(15,36,64,0.55);z-index:1000;display:flex;align-items:flex-end;justify-content:center;";
+        overlay.innerHTML = `
+          <div style="background:white;border-radius:20px 20px 0 0;padding:22px 20px 30px;width:100%;max-width:480px;box-shadow:0 -4px 24px rgba(0,0,0,0.18);">
+            <div style="font-family:'Baloo 2',cursive;font-size:17px;font-weight:800;color:var(--text);margin-bottom:16px;">${r.item}</div>
+            <div style="display:flex;gap:12px;margin-bottom:16px;">
+              <div style="flex:1;">
+                <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:5px;">Previous Bulk Price (₹)</label>
+                <div style="position:relative;">
+                  <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:700;color:var(--primary-mid);">₹</span>
+                  <input id="qty-popup-price" type="number" placeholder="जैसे: 222"
+                    style="width:100%;padding:11px 12px 11px 26px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-weight:700;color:var(--primary-mid);font-family:'Noto Sans',sans-serif;outline:none;"
+                    value="${priceClean}" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" />
+                </div>
+              </div>
+              <div style="flex:1;">
+                <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:5px;">Qty</label>
+                <input id="qty-popup-inp" type="text" placeholder="जैसे: 5bori, 200kg..."
+                  style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-weight:700;color:var(--text);font-family:'Noto Sans',sans-serif;outline:none;"
+                  value="${r.howmuch || ""}" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" />
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button onclick="closeRestockQtyPopup()" style="flex:1;background:var(--bg);color:var(--text2);border:1.5px solid var(--border);border-radius:10px;padding:13px;font-family:'Baloo 2',cursive;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+              <button onclick="saveRestockQtyPopup('${id}')" style="flex:2;background:var(--primary);color:white;border:none;border-radius:10px;padding:13px;font-family:'Baloo 2',cursive;font-size:14px;font-weight:700;cursor:pointer;">Done ✓</button>
+            </div>
+          </div>`;
+        document.body.appendChild(overlay);
+        overlay.addEventListener("click", (e) => { if (e.target === overlay) closeRestockQtyPopup(); });
+        setTimeout(() => document.getElementById("qty-popup-inp").focus(), 100);
+      }
+
+      function saveRestockQtyPopup(id) {
+        const r = data.restock.find((x) => x.id === id);
+        if (!r) return;
+        const qty = document.getElementById("qty-popup-inp").value.trim();
+        const price = document.getElementById("qty-popup-price").value.trim();
+        r.howmuch = qty;
+        if (price) r.price = "₹" + price;
+        save();
+        closeRestockQtyPopup();
+        renderRestock();
+      }
+
+      function closeRestockQtyPopup() {
+        const el = document.getElementById("qty-popup-overlay");
+        if (el) el.remove();
+      }
+
+      // ── PURCHASE HISTORY ──
+      function renderPurchaseHistory() {
+        const el = document.getElementById("purchase-history-list");
+        const hist = data.products.filter(
+          (p) => p.history && p.history.length > 0,
+        );
+        if (!hist.length) {
+          el.innerHTML = `<div class="empty" style="padding:14px 0"><p>Products update करने पर history यहाँ दिखेगी</p></div>`;
+          return;
+        }
+        el.innerHTML = hist
+          .slice(0, 8)
+          .map((p) => {
+            const last = p.history[p.history.length - 1];
+            return `<div class="hist-card">
+      <div class="hist-product-name">${p.name}</div>
+      <div class="hist-entry hist-entry-current">
+        <span style="font-weight:700">Current — ₹${p.buy}${p.qty ? " / " + p.qty + " " + (p.bulkUnit || p.unit || "") : ""}</span>
+        <span style="font-size:11px">${fmtDate(p.updated || today())}</span>
+      </div>
+      ${p.history
+        .slice()
+        .reverse()
+        .slice(0, 3)
+        .map(
+          (h) => `
+      <div class="hist-entry hist-entry-old">
+        <span>Last — ₹${h.buy}${h.qty ? " / " + h.qty + " " + h.unit : ""}</span>
+        <span>${fmtDate(h.date)}</span>
+      </div>`,
+        )
+        .join("")}
+    </div>`;
+          })
+          .join("");
+      }
+
+      // ── CUSTOMERS ──
+      function addCustomer() {
+        const name = document.getElementById("c-name").value.trim(),
+          phone = document
+            .getElementById("c-phone")
+            .value.trim()
+            .replace(/\D/g, ""),
+          type = document.getElementById("c-type").value;
+        if (!name) {
+          toast("⚠️ नाम भरें");
+          return;
+        }
+        data.customers.push({ id: genId(), name, phone, type });
+        save();
+        toast("✅ Customer जोड़ा!");
+        document.getElementById("c-name").value = "";
+        document.getElementById("c-phone").value = "";
+        renderCustomers();
+        renderWaCustList();
+        updateHome();
+      }
+      function deleteCustomer(id) {
+        showDeleteConfirm("इस customer को delete करें?", () => {
+          data.customers = data.customers.filter((c) => c.id !== id);
+          save();
+          toast("🗑️ Deleted");
+          renderCustomers();
+          renderWaCustList();
+          updateHome();
+        });
+      }
+      function openEditCustomer(id) {
+        const c = data.customers.find((x) => x.id === id);
+        if (!c) return;
+        editCustId = id;
+        document.getElementById("ec-name").value = c.name;
+        document.getElementById("ec-phone").value = c.phone;
+        document.getElementById("ec-type").value = c.type;
+        const typeLabels = { loyal: "⭐ Loyal", regular: "Regular", new: "New" };
+        const disp = document.getElementById("ec-type-display");
+        if (disp) disp.textContent = typeLabels[c.type] || c.type;
+        openModal("edit-cust-modal");
+      }
+      function saveEditCustomer() {
+        const c = data.customers.find((x) => x.id === editCustId);
+        if (!c) return;
+        c.name = document.getElementById("ec-name").value.trim() || c.name;
+        c.phone = document
+          .getElementById("ec-phone")
+          .value.trim()
+          .replace(/\D/g, "");
+        c.type = document.getElementById("ec-type").value;
+        save();
+        closeModal("edit-cust-modal");
+        toast("✅ Updated!");
+        renderCustomers();
+        renderWaCustList();
+      }
+      function renderCustomers() {
+        const countEl = document.getElementById("cust-list-count");
+        if (countEl) countEl.textContent = data.customers.length || "";
+        const list = document.getElementById("customer-list");
+        if (!data.customers.length) {
+          list.innerHTML = `<div class="empty"><div class="ei">👥</div><p>कोई customer नहीं</p></div>`;
+          return;
+        }
+        const tb = { loyal: "⭐ Loyal", regular: "Regular", new: "New" };
+        const tc = { loyal: "b-gold", regular: "b-blue", new: "b-green" };
+        const initials = (n) =>
+          n
+            .split(" ")
+            .map((w) => w[0])
+            .join("")
+            .toUpperCase()
+            .slice(0, 2);
+        list.innerHTML = data.customers
+          .map(
+            (c) => `
+  <div class="cust-card" id="ccard-${c.id}">
+    <div class="cust-avatar">${initials(c.name)}</div>
+    <div class="cust-info">
+      <div class="cust-name">${c.name}</div>
+      <div class="cust-phone">${c.phone ? "+" + c.phone : "No number"}</div>
+      <div style="margin-top:4px"><span class="badge ${tc[c.type]}">${tb[c.type]}</span></div>
+    </div>
+    <div class="cust-actions">
+      ${
+        c.phone
+          ? `<a href="https://wa.me/${c.phone}" target="_blank" class="wa-btn-pro">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat
+      </a>`
+          : ""
+      }
+      <div class="menu-wrap">
+        <button class="three-dot" onclick="toggleDD('ddc${c.id}')">⋮</button>
+        <div class="dropdown hidden" id="ddc${c.id}">
+          <button class="dd-item" onclick="openEditCustomer('${c.id}');closeAllDD()">✏️ Edit Details</button>
+          ${c.phone ? `<button class="dd-item" onclick="sendUdharReminder('${c.id}');closeAllDD()">💬 Send Reminder</button>` : ""}
+          <button class="dd-item danger" onclick="deleteCustomer('${c.id}');closeAllDD()">🗑️ Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>`,
+          )
+          .join("");
+      }
+
+      function sendUdharReminder(custId) {
+        const c = data.customers.find((x) => x.id === custId);
+        if (!c || !c.phone) return;
+        const udhar = data.udhar.find(
+          (u) => u.name.toLowerCase() === c.name.toLowerCase(),
+        );
+        const amount = udhar ? udhar.amount : 0;
+        const msg = encodeURIComponent(
+          `Hello ${c.name}, kindly pay your pending amount ₹${amount} at OM Traders Ranmaspur Buzurg. Thank you!`,
+        );
+        window.open(`https://wa.me/${c.phone}?text=${msg}`, "_blank");
+      }
+
+      function sendUdharReminderFromCard(udharId) {
+        const u = data.udhar.find((x) => x.id === udharId);
+        if (!u) return;
+        // Try to find phone from customers list
+        const cust = data.customers.find(
+          (c) => c.name.toLowerCase() === u.name.toLowerCase(),
+        );
+        if (!cust || !cust.phone) {
+          toast(
+            "⚠️ इस customer का WhatsApp नंबर नहीं है। Customers tab में जोड़ें।",
+          );
+          return;
+        }
+        const msg = encodeURIComponent(
+          `Hello ${u.name}, kindly pay your pending amount ₹${u.amount} at OM Traders Ranmaspur Buzurg. Thank you!`,
+        );
+        window.open(`https://wa.me/${cust.phone}?text=${msg}`, "_blank");
+      }
+
+      // ── WHATSAPP ──
+      function getWaMsg() {
+        const p = document.getElementById("wa-product").value.trim(),
+          price = document.getElementById("wa-price").value.trim(),
+          qty = document.getElementById("wa-qty").value.trim(),
+          detail = document.getElementById("wa-detail").value.trim();
+        if (!p) return "Product details भरें...";
+        return `🏪 *Om Traders* — Special Offer!\n\n🛍️ *${p}*\n${price ? "💰 Price: *₹" + price + "*\n" : ""}${qty ? "📦 Stock: " + qty + "\n" : ""}\n${detail ? "📝 " + detail + "\n\n" : ""}📍 जल्दी आएं, stock limited है!\n🙏 — Roopesh Kumar Verma`;
+      }
+      function updateWaPreview() {
+        document.getElementById("wa-preview").textContent = getWaMsg();
+        updateWaSendArea();
+      }
+      function renderWaCustList() {
+        const el = document.getElementById("wa-cust-list");
+        if (!data.customers.length) {
+          el.innerHTML = `<div style="padding:14px;text-align:center;font-size:12px;color:var(--text2)">पहले customers जोड़ें</div>`;
+          return;
+        }
+        const tb = { loyal: "⭐", regular: "", new: "🟢" };
+        el.innerHTML = data.customers
+          .map(
+            (c) => `
+  <div class="cust-opt">
+    <input type="checkbox" id="wac-${c.id}" value="${c.id}" class="wa-cc" ${c.phone ? "" : "disabled"} onchange="updateWaSendArea()">
+    <label for="wac-${c.id}" style="flex:1;cursor:pointer;font-size:13px">${tb[c.type] || ""} <strong>${c.name}</strong> <span style="font-size:11px;color:var(--text2)">${c.phone ? "+" + c.phone : "No number"}</span></label>
+  </div>`,
+          )
+          .join("");
+      }
+      function selAllWa() {
+        document
+          .querySelectorAll(".wa-cc:not(:disabled)")
+          .forEach((c) => (c.checked = true));
+        updateWaSendArea();
+      }
+      function selLoyalWa() {
+        document.querySelectorAll(".wa-cc").forEach((c) => (c.checked = false));
+        data.customers
+          .filter((c) => c.type === "loyal" && c.phone)
+          .forEach((c) => {
+            const el = document.getElementById("wac-" + c.id);
+            if (el) el.checked = true;
+          });
+        updateWaSendArea();
+      }
+      function deselWa() {
+        document.querySelectorAll(".wa-cc").forEach((c) => (c.checked = false));
+        updateWaSendArea();
+      }
+      function getSelCusts() {
+        return [...document.querySelectorAll(".wa-cc:checked")]
+          .map((cb) => data.customers.find((c) => c.id === cb.value))
+          .filter(Boolean);
+      }
+      function updateWaSendArea() {
+        const sel = getSelCusts(),
+          area = document.getElementById("wa-send-area");
+        if (!sel.length) {
+          area.innerHTML = `<p style="text-align:center;font-size:12px;color:var(--text2);margin-top:12px;padding:12px;background:var(--bg);border-radius:var(--r-sm)">Customers select करें फिर send करें</p>`;
+          return;
+        }
+        const msg = encodeURIComponent(getWaMsg());
+        area.innerHTML = `
+  <div style="display:flex;align-items:center;gap:8px;margin:12px 0 10px">
+    <div style="flex:1;height:1px;background:var(--border)"></div>
+    <span style="font-size:11px;color:var(--green-d);font-weight:700;background:var(--green-l);padding:3px 10px;border-radius:20px">✅ ${sel.length} selected</span>
+    <div style="flex:1;height:1px;background:var(--border)"></div>
+  </div>
+  <button class="wa-send-all-btn" onclick="sendToAllSelected()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Send to All ${sel.length} Selected
+  </button>
+  <div style="margin-top:10px">
+    <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">या individually भेजें:</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      ${sel
+        .map(
+          (
+            c,
+          ) => `<a href="https://wa.me/${c.phone}?text=${msg}" target="_blank" class="wa-send-btn" style="text-decoration:none">
+        <div class="wa-send-left">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <div><div class="wa-send-name">${c.name}</div><div class="wa-send-num">+${c.phone}</div></div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>`,
+        )
+        .join("")}
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--text2);margin-top:10px;text-align:center">हर chat अलग window में खुलेगा</p>`;
+      }
+
+      function sendToAllSelected() {
+        const sel = getSelCusts();
+        if (!sel.length) {
+          toast("⚠️ कोई customer select नहीं");
+          return;
+        }
+        const msg = encodeURIComponent(getWaMsg());
+        sel.forEach((c, i) => {
+          setTimeout(() => {
+            window.open(`https://wa.me/${c.phone}?text=${msg}`, "_blank");
+          }, i * 600);
+        });
+        toast(`✅ ${sel.length} chats खोले जा रहे हैं...`);
+      }
+
+      // ── WA SEND OPTIONS ──
+      function selectWaOpt(opt) {
+        document
+          .getElementById("wa-opt-individual")
+          .classList.toggle("active", opt === "individual");
+        document
+          .getElementById("wa-opt-group")
+          .classList.toggle("active", opt === "group");
+        document.getElementById("wa-individual-area").style.display =
+          opt === "individual" ? "" : "none";
+        document.getElementById("wa-group-area").style.display =
+          opt === "group" ? "" : "none";
+      }
+      function sendToGroup() {
+        const link = document.getElementById("wa-group-link").value.trim();
+        const msg = encodeURIComponent(getWaMsg());
+        if (link && link.includes("chat.whatsapp.com")) {
+          window.open(link, "_blank");
+          toast("✅ WhatsApp Group खुला — message paste करें");
+        } else {
+          window.open(`https://wa.me/?text=${msg}`, "_blank");
+          toast("✅ WhatsApp खुला — group select करें");
+        }
+      }
+
+      // ── PRODUCT FORM TABS ──
+      function switchProdTab(tab) {
+        document.getElementById("prod-bulk-section").style.display =
+          tab === "bulk" ? "block" : "none";
+        document.getElementById("prod-unit-section").style.display =
+          tab === "unit" ? "block" : "none";
+        document
+          .getElementById("tab-bulk")
+          .classList.toggle("active", tab === "bulk");
+        document
+          .getElementById("tab-unit")
+          .classList.toggle("active", tab === "unit");
+      }
+
+      // ── RESTOCK QTY UPDATE (enhanced display) ──
+      function updateRestockQty(id, val) {
+        const r = data.restock.find((x) => x.id === id);
+        if (r) {
+          r.howmuch = val;
+          save();
+        }
+      }
+
+      // ═══════════════════════════════════════
+      // ── CUSTOM SELECT POPUP ──
+      // ═══════════════════════════════════════
+      const customSelDefs = {
+        "p-cat-sel": {
+          title: "Category चुनें",
+          options: [
+            { value: "अनाज / Grains", label: "🌾 अनाज / Grains" },
+            { value: "तेल / Oil", label: "🫙 तेल / Oil" },
+            { value: "मसाले / Spices", label: "🌶️ मसाले / Spices" },
+            { value: "दाल / Pulses", label: "🫘 दाल / Pulses" },
+            { value: "Sugar & Salt", label: "🍬 Sugar & Salt" },
+            { value: "Snacks", label: "🍿 Snacks" },
+            { value: "Soap & Cleaning", label: "🧴 Soap & Cleaning" },
+            { value: "Dairy", label: "🥛 Dairy" },
+            { value: "Other", label: "📦 Other" },
+          ],
+        },
+        "p-bulk-unit-sel": {
+          title: "Bulk Unit चुनें",
+          options: [
+            { value: "kg", label: "kg" },
+            { value: "gram", label: "gram" },
+            { value: "litre", label: "litre" },
+            { value: "piece", label: "piece" },
+            { value: "packet", label: "packet" },
+            { value: "dozen", label: "dozen" },
+            { value: "bori", label: "bori" },
+            { value: "other", label: "Other (type below)" },
+          ],
+        },
+        "p-unit-sel": {
+          title: "Unit चुनें",
+          options: [
+            { value: "kg", label: "kg" },
+            { value: "gram", label: "gram" },
+            { value: "litre", label: "litre" },
+            { value: "piece", label: "piece" },
+            { value: "packet", label: "packet" },
+            { value: "dozen", label: "dozen" },
+            { value: "bori", label: "bori" },
+            { value: "other", label: "Other..." },
+          ],
+        },
+        "c-type-sel": {
+          title: "Customer Type चुनें",
+          options: [
+            { value: "loyal", label: "⭐ Loyal Customer" },
+            { value: "regular", label: "👤 Regular" },
+            { value: "new", label: "🟢 New Customer" },
+          ],
+        },
+        "ec-type-sel": {
+          title: "Customer Type चुनें",
+          options: [
+            { value: "loyal", label: "⭐ Loyal" },
+            { value: "regular", label: "👤 Regular" },
+            { value: "new", label: "🟢 New" },
+          ],
+        },
+      };
+
+      function openCustomSel(defKey, hiddenId, triggerEl) {
+        const def = customSelDefs[defKey];
+        if (!def) return;
+        const currentVal = document.getElementById(hiddenId)?.value || "";
+        const displayId = triggerEl.querySelector(".custom-sel-val")?.id || "";
+
+        const overlay = document.createElement("div");
+        overlay.className = "sel-popup-overlay";
+        overlay.id = "csel-overlay";
+
+        const optsHtml = def.options.map((o, i) => `
+          <div class="sel-popup-opt ${o.value === currentVal ? "active" : ""}" data-idx="${i}">
+            <span style="flex:1">${o.label}</span>
+            <span class="opt-check">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+          </div>`).join("");
+
+        overlay.innerHTML = `
+          <div class="sel-popup-sheet">
+            <div class="sel-popup-hd">
+              <div class="sel-popup-title">
+                <span>${def.title}</span>
+                <button class="sel-popup-close">✕</button>
+              </div>
+            </div>
+            <div class="sel-popup-body">${optsHtml}</div>
+          </div>`;
+
+        // Close button
+        overlay.querySelector(".sel-popup-close").addEventListener("click", closeSelPopup);
+
+        // Option click via delegation
+        overlay.querySelector(".sel-popup-body").addEventListener("click", function(e) {
+          const opt = e.target.closest(".sel-popup-opt");
+          if (!opt) return;
+          const idx = parseInt(opt.dataset.idx);
+          const chosen = def.options[idx];
+          if (!chosen) return;
+          const hidden = document.getElementById(hiddenId);
+          if (hidden) hidden.value = chosen.value;
+          if (displayId) {
+            const disp = document.getElementById(displayId);
+            if (disp) disp.textContent = chosen.label;
+          }
+          closeSelPopup();
+          if (hiddenId === "p-bulk-unit") checkBulkUnitOther();
+          if (hiddenId === "p-unit") checkUnitOther();
+        });
+
+        document.body.appendChild(overlay);
+        overlay.addEventListener("click", e => { if (e.target === overlay) closeSelPopup(); });
+      }
+
+      function pickCustomSelOpt(hiddenId, displayId, value, label) {
+        const hidden = document.getElementById(hiddenId);
+        if (hidden) hidden.value = value;
+        if (displayId) {
+          const disp = document.getElementById(displayId);
+          if (disp) disp.textContent = label;
+        }
+        closeSelPopup();
+        if (hiddenId === "p-bulk-unit") checkBulkUnitOther();
+        if (hiddenId === "p-unit") checkUnitOther();
+      }
+
+      function closeSelPopup() {
+        const el = document.getElementById("csel-overlay");
+        if (el) el.remove();
+      }
+
+      // ═══════════════════════════════════════
+      // ── CUSTOMER NAME PICKER (Udhar) ──
+      // ═══════════════════════════════════════
+      function openCustPicker() {
+        const allNames = [...new Set([
+          ...data.customers.map(c => c.name),
+          ...data.udhar.map(u => u.name),
+        ])].sort();
+
+        let filteredNames = [...allNames];
+
+        function renderNames(filter) {
+          const fl = (filter || "").toLowerCase();
+          filteredNames = fl ? allNames.filter(n => n.toLowerCase().includes(fl)) : [...allNames];
+          if (!filteredNames.length) return `<div style="padding:20px;text-align:center;color:var(--text2);font-size:13px">कोई नाम नहीं मिला</div>`;
+          return filteredNames.map((n, i) => `
+            <div class="sel-popup-opt" data-idx="${i}">
+              <span style="font-size:20px;line-height:1">👤</span>
+              <span style="flex:1;font-weight:600">${n}</span>
+            </div>`).join("");
+        }
+
+        const overlay = document.createElement("div");
+        overlay.className = "sel-popup-overlay";
+        overlay.id = "cust-picker-overlay";
+        overlay.innerHTML = `
+          <div class="sel-popup-sheet">
+            <div class="sel-popup-hd">
+              <div class="sel-popup-title">
+                <span>ग्राहक चुनें</span>
+                <button class="sel-popup-close" id="cp-close-btn">✕</button>
+              </div>
+              <input class="sel-popup-search" id="cp-search" placeholder="नाम से खोजें..." />
+            </div>
+            <div class="sel-popup-body" id="cp-list">
+              ${allNames.length ? renderNames("") : `<div style="padding:20px;text-align:center;color:var(--text2);font-size:13px">कोई saved customer नहीं है</div>`}
+            </div>
+            <div class="sel-popup-type-row">
+              <input class="sel-popup-type-inp" id="cp-type-inp" type="text" placeholder="नया नाम type करें..." />
+              <button class="sel-popup-type-btn" id="cp-use-btn">Use करें →</button>
+            </div>
+          </div>`;
+
+        document.body.appendChild(overlay);
+
+        overlay.querySelector("#cp-search").addEventListener("input", function() {
+          document.getElementById("cp-list").innerHTML = renderNames(this.value);
+        });
+        overlay.querySelector("#cp-list").addEventListener("click", function(e) {
+          const opt = e.target.closest(".sel-popup-opt");
+          if (!opt) return;
+          const name = filteredNames[parseInt(opt.dataset.idx)];
+          if (name) selectCustPickerName(name);
+        });
+        overlay.querySelector("#cp-use-btn").addEventListener("click", function() {
+          const val = document.getElementById("cp-type-inp")?.value.trim();
+          if (!val) { toast("⚠️ नाम लिखें"); return; }
+          selectCustPickerName(val);
+        });
+        overlay.querySelector("#cp-close-btn").addEventListener("click", closeCustPicker);
+        overlay.addEventListener("click", e => { if (e.target === overlay) closeCustPicker(); });
+        setTimeout(() => document.getElementById("cp-search")?.focus(), 80);
+      }
+
+      function selectCustPickerName(name) {
+        document.getElementById("u-name").value = name;
+        const disp = document.getElementById("udhar-name-display");
+        if (disp) { disp.textContent = name; disp.classList.add("selected"); }
+        closeCustPicker();
+      }
+
+      function selectCustPickerTyped() {
+        const val = document.getElementById("cp-type-inp")?.value.trim();
+        if (!val) { toast("⚠️ नाम लिखें"); return; }
+        selectCustPickerName(val);
+      }
+
+      function closeCustPicker() {
+        const el = document.getElementById("cust-picker-overlay");
+        if (el) el.remove();
+      }
+
+      // ═══════════════════════════════════════
+      // ── CUSTOMER LIST TOGGLE ──
+      // ═══════════════════════════════════════
+      let custListVisible = false;
+      function toggleCustList() {
+        custListVisible = !custListVisible;
+        const list = document.getElementById("customer-list");
+        const icon = document.getElementById("cust-list-toggle-icon");
+        const label = document.getElementById("cust-list-toggle-label");
+        list.style.display = custListVisible ? "block" : "none";
+        if (icon) icon.textContent = custListVisible ? "▲" : "👥";
+        if (label) label.textContent = custListVisible ? "Customers छुपाएं" : "Customers देखें";
+        if (custListVisible) renderCustomers();
+      }
+
+      // ═══════════════════════════════════════
+      // ── BACKUP & RESTORE ──
+      // ═══════════════════════════════════════
+      function openBackupModal() {
+        const d = data;
+        document.getElementById("backup-stats-row").innerHTML = `
+          <div class="backup-stat"><div class="backup-stat-val">${d.products.length}</div><div class="backup-stat-lbl">Products</div></div>
+          <div class="backup-stat"><div class="backup-stat-val">${d.udhar.length}</div><div class="backup-stat-lbl">Udhar</div></div>
+          <div class="backup-stat"><div class="backup-stat-val">${d.customers.length}</div><div class="backup-stat-lbl">Customers</div></div>
+        `;
+        const lastBackup = localStorage.getItem("ot_last_backup");
+        const noteEl = document.getElementById("last-backup-note");
+        if (lastBackup) {
+          const d2 = new Date(lastBackup);
+          noteEl.textContent = "आखिरी backup: " + d2.toLocaleDateString("hi-IN", { day:"numeric", month:"short", year:"2-digit" }) + " को " + d2.toLocaleTimeString("hi-IN", { hour:"2-digit", minute:"2-digit" }) + " बजे";
+        } else {
+          noteEl.innerHTML = '<span style="color:var(--red)">⚠️ अभी तक कोई backup नहीं लिया</span>';
+        }
+        document.getElementById("backup-modal").classList.add("open");
+        // Update home card sub text
+        updateHomeBackupCard();
+      }
+      function closeBackupModal() {
+        document.getElementById("backup-modal").classList.remove("open");
+      }
+      function doExportBackup() {
+        const exportData = {
+          version: 2,
+          exportedAt: new Date().toISOString(),
+          exportedBy: user?.name || user?.username || "unknown",
+          data: data
+        };
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        const dateStr = new Date().toISOString().split("T")[0];
+        a.href = url;
+        a.download = "OmTraders-Backup-" + dateStr + ".json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        localStorage.setItem("ot_last_backup", new Date().toISOString());
+        toast("✅ Backup download हो गया!");
+        closeBackupModal();
+        updateHomeBackupCard();
+      }
+      function doImportBackup(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            const parsed = JSON.parse(e.target.result);
+            let importedData;
+            if (parsed.version && parsed.data) {
+              importedData = parsed.data;
+            } else if (parsed.udhar !== undefined) {
+              importedData = parsed;
+            } else {
+              toast("⚠️ यह valid backup file नहीं है");
+              return;
+            }
+            const counts = [
+              (importedData.products||[]).length + " products",
+              (importedData.udhar||[]).length + " udhar",
+              (importedData.customers||[]).length + " customers",
+              (importedData.sales||[]).length + " sales"
+            ].join(", ");
+            if (!confirm("Restore करें?\n\nइसमें है: " + counts + "\n\nमौजूदा data replace हो जाएगा।")) {
+              input.value = "";
+              return;
+            }
+            data = {
+              udhar: importedData.udhar || [],
+              products: importedData.products || [],
+              sales: importedData.sales || [],
+              restock: importedData.restock || [],
+              customers: importedData.customers || [],
+            };
+            save();
+            toast("✅ Data restore हो गया! " + counts);
+            closeBackupModal();
+            updateHome();
+            updateHomeBackupCard();
+          } catch(err) {
+            toast("⚠️ File पढ़ने में error आई");
+          }
+          input.value = "";
+        };
+        reader.readAsText(file);
+      }
+      function updateHomeBackupCard() {
+        const lastBackup = localStorage.getItem("ot_last_backup");
+        const sub = document.getElementById("home-backup-sub");
+        if (!sub) return;
+        if (lastBackup) {
+          const d2 = new Date(lastBackup);
+          const diffDays = Math.floor((Date.now() - d2.getTime()) / 86400000);
+          if (diffDays === 0) {
+            sub.innerHTML = '<span style="color:var(--green)">✓ आज backup लिया</span>';
+          } else if (diffDays <= 7) {
+            sub.textContent = diffDays + " दिन पहले backup लिया";
+          } else {
+            sub.innerHTML = '<span style="color:var(--amber)">⚠️ ' + diffDays + ' दिन से backup नहीं लिया</span>';
+          }
+        } else {
+          sub.innerHTML = '<span style="color:var(--red)">⚠️ अभी तक backup नहीं लिया — अभी लें</span>';
+        }
+      }
+
+      // ═══════════════════════════════════════
+      // ── PWA / SERVICE WORKER ──
+      // ═══════════════════════════════════════
+      let deferredPrompt = null;
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const dismissed = localStorage.getItem("ot_pwa_dismissed");
+        if (!dismissed) {
+          document.getElementById("pwa-banner").classList.add("show");
+        }
+      });
+      function installPWA() {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((r) => {
+          deferredPrompt = null;
+          document.getElementById("pwa-banner").classList.remove("show");
+          if (r.outcome === "accepted") toast("✅ App install हो गया!");
+        });
+      }
+      function dismissPWA() {
+        document.getElementById("pwa-banner").classList.remove("show");
+        localStorage.setItem("ot_pwa_dismissed", "1");
+      }
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("sw.js").catch(() => {});
+        });
+      }
+      // Close backup modal on overlay click
+      document.getElementById("backup-modal").addEventListener("click", function(e) {
+        if (e.target === this) closeBackupModal();
+      });
+      // Update backup card on load
+      updateHomeBackupCard();
+
+      updateHome();
+      renderRestock();
+      renderPurchaseHistory();
+    </script>
+  </body>
+</html>
