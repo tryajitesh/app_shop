@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Om Traders</title>
     <meta name="theme-color" content="#1e3a5f" />
@@ -49,8 +49,9 @@
         --sh:
           0 1px 3px rgba(15, 36, 64, 0.08), 0 1px 2px rgba(15, 36, 64, 0.05);
         --sh2: 0 4px 20px rgba(15, 36, 64, 0.14);
-        --r: 14px;
-        --r-sm: 9px;
+        --r: 16px;
+        --r-sm: 10px;
+        font-size: 16px;
       }
       * {
         box-sizing: border-box;
@@ -58,7 +59,10 @@
         padding: 0;
         -webkit-tap-highlight-color: transparent;
       }
-      html,
+      html {
+        height: 100%;
+        overflow: hidden;
+      }
       body {
         height: 100%;
         font-family: "Noto Sans", sans-serif;
@@ -66,7 +70,8 @@
         color: var(--text);
         max-width: 480px;
         margin: 0 auto;
-        overflow-x: hidden;
+        overflow: hidden;
+        font-size: 15px;
       }
 
       /* ── AUTH ── */
@@ -163,53 +168,60 @@
       #app-shell {
         display: none;
         flex-direction: column;
-        height: 100vh;
+        height: 100%;
+        height: 100dvh;
+        overflow: hidden;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        max-width: 480px;
+        margin: 0 auto;
       }
 
       /* ── HEADER ── */
       .header {
         background: linear-gradient(105deg, #1e3a5f 0%, #0f2440 100%);
         color: white;
-        padding: 10px 16px;
+        padding: 14px 18px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         flex-shrink: 0;
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        min-height: 64px;
       }
       .hd-name {
         font-family: "Baloo 2", cursive;
-        font-size: 20px;
+        font-size: 23px;
         font-weight: 800;
         line-height: 1.1;
         letter-spacing: 0.3px;
       }
       .hd-by {
-        font-size: 9.5px;
+        font-size: 11px;
         opacity: 0.65;
         font-style: italic;
-        margin-top: 1px;
+        margin-top: 2px;
       }
       .hd-right {
         display: flex;
         align-items: center;
-        gap: 7px;
+        gap: 8px;
       }
       .hd-date {
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 600;
         background: rgba(255, 255, 255, 0.14);
-        padding: 3px 9px;
-        border-radius: 6px;
+        padding: 5px 11px;
+        border-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.2);
       }
       .hd-user-btn {
         background: rgba(255, 255, 255, 0.14);
         border: 1px solid rgba(255, 255, 255, 0.25);
         color: white;
-        border-radius: 6px;
-        padding: 4px 10px;
-        font-size: 11px;
+        border-radius: 8px;
+        padding: 6px 13px;
+        font-size: 12px;
         cursor: pointer;
         font-weight: 600;
         display: flex;
@@ -222,36 +234,37 @@
         display: flex;
         background: var(--surface);
         border-bottom: 2px solid var(--border);
-        overflow-x: auto;
+        overflow-x: hidden;
         scrollbar-width: none;
         flex-shrink: 0;
+        box-shadow: 0 1px 0 var(--border);
       }
       .nav::-webkit-scrollbar {
         display: none;
       }
       .nav-btn {
         flex: 1;
-        min-width: 52px;
-        padding: 8px 4px 6px;
+        min-width: 0;
+        padding: 10px 4px 8px;
         background: none;
         border: none;
         cursor: pointer;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 3px;
+        gap: 4px;
         border-bottom: 3px solid transparent;
         margin-bottom: -2px;
         transition: all 0.18s;
         color: var(--text2);
       }
       .nav-btn svg {
-        width: 21px;
-        height: 21px;
+        width: 25px;
+        height: 25px;
         transition: transform 0.18s;
       }
       .nav-btn .nl {
-        font-size: 9px;
+        font-size: 10.5px;
         font-weight: 600;
         font-family: "Noto Sans", sans-serif;
         white-space: nowrap;
@@ -268,11 +281,14 @@
       .screens {
         flex: 1;
         overflow-y: auto;
+        overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
       }
       .screen {
         display: none;
-        padding: 14px;
+        padding: 16px;
+        min-height: 100%;
       }
       .screen.active {
         display: block;
@@ -283,26 +299,26 @@
         background: var(--surface);
         border-radius: var(--r);
         box-shadow: var(--sh);
-        padding: 14px;
-        margin-bottom: 10px;
+        padding: 16px;
+        margin-bottom: 12px;
         border: 1px solid var(--border);
       }
       .card-hd {
         font-family: "Baloo 2", cursive;
-        font-size: 15px;
+        font-size: 17px;
         font-weight: 700;
         color: var(--text);
-        margin-bottom: 12px;
+        margin-bottom: 14px;
         display: flex;
         align-items: center;
         gap: 6px;
       }
       .sec-hd {
         font-family: "Baloo 2", cursive;
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 800;
         color: var(--text);
-        margin-bottom: 12px;
+        margin-bottom: 14px;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -310,13 +326,13 @@
 
       /* ── FORM ── */
       .fg {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
       }
       .fl {
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 700;
         color: var(--text2);
-        margin-bottom: 4px;
+        margin-bottom: 5px;
         display: block;
         text-transform: uppercase;
         letter-spacing: 0.4px;
@@ -325,10 +341,10 @@
       select,
       textarea {
         width: 100%;
-        padding: 10px 12px;
+        padding: 12px 14px;
         border: 1.5px solid var(--border);
         border-radius: var(--r-sm);
-        font-size: 13px;
+        font-size: 15px;
         font-family: "Noto Sans", sans-serif;
         background: white;
         color: var(--text);
@@ -373,11 +389,11 @@
 
       /* ── BUTTONS ── */
       .btn {
-        padding: 10px 16px;
+        padding: 12px 18px;
         border-radius: var(--r-sm);
         border: none;
         cursor: pointer;
-        font-size: 13px;
+        font-size: 14px;
         font-family: "Baloo 2", cursive;
         font-weight: 700;
         transition: all 0.18s;
@@ -484,9 +500,9 @@
       .badge {
         display: inline-flex;
         align-items: center;
-        padding: 2px 8px;
+        padding: 3px 10px;
         border-radius: 20px;
-        font-size: 10.5px;
+        font-size: 12px;
         font-weight: 600;
       }
       .b-red {
@@ -543,7 +559,7 @@
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        padding: 11px 0;
+        padding: 13px 0;
         border-bottom: 1px solid var(--border);
         gap: 8px;
       }
@@ -553,10 +569,10 @@
       }
       .li-name {
         font-weight: 700;
-        font-size: 13.5px;
+        font-size: 15px;
       }
       .li-sub {
-        font-size: 11.5px;
+        font-size: 13px;
         color: var(--text2);
         margin-top: 3px;
         line-height: 1.5;
@@ -868,12 +884,12 @@
       .qgrid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-bottom: 10px;
+        gap: 12px;
+        margin-bottom: 12px;
       }
       .qcard {
         border-radius: var(--r);
-        padding: 16px 12px;
+        padding: 20px 14px;
         cursor: pointer;
         text-align: center;
         border: none;
@@ -887,19 +903,19 @@
         transform: scale(0.97);
       }
       .qci {
-        font-size: 26px;
-        margin-bottom: 7px;
+        font-size: 32px;
+        margin-bottom: 8px;
         line-height: 1;
       }
       .qct {
         font-family: "Baloo 2", cursive;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 700;
         line-height: 1.2;
       }
       .qcs {
-        font-size: 10.5px;
-        margin-top: 3px;
+        font-size: 12px;
+        margin-top: 4px;
         opacity: 0.85;
       }
       .qc-a {
@@ -2224,18 +2240,10 @@
         </div>
         <div class="hd-right">
           <div class="hd-date" id="hd-date"></div>
-          <button class="hd-user-btn" onclick="openBackupModal()" style="background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.25);" title="Backup / Restore">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="17 8 12 3 7 8"/>
-              <line x1="12" y1="3" x2="12" y2="15"/>
-            </svg>
-            Backup
-          </button>
           <button class="hd-user-btn" onclick="openModal('logout-modal')">
             <svg
-              width="12"
-              height="12"
+              width="13"
+              height="13"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -3203,13 +3211,27 @@
             </div>
             <div class="backup-action-arrow">›</div>
           </div>
-          <div class="backup-action-card" onclick="document.getElementById('import-file-input').click()">
-            <div class="backup-action-icon bai-import">📥</div>
-            <div class="backup-action-text">
-              <div class="backup-action-title">Restore करें (Import)</div>
-              <div class="backup-action-sub">पुरानी backup file से सारा data वापस लाएं। नए phone पर भी काम करेगा।</div>
+          <!-- Import section with two options -->
+          <div style="border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px;">
+            <div style="padding:12px 14px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);">
+              <div class="backup-action-icon bai-import" style="width:38px;height:38px;font-size:18px;">📥</div>
+              <div>
+                <div class="backup-action-title">Restore करें (Import)</div>
+                <div class="backup-action-sub">Backup file से data लाएं</div>
+              </div>
             </div>
-            <div class="backup-action-arrow">›</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+              <button onclick="triggerImport('merge')" style="padding:12px 8px;background:var(--green-l);border:none;border-right:1px solid var(--border);cursor:pointer;font-family:'Baloo 2',cursive;font-size:12px;font-weight:700;color:var(--green-d);display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <span style="font-size:20px;">🔀</span>
+                Merge करें
+                <span style="font-size:10px;font-weight:400;color:var(--text2);font-family:'Noto Sans',sans-serif;">पुराना+नया दोनों रहेंगे</span>
+              </button>
+              <button onclick="triggerImport('replace')" style="padding:12px 8px;background:var(--red-l);border:none;cursor:pointer;font-family:'Baloo 2',cursive;font-size:12px;font-weight:700;color:var(--red);display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <span style="font-size:20px;">🔄</span>
+                Replace करें
+                <span style="font-size:10px;font-weight:400;color:var(--text2);font-family:'Noto Sans',sans-serif;">पुराना जाएगा, नया आएगा</span>
+              </button>
+            </div>
           </div>
           <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="doImportBackup(this)" />
           <div class="last-backup-note" id="last-backup-note"></div>
@@ -5165,6 +5187,11 @@
         closeBackupModal();
         updateHomeBackupCard();
       }
+      let _importMode = "replace";
+      function triggerImport(mode) {
+        _importMode = mode;
+        document.getElementById("import-file-input").click();
+      }
       function doImportBackup(input) {
         const file = input.files[0];
         if (!file) return;
@@ -5179,27 +5206,105 @@
               importedData = parsed;
             } else {
               toast("⚠️ यह valid backup file नहीं है");
-              return;
-            }
-            const counts = [
-              (importedData.products||[]).length + " products",
-              (importedData.udhar||[]).length + " udhar",
-              (importedData.customers||[]).length + " customers",
-              (importedData.sales||[]).length + " sales"
-            ].join(", ");
-            if (!confirm("Restore करें?\n\nइसमें है: " + counts + "\n\nमौजूदा data replace हो जाएगा।")) {
               input.value = "";
               return;
             }
-            data = {
-              udhar: importedData.udhar || [],
-              products: importedData.products || [],
-              sales: importedData.sales || [],
-              restock: importedData.restock || [],
-              customers: importedData.customers || [],
-            };
+
+            if (_importMode === "replace") {
+              // ── REPLACE mode ──
+              const counts = [
+                (importedData.products||[]).length + " products",
+                (importedData.udhar||[]).length + " udhar",
+                (importedData.customers||[]).length + " customers",
+                (importedData.sales||[]).length + " sales",
+                (importedData.restock||[]).length + " restock items"
+              ].join(", ");
+              if (!confirm("Replace करें?\n\nBackup में है: " + counts + "\n\n⚠️ मौजूदा सारा data delete हो जाएगा।")) {
+                input.value = "";
+                return;
+              }
+              data = {
+                udhar: importedData.udhar || [],
+                products: importedData.products || [],
+                sales: importedData.sales || [],
+                restock: importedData.restock || [],
+                customers: importedData.customers || [],
+              };
+              save();
+              toast("✅ Data replace हो गया!");
+
+            } else {
+              // ── MERGE mode ──
+              let added = { products: 0, udhar: 0, customers: 0, sales: 0, restock: 0 };
+
+              // Merge Products — match by name (case-insensitive), keep existing if duplicate
+              const existingProductNames = new Set(data.products.map(p => p.name.toLowerCase()));
+              (importedData.products || []).forEach(p => {
+                if (!existingProductNames.has(p.name.toLowerCase())) {
+                  data.products.push(p);
+                  added.products++;
+                }
+              });
+
+              // Merge Udhar — match by name, merge entries if same person
+              (importedData.udhar || []).forEach(imp => {
+                const existing = data.udhar.find(u => u.name.toLowerCase() === imp.name.toLowerCase());
+                if (existing) {
+                  // Merge entries by date+amount to avoid duplicates
+                  const existingKeys = new Set((existing.entries||[]).map(en => en.date + "_" + en.amount + "_" + en.type));
+                  const newEntries = (imp.entries||[]).filter(en => !existingKeys.has(en.date + "_" + en.amount + "_" + en.type));
+                  if (newEntries.length > 0) {
+                    existing.entries = [...(existing.entries||[]), ...newEntries];
+                    // Recalculate total amount
+                    existing.amount = existing.entries.filter(en => en.type === "debit").reduce((s, en) => s + (en.amount||0), 0)
+                      - existing.entries.filter(en => en.type === "deposit").reduce((s, en) => s + (en.amount||0), 0);
+                    added.udhar++;
+                  }
+                } else {
+                  data.udhar.push(imp);
+                  added.udhar++;
+                }
+              });
+
+              // Merge Customers — match by name
+              const existingCustNames = new Set(data.customers.map(c => c.name.toLowerCase()));
+              (importedData.customers || []).forEach(c => {
+                if (!existingCustNames.has(c.name.toLowerCase())) {
+                  data.customers.push(c);
+                  added.customers++;
+                }
+              });
+
+              // Merge Sales — match by id to avoid duplicates
+              const existingSaleIds = new Set(data.sales.map(s => s.id));
+              (importedData.sales || []).forEach(s => {
+                if (!existingSaleIds.has(s.id)) {
+                  data.sales.push(s);
+                  added.sales++;
+                }
+              });
+
+              // Merge Restock — match by name
+              const existingRestockNames = new Set(data.restock.map(r => r.name.toLowerCase()));
+              (importedData.restock || []).forEach(r => {
+                if (!existingRestockNames.has(r.name.toLowerCase())) {
+                  data.restock.push(r);
+                  added.restock++;
+                }
+              });
+
+              save();
+              const summary = [
+                added.products ? added.products + " products जोड़े" : "",
+                added.udhar ? added.udhar + " उधार merge हुए" : "",
+                added.customers ? added.customers + " customers जोड़े" : "",
+                added.sales ? added.sales + " sales जोड़ी" : "",
+                added.restock ? added.restock + " restock items जोड़े" : "",
+              ].filter(Boolean).join(", ") || "कोई नया data नहीं था — सब already था";
+              toast("🔀 Merge हो गया! " + summary);
+            }
+
             save();
-            toast("✅ Data restore हो गया! " + counts);
             closeBackupModal();
             updateHome();
             updateHomeBackupCard();
