@@ -1047,13 +1047,13 @@
         background: var(--primary-l);
         border: 2px dashed #93c5fd;
         border-radius: var(--r);
-        padding: 13px 16px;
+        padding: 10px 16px;
         width: 100%;
         text-align: center;
         cursor: pointer;
         margin-bottom: 10px;
         font-family: "Baloo 2", cursive;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 700;
         color: var(--primary);
         display: flex;
@@ -1080,15 +1080,15 @@
       .bulk-section {
         background: #f8fafc;
         border-radius: var(--r-sm);
-        padding: 10px;
-        margin-bottom: 10px;
+        padding: 8px;
+        margin-bottom: 8px;
         border: 1px solid var(--border);
       }
       .unit-section {
         background: #f0f9ff;
         border-radius: var(--r-sm);
-        padding: 10px;
-        margin-bottom: 10px;
+        padding: 8px;
+        margin-bottom: 8px;
         border: 1px solid #bae6fd;
       }
 
@@ -1740,13 +1740,13 @@
         border-radius: var(--r-sm);
         overflow: hidden;
         border: 1.5px solid var(--border);
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
       .prod-tab {
         flex: 1;
-        padding: 9px;
+        padding: 7px;
         text-align: center;
-        font-size: 12.5px;
+        font-size: 12px;
         font-weight: 700;
         cursor: pointer;
         background: none;
@@ -1957,6 +1957,7 @@
 
       /* ── CUSTOM SELECT ── */
       .custom-sel-trigger {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -1990,6 +1991,7 @@
 
       /* ── CUSTOMER PICKER ── */
       .cust-picker-wrap {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -2013,7 +2015,135 @@
         font-weight: 600;
       }
 
-      /* ── POPUP OVERLAY (generic) ── */
+      /* ── INLINE DROPDOWN (replaces full-screen popup) ── */
+      .sel-dropdown-wrap {
+        position: relative;
+      }
+      .sel-dropdown {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border: 1.5px solid var(--primary);
+        border-radius: 10px;
+        box-shadow: 0 8px 28px rgba(15,36,64,0.18);
+        z-index: 600;
+        max-height: 240px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        /* Break out of parent flex context */
+        display: block !important;
+        flex-direction: unset !important;
+        flex: unset !important;
+        min-width: 160px;
+      }
+      .sel-dropdown::-webkit-scrollbar { display: none; }
+      .sel-dropdown-opt {
+        padding: 9px 13px;
+        font-size: 13px;
+        font-family: "Noto Sans", sans-serif;
+        cursor: pointer;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 8px;
+        border-bottom: 1px solid var(--bg);
+        transition: background 0.1s;
+        white-space: nowrap;
+        color: var(--text);
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .sel-dropdown-opt:last-child { border-bottom: none; }
+      .sel-dropdown-opt:active,
+      .sel-dropdown-opt:hover { background: var(--primary-l); }
+      .sel-dropdown-opt.active {
+        background: var(--primary-l);
+        color: var(--primary);
+        font-weight: 700;
+      }
+      .sel-dropdown-opt .dd-emoji {
+        font-size: 15px;
+        line-height: 1;
+        flex-shrink: 0;
+        width: 20px;
+        text-align: center;
+      }
+      .sel-dropdown-opt .dd-label {
+        flex: 1;
+        font-size: 12.5px;
+        line-height: 1.3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .sel-dropdown-opt .dd-check {
+        width: 16px; height: 16px; border-radius: 50%;
+        background: var(--primary);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0; opacity: 0;
+      }
+      .sel-dropdown-opt.active .dd-check { opacity: 1; }
+
+      /* Customer picker inline */
+      .cust-dropdown {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0; right: 0;
+        background: var(--surface);
+        border: 1.5px solid var(--primary);
+        border-radius: 10px;
+        box-shadow: 0 8px 28px rgba(15,36,64,0.18);
+        z-index: 600;
+        display: none;
+        min-width: 200px;
+      }
+      .cust-dropdown.open { display: block; }
+      .cust-dropdown-search {
+        width: 100%;
+        padding: 9px 12px;
+        border: none;
+        border-bottom: 1px solid var(--border);
+        font-size: 13px;
+        font-family: "Noto Sans", sans-serif;
+        outline: none;
+        background: var(--bg);
+        border-radius: 10px 10px 0 0;
+        display: block;
+        box-sizing: border-box;
+      }
+      .cust-dropdown-list {
+        max-height: 180px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .cust-dropdown-list::-webkit-scrollbar { display: none; }
+      .cust-dropdown-footer {
+        display: flex;
+        gap: 6px;
+        padding: 8px 10px;
+        border-top: 1px solid var(--border);
+        background: var(--bg);
+        border-radius: 0 0 10px 10px;
+      }
+      .cust-dropdown-footer input {
+        flex: 1; padding: 7px 10px; font-size: 12.5px; border-radius: 7px;
+        display: block; box-sizing: border-box;
+      }
+      .cust-dropdown-footer button {
+        padding: 7px 12px; font-size: 12px; border-radius: 7px;
+        background: var(--primary); color: white; border: none;
+        font-family: "Baloo 2", cursive; font-weight: 700; cursor: pointer;
+        white-space: nowrap;
+      }
+
+      /* ── POPUP OVERLAY (generic) — kept for backward compat but unused for sel ── */
       .sel-popup-overlay {
         position: fixed;
         inset: 0;
@@ -2022,125 +2152,6 @@
         display: flex;
         align-items: flex-end;
         justify-content: center;
-      }
-      .sel-popup-sheet {
-        background: white;
-        border-radius: 20px 20px 0 0;
-        width: 100%;
-        max-width: 480px;
-        max-height: 72vh;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 -4px 30px rgba(0,0,0,0.18);
-      }
-      .sel-popup-hd {
-        padding: 16px 18px 10px;
-        border-bottom: 1px solid var(--border);
-        flex-shrink: 0;
-      }
-      .sel-popup-title {
-        font-family: "Baloo 2", cursive;
-        font-size: 16px;
-        font-weight: 800;
-        color: var(--text);
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .sel-popup-close {
-        background: var(--bg);
-        border: none;
-        border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        font-size: 15px;
-        cursor: pointer;
-        color: var(--text2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .sel-popup-search {
-        width: 100%;
-        padding: 9px 12px;
-        border: 1.5px solid var(--border);
-        border-radius: 9px;
-        font-size: 13px;
-        font-family: "Noto Sans", sans-serif;
-        outline: none;
-      }
-      .sel-popup-search:focus {
-        border-color: var(--primary);
-      }
-      .sel-popup-body {
-        overflow-y: auto;
-        flex: 1;
-        padding: 8px 0 16px;
-      }
-      .sel-popup-opt {
-        padding: 13px 18px;
-        font-size: 14px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: background 0.12s;
-        border-bottom: 1px solid var(--bg);
-      }
-      .sel-popup-opt:hover, .sel-popup-opt:active {
-        background: var(--primary-l);
-      }
-      .sel-popup-opt.active {
-        background: var(--primary-l);
-        color: var(--primary);
-        font-weight: 700;
-      }
-      .sel-popup-opt .opt-check {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: var(--primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        opacity: 0;
-      }
-      .sel-popup-opt.active .opt-check {
-        opacity: 1;
-      }
-      .sel-popup-type-row {
-        padding: 10px 18px 4px;
-        border-top: 1px solid var(--border);
-        flex-shrink: 0;
-        display: flex;
-        gap: 8px;
-        align-items: center;
-      }
-      .sel-popup-type-inp {
-        flex: 1;
-        padding: 9px 12px;
-        border: 1.5px solid var(--border);
-        border-radius: 9px;
-        font-size: 13px;
-        font-family: "Noto Sans", sans-serif;
-        outline: none;
-      }
-      .sel-popup-type-inp:focus {
-        border-color: var(--primary);
-      }
-      .sel-popup-type-btn {
-        padding: 9px 14px;
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 9px;
-        font-family: "Baloo 2", cursive;
-        font-size: 13px;
-        font-weight: 700;
-        cursor: pointer;
-        white-space: nowrap;
       }
 
       /* ── WA SEND OPTIONS ── */
@@ -2450,6 +2461,14 @@
               <div class="cust-picker-wrap" id="udhar-name-picker" onclick="openCustPicker()">
                 <span class="cust-picker-val" id="udhar-name-display">नाम चुनें या टाइप करें...</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                <div class="cust-dropdown" id="cust-inline-dropdown" onclick="event.stopPropagation()">
+                  <input class="cust-dropdown-search" id="cp-search-inline" type="text" placeholder="नाम से खोजें..." oninput="filterCustDropdown(this.value)" />
+                  <div class="cust-dropdown-list" id="cp-list-inline"></div>
+                  <div class="cust-dropdown-footer">
+                    <input type="text" id="cp-type-inline" placeholder="नया नाम type करें..." />
+                    <button onclick="useCustPickerTyped()">Use →</button>
+                  </div>
+                </div>
               </div>
               <input type="hidden" id="u-name" />
             </div>
@@ -2504,18 +2523,21 @@
             <span>＋</span> Product जोड़ें / Update करें
           </button>
           <div class="card add-prod-form" id="prod-add-form">
-            <div class="card-hd">Product Details भरें</div>
-            <div class="fg" style="margin-bottom:10px">
-              <label class="fl">Product का नाम *</label>
-              <input id="p-name" type="text" placeholder="जैसे: Basmati Chawal" />
-            </div>
-            <div class="fg" style="margin-bottom:10px">
-              <label class="fl">Category</label>
-              <div class="custom-sel-trigger" id="p-cat-trigger" onclick="openCustomSel('p-cat-sel','p-cat',this)">
-                <span class="custom-sel-val" id="p-cat-display">अनाज / Grains</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <div class="card-hd" style="margin-bottom:10px;">Product Details भरें</div>
+            <!-- Name + Category in one row -->
+            <div class="ir" style="margin-bottom:8px;gap:8px;">
+              <div style="flex:2">
+                <label class="fl">Product का नाम *</label>
+                <input id="p-name" type="text" placeholder="जैसे: Basmati Chawal" style="padding:8px 10px;font-size:12.5px;" />
               </div>
-              <input type="hidden" id="p-cat" value="अनाज / Grains" />
+              <div style="flex:1">
+                <label class="fl">Category</label>
+                <div class="custom-sel-trigger" id="p-cat-trigger" onclick="openCustomSel('p-cat-sel','p-cat',this)" style="min-height:37px;padding:6px 8px;font-size:11.5px;">
+                  <span class="custom-sel-val" id="p-cat-display" style="font-size:11px;">🌾 Grains</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <input type="hidden" id="p-cat" value="अनाज / Grains" />
+              </div>
             </div>
 
             <!-- BULK / UNIT TABS -->
@@ -4973,38 +4995,31 @@
       function openCustomSel(defKey, hiddenId, triggerEl) {
         const def = customSelDefs[defKey];
         if (!def) return;
+        // Toggle — close if already open on same trigger
+        const existing = document.getElementById("csel-dropdown");
+        if (existing && existing.parentElement === triggerEl) { closeSelPopup(); return; }
+        closeSelPopup();
         const currentVal = document.getElementById(hiddenId)?.value || "";
         const displayId = triggerEl.querySelector(".custom-sel-val")?.id || "";
 
-        const overlay = document.createElement("div");
-        overlay.className = "sel-popup-overlay";
-        overlay.id = "csel-overlay";
+        const dd = document.createElement("div");
+        dd.className = "sel-dropdown";
+        dd.id = "csel-dropdown";
 
-        const optsHtml = def.options.map((o, i) => `
-          <div class="sel-popup-opt ${o.value === currentVal ? "active" : ""}" data-idx="${i}">
-            <span style="flex:1">${o.label}</span>
-            <span class="opt-check">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-          </div>`).join("");
-
-        overlay.innerHTML = `
-          <div class="sel-popup-sheet">
-            <div class="sel-popup-hd">
-              <div class="sel-popup-title">
-                <span>${def.title}</span>
-                <button class="sel-popup-close">✕</button>
-              </div>
-            </div>
-            <div class="sel-popup-body">${optsHtml}</div>
+        dd.innerHTML = def.options.map((o, i) => {
+          // Split emoji from text label
+          const parts = o.label.match(/^(\p{Emoji_Presentation}|\p{Extended_Pictographic}|\S+\uFE0F?)\s*(.*)/u);
+          const emoji = parts ? parts[1] : "";
+          const text = parts ? parts[2] : o.label;
+          return `<div class="sel-dropdown-opt ${o.value === currentVal ? "active" : ""}" data-idx="${i}">
+            <span class="dd-emoji">${emoji}</span>
+            <span class="dd-label">${text}</span>
+            <span class="dd-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
           </div>`;
+        }).join("");
 
-        // Close button
-        overlay.querySelector(".sel-popup-close").addEventListener("click", closeSelPopup);
-
-        // Option click via delegation
-        overlay.querySelector(".sel-popup-body").addEventListener("click", function(e) {
-          const opt = e.target.closest(".sel-popup-opt");
+        dd.addEventListener("click", function(e) {
+          const opt = e.target.closest(".sel-dropdown-opt");
           if (!opt) return;
           const idx = parseInt(opt.dataset.idx);
           const chosen = def.options[idx];
@@ -5013,96 +5028,98 @@
           if (hidden) hidden.value = chosen.value;
           if (displayId) {
             const disp = document.getElementById(displayId);
-            if (disp) disp.textContent = chosen.label;
+            if (disp) {
+              if (defKey === "p-cat-sel") {
+                // Short display: emoji + first word
+                const p = chosen.label.match(/^(\S+)\s+(\S+)/);
+                disp.textContent = p ? p[1] + " " + p[2].replace("/","").trim() : chosen.label;
+              } else {
+                disp.textContent = chosen.label;
+              }
+            }
           }
           closeSelPopup();
           if (hiddenId === "p-bulk-unit") checkBulkUnitOther();
           if (hiddenId === "p-unit") checkUnitOther();
         });
 
-        document.body.appendChild(overlay);
-        overlay.addEventListener("click", e => { if (e.target === overlay) closeSelPopup(); });
+        triggerEl.appendChild(dd);
+        triggerEl.style.borderColor = "var(--primary)";
+        triggerEl.style.boxShadow = "0 0 0 3px rgba(30,58,95,0.1)";
+
+        setTimeout(() => {
+          document.addEventListener("click", _selOutsideHandler);
+        }, 10);
       }
 
-      function pickCustomSelOpt(hiddenId, displayId, value, label) {
-        const hidden = document.getElementById(hiddenId);
-        if (hidden) hidden.value = value;
-        if (displayId) {
-          const disp = document.getElementById(displayId);
-          if (disp) disp.textContent = label;
-        }
-        closeSelPopup();
-        if (hiddenId === "p-bulk-unit") checkBulkUnitOther();
-        if (hiddenId === "p-unit") checkUnitOther();
+      function _selOutsideHandler(e) {
+        const dd = document.getElementById("csel-dropdown");
+        const cp = document.getElementById("cust-inline-dropdown");
+        if (dd && !dd.parentElement.contains(e.target)) closeSelPopup();
+        if (cp && cp.classList.contains("open") && !cp.parentElement.contains(e.target)) closeCustPicker();
       }
 
       function closeSelPopup() {
-        const el = document.getElementById("csel-overlay");
-        if (el) el.remove();
+        const dd = document.getElementById("csel-dropdown");
+        if (dd) {
+          const parent = dd.parentElement;
+          if (parent) {
+            parent.style.borderColor = "";
+            parent.style.boxShadow = "";
+          }
+          dd.remove();
+        }
+        document.removeEventListener("click", _selOutsideHandler);
       }
 
       // ═══════════════════════════════════════
-      // ── CUSTOMER NAME PICKER (Udhar) ──
+      // ── CUSTOMER NAME PICKER (Udhar) — inline dropdown ──
       // ═══════════════════════════════════════
       function openCustPicker() {
+        const dd = document.getElementById("cust-inline-dropdown");
+        if (!dd) return;
+        if (dd.classList.contains("open")) { closeCustPicker(); return; }
         const allNames = [...new Set([
           ...data.customers.map(c => c.name),
           ...data.udhar.map(u => u.name),
         ])].sort();
+        dd._allNames = allNames;
+        renderCustDropdownList(allNames);
+        dd.classList.add("open");
+        const wrap = document.getElementById("udhar-name-picker");
+        if (wrap) { wrap.style.borderColor = "var(--primary)"; wrap.style.boxShadow = "0 0 0 3px rgba(30,58,95,0.1)"; }
+        setTimeout(() => {
+          document.getElementById("cp-search-inline")?.focus();
+          document.addEventListener("click", _selOutsideHandler);
+        }, 10);
+      }
 
-        let filteredNames = [...allNames];
-
-        function renderNames(filter) {
-          const fl = (filter || "").toLowerCase();
-          filteredNames = fl ? allNames.filter(n => n.toLowerCase().includes(fl)) : [...allNames];
-          if (!filteredNames.length) return `<div style="padding:20px;text-align:center;color:var(--text2);font-size:13px">कोई नाम नहीं मिला</div>`;
-          return filteredNames.map((n, i) => `
-            <div class="sel-popup-opt" data-idx="${i}">
-              <span style="font-size:20px;line-height:1">👤</span>
-              <span style="flex:1;font-weight:600">${n}</span>
-            </div>`).join("");
+      function renderCustDropdownList(names) {
+        const list = document.getElementById("cp-list-inline");
+        if (!list) return;
+        if (!names.length) {
+          list.innerHTML = `<div style="padding:12px 14px;color:var(--text2);font-size:12px;text-align:center;">कोई नाम नहीं मिला</div>`;
+          return;
         }
+        list.innerHTML = names.map((n, i) => `
+          <div class="sel-dropdown-opt" data-idx="${i}" onclick="selectCustPickerName('${n.replace(/'/g,"\\'")}')">
+            <span class="dd-emoji">👤</span>
+            <span class="dd-label">${n}</span>
+          </div>`).join("");
+      }
 
-        const overlay = document.createElement("div");
-        overlay.className = "sel-popup-overlay";
-        overlay.id = "cust-picker-overlay";
-        overlay.innerHTML = `
-          <div class="sel-popup-sheet">
-            <div class="sel-popup-hd">
-              <div class="sel-popup-title">
-                <span>ग्राहक चुनें</span>
-                <button class="sel-popup-close" id="cp-close-btn">✕</button>
-              </div>
-              <input class="sel-popup-search" id="cp-search" placeholder="नाम से खोजें..." />
-            </div>
-            <div class="sel-popup-body" id="cp-list">
-              ${allNames.length ? renderNames("") : `<div style="padding:20px;text-align:center;color:var(--text2);font-size:13px">कोई saved customer नहीं है</div>`}
-            </div>
-            <div class="sel-popup-type-row">
-              <input class="sel-popup-type-inp" id="cp-type-inp" type="text" placeholder="नया नाम type करें..." />
-              <button class="sel-popup-type-btn" id="cp-use-btn">Use करें →</button>
-            </div>
-          </div>`;
+      function filterCustDropdown(val) {
+        const dd = document.getElementById("cust-inline-dropdown");
+        if (!dd) return;
+        const fl = val.toLowerCase();
+        const filtered = fl ? (dd._allNames || []).filter(n => n.toLowerCase().includes(fl)) : (dd._allNames || []);
+        renderCustDropdownList(filtered);
+      }
 
-        document.body.appendChild(overlay);
-
-        overlay.querySelector("#cp-search").addEventListener("input", function() {
-          document.getElementById("cp-list").innerHTML = renderNames(this.value);
-        });
-        overlay.querySelector("#cp-list").addEventListener("click", function(e) {
-          const opt = e.target.closest(".sel-popup-opt");
-          if (!opt) return;
-          const name = filteredNames[parseInt(opt.dataset.idx)];
-          if (name) selectCustPickerName(name);
-        });
-        overlay.querySelector("#cp-use-btn").addEventListener("click", function() {
-          const val = document.getElementById("cp-type-inp")?.value.trim();
-          if (!val) { toast("⚠️ नाम लिखें"); return; }
-          selectCustPickerName(val);
-        });
-        overlay.querySelector("#cp-close-btn").addEventListener("click", closeCustPicker);
-        overlay.addEventListener("click", e => { if (e.target === overlay) closeCustPicker(); });
-        setTimeout(() => document.getElementById("cp-search")?.focus(), 80);
+      function useCustPickerTyped() {
+        const val = document.getElementById("cp-type-inline")?.value.trim();
+        if (!val) { toast("⚠️ नाम लिखें"); return; }
+        selectCustPickerName(val);
       }
 
       function selectCustPickerName(name) {
@@ -5113,14 +5130,17 @@
       }
 
       function selectCustPickerTyped() {
-        const val = document.getElementById("cp-type-inp")?.value.trim();
+        const val = document.getElementById("cp-type-inline")?.value.trim();
         if (!val) { toast("⚠️ नाम लिखें"); return; }
         selectCustPickerName(val);
       }
 
       function closeCustPicker() {
-        const el = document.getElementById("cust-picker-overlay");
-        if (el) el.remove();
+        const dd = document.getElementById("cust-inline-dropdown");
+        if (dd) dd.classList.remove("open");
+        const wrap = document.getElementById("udhar-name-picker");
+        if (wrap) { wrap.style.borderColor = ""; wrap.style.boxShadow = ""; }
+        document.removeEventListener("click", _selOutsideHandler);
       }
 
       // ═══════════════════════════════════════
