@@ -1969,9 +1969,15 @@
         font-size: 13px;
         font-family: "Noto Sans", sans-serif;
         color: var(--text);
-        transition: border-color 0.18s, box-shadow 0.18s;
+        transition: border-color 0.18s;
         user-select: none;
         min-height: 42px;
+        overflow: visible;
+      }
+      .custom-sel-trigger.dd-open {
+        border-color: var(--primary);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
       }
       .custom-sel-trigger:active {
         border-color: var(--primary);
@@ -2005,6 +2011,12 @@
         transition: border-color 0.18s;
         min-height: 42px;
         user-select: none;
+        overflow: visible;
+      }
+      .cust-picker-wrap.dd-open {
+        border-color: var(--primary);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
       }
       .cust-picker-val {
         color: #94a3b8;
@@ -2021,56 +2033,52 @@
       }
       .sel-dropdown {
         position: absolute;
-        top: calc(100% + 6px);
-        left: 0;
-        right: 0;
-        background: var(--surface);
+        top: calc(100% + 0px);
+        left: -1.5px;
+        right: -1.5px;
+        background: #1a2744;
         border: 1.5px solid var(--primary);
-        border-radius: 10px;
-        box-shadow: 0 8px 28px rgba(15,36,64,0.18);
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 10px 32px rgba(10,20,50,0.45);
         z-index: 600;
-        max-height: 240px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        overscroll-behavior: contain;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        /* Break out of parent flex context */
+        overflow: hidden;
         display: block !important;
         flex-direction: unset !important;
         flex: unset !important;
-        min-width: 160px;
       }
-      .sel-dropdown::-webkit-scrollbar { display: none; }
       .sel-dropdown-opt {
-        padding: 9px 13px;
+        padding: 10px 13px;
         font-size: 13px;
         font-family: "Noto Sans", sans-serif;
         cursor: pointer;
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
-        gap: 8px;
-        border-bottom: 1px solid var(--bg);
-        transition: background 0.1s;
+        gap: 9px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        transition: background 0.12s;
         white-space: nowrap;
-        color: var(--text);
+        color: #c8d8f0;
         width: 100%;
         box-sizing: border-box;
       }
       .sel-dropdown-opt:last-child { border-bottom: none; }
       .sel-dropdown-opt:active,
-      .sel-dropdown-opt:hover { background: var(--primary-l); }
+      .sel-dropdown-opt:hover {
+        background: rgba(99,149,255,0.14);
+        color: #fff;
+      }
       .sel-dropdown-opt.active {
-        background: var(--primary-l);
-        color: var(--primary);
-        font-weight: 700;
+        background: rgba(99,149,255,0.18);
+        color: #7eb3ff;
+        font-weight: 600;
       }
       .sel-dropdown-opt .dd-emoji {
         font-size: 15px;
         line-height: 1;
         flex-shrink: 0;
-        width: 20px;
+        width: 22px;
         text-align: center;
       }
       .sel-dropdown-opt .dd-label {
@@ -2082,7 +2090,7 @@
       }
       .sel-dropdown-opt .dd-check {
         width: 16px; height: 16px; border-radius: 50%;
-        background: var(--primary);
+        background: #3b82f6;
         display: flex; align-items: center; justify-content: center;
         flex-shrink: 0; opacity: 0;
       }
@@ -2091,30 +2099,33 @@
       /* Customer picker inline */
       .cust-dropdown {
         position: absolute;
-        top: calc(100% + 6px);
-        left: 0; right: 0;
-        background: var(--surface);
+        top: calc(100%);
+        left: -1.5px;
+        right: -1.5px;
+        background: #1a2744;
         border: 1.5px solid var(--primary);
-        border-radius: 10px;
-        box-shadow: 0 8px 28px rgba(15,36,64,0.18);
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 10px 32px rgba(10,20,50,0.45);
         z-index: 600;
         display: none;
-        min-width: 200px;
+        overflow: hidden;
       }
       .cust-dropdown.open { display: block; }
       .cust-dropdown-search {
         width: 100%;
         padding: 9px 12px;
         border: none;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
         font-size: 13px;
         font-family: "Noto Sans", sans-serif;
         outline: none;
-        background: var(--bg);
-        border-radius: 10px 10px 0 0;
+        background: rgba(255,255,255,0.06);
+        color: #e2eaf8;
         display: block;
         box-sizing: border-box;
       }
+      .cust-dropdown-search::placeholder { color: #6b82a8; }
       .cust-dropdown-list {
         max-height: 180px;
         overflow-y: auto;
@@ -2128,14 +2139,18 @@
         display: flex;
         gap: 6px;
         padding: 8px 10px;
-        border-top: 1px solid var(--border);
-        background: var(--bg);
-        border-radius: 0 0 10px 10px;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        background: rgba(0,0,0,0.2);
       }
       .cust-dropdown-footer input {
         flex: 1; padding: 7px 10px; font-size: 12.5px; border-radius: 7px;
         display: block; box-sizing: border-box;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: #e2eaf8;
+        font-family: "Noto Sans", sans-serif;
       }
+      .cust-dropdown-footer input::placeholder { color: #6b82a8; }
       .cust-dropdown-footer button {
         padding: 7px 12px; font-size: 12px; border-radius: 7px;
         background: var(--primary); color: white; border: none;
@@ -2462,11 +2477,11 @@
                 <span class="cust-picker-val" id="udhar-name-display">नाम चुनें या टाइप करें...</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                 <div class="cust-dropdown" id="cust-inline-dropdown" onclick="event.stopPropagation()">
-                  <input class="cust-dropdown-search" id="cp-search-inline" type="text" placeholder="नाम से खोजें..." oninput="filterCustDropdown(this.value)" />
+                  <input class="cust-dropdown-search" id="cp-search-inline" type="text" placeholder="🔍 नाम खोजें..." oninput="filterCustDropdown(this.value)" autocomplete="off" autocorrect="off" spellcheck="false" />
                   <div class="cust-dropdown-list" id="cp-list-inline"></div>
                   <div class="cust-dropdown-footer">
-                    <input type="text" id="cp-type-inline" placeholder="नया नाम type करें..." />
-                    <button onclick="useCustPickerTyped()">Use →</button>
+                    <input type="text" id="cp-type-inline" placeholder="✏️ नया नाम लिखें..." autocomplete="off" />
+                    <button onclick="useCustPickerTyped()">जोड़ें →</button>
                   </div>
                 </div>
               </div>
@@ -2524,20 +2539,25 @@
           </button>
           <div class="card add-prod-form" id="prod-add-form">
             <div class="card-hd" style="margin-bottom:10px;">Product Details भरें</div>
-            <!-- Name + Category in one row -->
+            <!-- Name + Category in one row — 50/50 -->
             <div class="ir" style="margin-bottom:8px;gap:8px;">
-              <div style="flex:2">
+              <div style="flex:1;min-width:0;">
                 <label class="fl">Product का नाम *</label>
                 <input id="p-name" type="text" placeholder="जैसे: Basmati Chawal" style="padding:8px 10px;font-size:12.5px;" />
               </div>
-              <div style="flex:1">
+              <div style="flex:1;min-width:0;position:relative;">
                 <label class="fl">Category</label>
-                <div class="custom-sel-trigger" id="p-cat-trigger" onclick="openCustomSel('p-cat-sel','p-cat',this)" style="min-height:37px;padding:6px 8px;font-size:11.5px;">
-                  <span class="custom-sel-val" id="p-cat-display" style="font-size:11px;">🌾 Grains</span>
+                <div class="custom-sel-trigger" id="p-cat-trigger" onclick="openCustomSel('p-cat-sel','p-cat',this)" style="min-height:37px;padding:6px 10px;font-size:12px;">
+                  <span class="custom-sel-val" id="p-cat-display">🌾 Grains</span>
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
                 <input type="hidden" id="p-cat" value="अनाज / Grains" />
               </div>
+            </div>
+            <!-- Custom category input — shows only when Other is selected -->
+            <div id="p-cat-other-wrap" style="display:none;margin-bottom:8px;background:var(--primary-l);border-radius:var(--r-sm);padding:10px 12px;border-left:3px solid var(--primary);">
+              <label class="fl" style="color:var(--primary);margin-bottom:5px;">✏️ Custom Category लिखें</label>
+              <input id="p-cat-other" type="text" placeholder="जैसे: Beverages, Frozen Food..." style="padding:8px 10px;font-size:12.5px;background:white;" />
             </div>
 
             <!-- BULK / UNIT TABS -->
@@ -3470,7 +3490,7 @@
             btn.innerHTML = "<span>＋</span> Product जोड़ें / Update करें";
           }
           // Clear all product form fields
-          ["p-name","p-buy","p-sell","p-qty","p-unit-buy","p-unit-sell","p-unit-qty","p-bulk-unit-other","p-unit-other"].forEach(fid => {
+          ["p-name","p-buy","p-sell","p-qty","p-unit-buy","p-unit-sell","p-unit-qty","p-bulk-unit-other","p-unit-other","p-cat-other"].forEach(fid => {
             const el = document.getElementById(fid);
             if (el) el.value = "";
           });
@@ -3480,6 +3500,8 @@
           if (bouWrap) bouWrap.style.display = "none";
           const uoWrap = document.getElementById("p-unit-other-wrap");
           if (uoWrap) uoWrap.style.display = "none";
+          const catOWrap = document.getElementById("p-cat-other-wrap");
+          if (catOWrap) catOWrap.style.display = "none";
         }
         // Auto-close restock add form when navigating away
         if (id !== "restock") {
@@ -3839,6 +3861,14 @@
         document.getElementById("p-unit-other-wrap").style.display =
           document.getElementById("p-unit").value === "other" ? "block" : "none";
       }
+      function checkCatOther() {
+        const isOther = document.getElementById("p-cat").value === "Other";
+        const wrap = document.getElementById("p-cat-other-wrap");
+        if (wrap) wrap.style.display = isOther ? "block" : "none";
+        if (isOther) {
+          setTimeout(() => document.getElementById("p-cat-other")?.focus({ preventScroll: true }), 80);
+        }
+      }
       function getUnit(selId, otherId) {
         const v = document.getElementById(selId).value;
         return v === "other"
@@ -3904,7 +3934,10 @@
           parseFloat(document.getElementById("p-unit-qty").value) || 0;
         const bulkUnit = getUnit("p-bulk-unit", "p-bulk-unit-other");
         const unit = getUnit("p-unit", "p-unit-other");
-        const cat = document.getElementById("p-cat").value,
+        const rawCat = document.getElementById("p-cat").value;
+        const cat = rawCat === "Other"
+          ? (document.getElementById("p-cat-other").value.trim() || "Other")
+          : rawCat,
           notes = "";
         const ex = data.products.find(
           (p) => p.name.toLowerCase() === name.toLowerCase(),
@@ -5018,9 +5051,10 @@
           </div>`;
         }).join("");
 
-        dd.addEventListener("click", function(e) {
+        dd.addEventListener("pointerdown", function(e) {
           const opt = e.target.closest(".sel-dropdown-opt");
           if (!opt) return;
+          e.stopPropagation();
           const idx = parseInt(opt.dataset.idx);
           const chosen = def.options[idx];
           if (!chosen) return;
@@ -5030,7 +5064,6 @@
             const disp = document.getElementById(displayId);
             if (disp) {
               if (defKey === "p-cat-sel") {
-                // Short display: emoji + first word
                 const p = chosen.label.match(/^(\S+)\s+(\S+)/);
                 disp.textContent = p ? p[1] + " " + p[2].replace("/","").trim() : chosen.label;
               } else {
@@ -5041,11 +5074,11 @@
           closeSelPopup();
           if (hiddenId === "p-bulk-unit") checkBulkUnitOther();
           if (hiddenId === "p-unit") checkUnitOther();
+          if (hiddenId === "p-cat") checkCatOther();
         });
 
         triggerEl.appendChild(dd);
-        triggerEl.style.borderColor = "var(--primary)";
-        triggerEl.style.boxShadow = "0 0 0 3px rgba(30,58,95,0.1)";
+        triggerEl.classList.add("dd-open");
 
         setTimeout(() => {
           document.addEventListener("click", _selOutsideHandler);
@@ -5054,19 +5087,22 @@
 
       function _selOutsideHandler(e) {
         const dd = document.getElementById("csel-dropdown");
+        if (dd) {
+          const trigger = dd.parentElement;
+          if (trigger && !trigger.contains(e.target)) closeSelPopup();
+        }
         const cp = document.getElementById("cust-inline-dropdown");
-        if (dd && !dd.parentElement.contains(e.target)) closeSelPopup();
-        if (cp && cp.classList.contains("open") && !cp.parentElement.contains(e.target)) closeCustPicker();
+        if (cp && cp.classList.contains("open")) {
+          const wrap = document.getElementById("udhar-name-picker");
+          if (wrap && !wrap.contains(e.target)) closeCustPicker();
+        }
       }
 
       function closeSelPopup() {
         const dd = document.getElementById("csel-dropdown");
         if (dd) {
           const parent = dd.parentElement;
-          if (parent) {
-            parent.style.borderColor = "";
-            parent.style.boxShadow = "";
-          }
+          if (parent) parent.classList.remove("dd-open");
           dd.remove();
         }
         document.removeEventListener("click", _selOutsideHandler);
@@ -5084,14 +5120,21 @@
           ...data.udhar.map(u => u.name),
         ])].sort();
         dd._allNames = allNames;
+        // Clear search
+        const searchEl = document.getElementById("cp-search-inline");
+        if (searchEl) searchEl.value = "";
         renderCustDropdownList(allNames);
         dd.classList.add("open");
         const wrap = document.getElementById("udhar-name-picker");
-        if (wrap) { wrap.style.borderColor = "var(--primary)"; wrap.style.boxShadow = "0 0 0 3px rgba(30,58,95,0.1)"; }
+        if (wrap) wrap.classList.add("dd-open");
+        // Delay focus so phone doesn't jump scroll — only focus search, not the wrapper
         setTimeout(() => {
-          document.getElementById("cp-search-inline")?.focus();
+          const s = document.getElementById("cp-search-inline");
+          if (s) {
+            s.focus({ preventScroll: true });
+          }
           document.addEventListener("click", _selOutsideHandler);
-        }, 10);
+        }, 80);
       }
 
       function renderCustDropdownList(names) {
@@ -5102,10 +5145,17 @@
           return;
         }
         list.innerHTML = names.map((n, i) => `
-          <div class="sel-dropdown-opt" data-idx="${i}" onclick="selectCustPickerName('${n.replace(/'/g,"\\'")}')">
+          <div class="sel-dropdown-opt" data-idx="${i}">
             <span class="dd-emoji">👤</span>
             <span class="dd-label">${n}</span>
           </div>`).join("");
+        // Use pointerdown so selection fires before outside-click closes it
+        list.querySelectorAll(".sel-dropdown-opt").forEach((el, i) => {
+          el.addEventListener("pointerdown", function(e) {
+            e.stopPropagation();
+            selectCustPickerName(names[i]);
+          });
+        });
       }
 
       function filterCustDropdown(val) {
@@ -5139,7 +5189,7 @@
         const dd = document.getElementById("cust-inline-dropdown");
         if (dd) dd.classList.remove("open");
         const wrap = document.getElementById("udhar-name-picker");
-        if (wrap) { wrap.style.borderColor = ""; wrap.style.boxShadow = ""; }
+        if (wrap) wrap.classList.remove("dd-open");
         document.removeEventListener("click", _selOutsideHandler);
       }
 
