@@ -600,14 +600,12 @@
         background: var(--border);
       }
       .dropdown {
-        position: absolute;
-        right: 0;
-        top: calc(100% + 4px);
+        position: fixed; /* fixed instead of absolute to escape overflow:hidden parents */
         background: white;
         border-radius: var(--r);
         box-shadow: var(--sh2);
         border: 1px solid var(--border);
-        z-index: 200;
+        z-index: 800;
         min-width: 160px;
         overflow: hidden;
       }
@@ -1099,26 +1097,36 @@
 
       /* ── RESTOCK BUTTON STATES ── */
       .rstock-btn-pending {
-        background: var(--amber-l);
-        color: var(--amber);
-        border: 1px solid #fde68a;
+        background: var(--primary-l);
+        color: var(--primary);
+        border: 1.5px solid #93c5fd;
         border-radius: 8px;
-        padding: 4px 9px;
+        padding: 4px 10px;
         font-size: 11px;
         font-weight: 700;
         cursor: pointer;
         font-family: "Baloo 2", cursive;
+        transition: all 0.15s;
+      }
+      .rstock-btn-pending:active {
+        background: var(--primary);
+        color: white;
       }
       .rstock-btn-added {
         background: var(--green-l);
         color: var(--green-d);
-        border: 1px solid #86efac;
-        border-radius: 7px;
-        padding: 4px 9px;
+        border: 1.5px solid #86efac;
+        border-radius: 8px;
+        padding: 4px 10px;
         font-size: 11px;
         font-weight: 700;
         cursor: pointer;
         font-family: "Baloo 2", cursive;
+        transition: all 0.15s;
+      }
+      .rstock-btn-added:active {
+        background: var(--green-d);
+        color: white;
       }
 
       /* ── SEARCH ── */
@@ -1795,7 +1803,7 @@
 
       /* ── RESTOCK BUY LIST QTY — clickable button style ── */
       .buy-qty-btn {
-        min-width: 64px;
+        min-width: 72px;
         padding: 6px 10px;
         background: var(--bg);
         border: 1.5px solid var(--border);
@@ -1807,6 +1815,7 @@
         cursor: pointer;
         font-family: "Baloo 2", cursive;
         transition: all 0.15s;
+        line-height: 1.3;
       }
       .buy-qty-btn:hover {
         border-color: var(--primary);
@@ -2042,11 +2051,18 @@
         border-radius: 0 0 10px 10px;
         box-shadow: 0 10px 32px rgba(10,20,50,0.45);
         z-index: 600;
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 210px; /* ~5 options × 42px each */
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
         display: block !important;
         flex-direction: unset !important;
         flex: unset !important;
+        -webkit-overflow-scrolling: touch;
       }
+      .sel-dropdown::-webkit-scrollbar { display: none; }
       .sel-dropdown-opt {
         padding: 10px 13px;
         font-size: 13px;
@@ -2482,7 +2498,7 @@
                   oninput="document.getElementById('u-name').value=this.value"
                   style="flex:1;"
                 />
-                <button type="button" onclick="openSavedCustSheet()" style="
+                <button type="button" onclick="openSavedCustSheet()" onmousedown="event.preventDefault()" style="
                   width:42px;height:42px;flex-shrink:0;
                   background:var(--primary);color:white;
                   border:none;border-radius:var(--r-sm);
@@ -2510,21 +2526,6 @@
                 <label class="fl">चीज़ (optional)</label
                 ><input id="u-item" type="text" placeholder="आटा, चीनी..." />
               </div>
-            </div>
-            <div class="fg">
-              <label class="photo-btn"
-                ><span>📷</span> परचे की Photo (optional)<input
-                  type="file"
-                  accept="image/*"
-                  id="u-photo"
-                  style="display: none"
-                  onchange="previewUdharPhoto(this)"
-              /></label>
-              <img
-                id="u-photo-preview"
-                style="display: none; margin-top: 8px"
-                class="photo-thumb"
-              />
             </div>
             <button class="btn btn-p fw" onclick="addUdhar()">
               उधार जोड़ें ✓
@@ -2800,41 +2801,10 @@
               <label class="fl">Product का नाम *</label
               ><input id="r-item" type="text" placeholder="Item का नाम" />
             </div>
-            <div class="fg">
-              <label class="fl">Unit चुनें</label>
-              <div class="rstock-unit-sel" id="r-unit-chips">
-                <span class="unit-chip sel" onclick="selectUnit(this, 'bori')"
-                  >Bori</span
-                >
-                <span class="unit-chip" onclick="selectUnit(this, 'kg')"
-                  >kg</span
-                >
-                <span class="unit-chip" onclick="selectUnit(this, 'gm')"
-                  >gm</span
-                >
-                <span class="unit-chip" onclick="selectUnit(this, 'piece')"
-                  >Piece</span
-                >
-                <span class="unit-chip" onclick="selectUnit(this, 'litre')"
-                  >Litre</span
-                >
-                <span class="unit-chip" onclick="selectUnit(this, 'other')"
-                  >Other...</span
-                >
-              </div>
-            </div>
-            <div id="r-unit-other-wrap" style="display: none" class="fg">
-              <label class="fl">Unit का नाम लिखें</label>
-              <input
-                id="r-unit-other"
-                type="text"
-                placeholder="जैसे: packet, crate..."
-              />
-            </div>
             <div class="ir">
               <div>
-                <label class="fl">कितना चाहिए? (Qty)</label
-                ><input id="r-howmuch" type="number" placeholder="जैसे: 5" />
+                <label class="fl">कितना चाहिए?</label>
+                <input id="r-howmuch" type="text" placeholder="जैसे: 5kg, 2 bori..." autocomplete="off" />
               </div>
               <div>
                 <label class="fl">Price (₹) optional</label
@@ -3626,7 +3596,29 @@
         document.querySelectorAll(".dropdown").forEach((d) => {
           if (d.id !== id) d.classList.add("hidden");
         });
+        const isHidden = el.classList.contains("hidden");
         el.classList.toggle("hidden");
+        if (isHidden) {
+          // Smart positioning using fixed coords from the trigger button
+          const btn = el.previousElementSibling || el.parentElement?.querySelector(".three-dot");
+          if (btn) {
+            const rect = btn.getBoundingClientRect();
+            const ddW = 170;
+            const screenW = window.innerWidth;
+            const screenH = window.innerHeight;
+            // Horizontal: right-align but clamp to screen
+            let left = rect.right - ddW;
+            if (left < 8) left = 8;
+            if (left + ddW > screenW - 8) left = screenW - ddW - 8;
+            // Vertical: open below, but flip above if not enough space
+            const ddH = el.querySelectorAll(".dd-item").length * 44 + 8;
+            let top = rect.bottom + 4;
+            if (top + ddH > screenH - 8) top = rect.top - ddH - 4;
+            el.style.left = left + "px";
+            el.style.top = top + "px";
+            el.style.right = "auto";
+          }
+        }
       }
 
       // ── HOME ──
@@ -3676,8 +3668,6 @@
           toast("⚠️ नाम और रकम भरें");
           return;
         }
-        const photoEl = document.getElementById("u-photo-preview");
-        const photo = photoEl.style.display !== "none" ? photoEl.src : "";
         const ex = data.udhar.find(
           (u) => u.name.toLowerCase() === name.toLowerCase(),
         );
@@ -3688,7 +3678,6 @@
               amount: ex.amount,
               item: ex.item || "",
               date: ex.date,
-              photo: ex.photo || "",
             },
           ];
           ex.entries.push({
@@ -3696,10 +3685,8 @@
             amount,
             item,
             date: today(),
-            photo,
           });
           ex.amount += amount;
-          ex.photo = ex.photo || photo;
         } else {
           data.udhar.push({
             id: genId(),
@@ -3707,9 +3694,8 @@
             amount,
             item,
             date: today(),
-            photo,
             deposits: 0,
-            entries: [{ type: "debit", amount, item, date: today(), photo }],
+            entries: [{ type: "debit", amount, item, date: today() }],
           });
         }
         save();
@@ -3719,8 +3705,6 @@
         if (nameInp) nameInp.value = "";
         document.getElementById("u-amount").value = "";
         document.getElementById("u-item").value = "";
-        document.getElementById("u-photo-preview").style.display = "none";
-        document.getElementById("u-photo").value = "";
         renderUdhar();
         updateHome();
       }
@@ -4157,9 +4141,9 @@
           // Add to buy list
           const price =
             p.buy && p.qty
-              ? `₹${p.buy}/${p.bulkUnit || p.unit || ""}`
+              ? `₹${p.buy}/${p.qty} ${(p.bulkUnit || p.unit || "").trim()}`
               : p.unitBuy
-                ? `₹${p.unitBuy}/${p.unit}`
+                ? `₹${p.unitBuy}/${p.unitQty || 1} ${(p.unit || "").trim()}`
                 : "";
           data.restock.push({
             id: genId(),
@@ -4478,19 +4462,17 @@
           toast("⚠️ नाम भरें");
           return;
         }
-        let unit = selectedUnit;
-        if (unit === "other") {
-          unit =
-            document.getElementById("r-unit-other").value.trim() || "other";
-        }
         const howmuch = document.getElementById("r-howmuch").value.trim();
         const price = document.getElementById("r-price").value.trim();
+        // Extract unit from howmuch field (e.g. "5kg" → unit="kg", "2 bori" → unit="bori")
+        const unitMatch = howmuch.match(/[a-zA-Z]+/);
+        const unit = unitMatch ? unitMatch[0] : "";
         data.restock.push({
           id: genId(),
           item,
           unit,
           howmuch,
-          price,
+          price: price ? "₹" + price : "",
           done: false,
           date: today(),
         });
@@ -4566,9 +4548,9 @@
           ) {
             const price =
               p.buy && p.qty
-                ? `₹${p.buy}/${p.bulkUnit || p.unit || ""}`
+                ? `₹${p.buy}/${p.qty} ${(p.bulkUnit || p.unit || "").trim()}`
                 : p.unitBuy
-                  ? `₹${p.unitBuy}/${p.unit}`
+                  ? `₹${p.unitBuy}/${p.unitQty || 1} ${(p.unit || "").trim()}`
                   : "";
             data.restock.push({
               id: genId(),
@@ -4598,18 +4580,24 @@
         }
         list.innerHTML = data.restock
           .map((r) => {
-            // r.price stored as "₹222/kg" or plain number — strip for display
-            const priceClean = r.price ? r.price.replace(/[₹]/g, "").split("/")[0].trim() : "";
-            // Build qty display button content
+            // r.price stored as "₹1200/50kg" — extract price number and qty+unit part
+            const priceRaw = r.price || "";
+            const priceNum = priceRaw.replace(/[₹]/g, "").split("/")[0].trim();
+            const priceUnit = priceRaw.includes("/") ? priceRaw.split("/").slice(1).join("/").trim() : (r.unit || "");
+            // Full label: ₹1200 / 50kg
+            const priceLabel = priceNum
+              ? `₹${priceNum}${priceUnit ? " / " + priceUnit : ""}`
+              : "";
+            // howmuch bold primary-mid on top, price grey small below
             let qtyLabel;
-            if (priceClean && r.howmuch) {
-              qtyLabel = `<span style="color:var(--primary-mid);font-weight:800">₹${priceClean}</span><span style="color:var(--text2);font-weight:600;font-size:11px"> × </span><span style="color:var(--text);font-weight:700">${r.howmuch}</span>`;
-            } else if (priceClean) {
-              qtyLabel = `<span style="color:var(--primary-mid);font-weight:800">₹${priceClean}</span>`;
+            if (r.howmuch && priceLabel) {
+              qtyLabel = `<span style="color:var(--primary-mid);font-weight:800;font-size:12.5px">${r.howmuch}</span><span style="color:var(--text2);font-weight:400;font-size:10px;display:block;margin-top:1px">${priceLabel}</span>`;
             } else if (r.howmuch) {
-              qtyLabel = `<span style="color:var(--text);font-weight:700">${r.howmuch}</span>`;
+              qtyLabel = `<span style="color:var(--primary-mid);font-weight:800;font-size:12.5px">${r.howmuch}</span>`;
+            } else if (priceLabel) {
+              qtyLabel = `<span style="color:var(--text2);font-weight:400;font-size:11px">${priceLabel}</span>`;
             } else {
-              qtyLabel = `<span style="color:var(--text2)">Qty?</span>`;
+              qtyLabel = `<span style="color:var(--text2);font-size:11px">Set Qty</span>`;
             }
             return `
   <div class="buy-row">
@@ -4675,9 +4663,17 @@
         const r = data.restock.find((x) => x.id === id);
         if (!r) return;
         const qty = document.getElementById("qty-popup-inp").value.trim();
-        const price = document.getElementById("qty-popup-price").value.trim();
+        const newPriceNum = document.getElementById("qty-popup-price").value.trim();
         r.howmuch = qty;
-        if (price) r.price = "₹" + price;
+        if (newPriceNum) {
+          // Preserve the existing qty+unit part (e.g. "100 bori") from stored price
+          const existingUnit = r.price && r.price.includes("/")
+            ? r.price.split("/").slice(1).join("/").trim()
+            : "";
+          r.price = existingUnit
+            ? `₹${newPriceNum}/${existingUnit}`
+            : `₹${newPriceNum}`;
+        }
         save();
         closeRestockQtyPopup();
         renderRestock();
