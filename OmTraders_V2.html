@@ -2053,7 +2053,7 @@
         z-index: 600;
         overflow-y: auto;
         overflow-x: hidden;
-        max-height: 210px; /* ~5 options × 42px each */
+        max-height: 160px; /* ~4 options visible, rest scrollable */
         overscroll-behavior: contain;
         scrollbar-width: none;
         -ms-overflow-style: none;
@@ -2489,20 +2489,36 @@
             <div class="card-hd">नया उधार जोड़ें</div>
             <div class="fg">
               <label class="fl">ग्राहक का नाम *</label>
-              <div style="display:flex;gap:8px;align-items:center;">
-                <input
-                  id="u-name-input"
-                  type="text"
-                  placeholder="नाम लिखें..."
-                  autocomplete="off"
-                  oninput="document.getElementById('u-name').value=this.value"
-                  style="flex:1;"
-                />
+              <div style="display:flex;gap:8px;align-items:flex-start;">
+                <div style="flex:1;position:relative;">
+                  <input
+                    id="u-name-input"
+                    type="text"
+                    placeholder="नाम लिखें..."
+                    autocomplete="off"
+                    oninput="onUdharNameInput(this.value)"
+                    onfocus="onUdharNameInput(this.value)"
+                    onblur="setTimeout(closeUdharSuggest,200)"
+                    style="width:100%;"
+                  />
+                  <!-- Live suggestions dropdown -->
+                  <div id="u-name-suggest" style="
+                    display:none;position:absolute;top:calc(100% + 2px);
+                    left:0;right:0;
+                    background:#1a2744;
+                    border:1.5px solid var(--primary);
+                    border-radius:0 0 10px 10px;
+                    box-shadow:0 8px 24px rgba(10,20,50,0.35);
+                    z-index:600;
+                    max-height:160px;overflow-y:auto;overflow-x:hidden;
+                    scrollbar-width:none;-ms-overflow-style:none;
+                  "></div>
+                </div>
                 <button type="button" onclick="openSavedCustSheet()" onmousedown="event.preventDefault()" style="
-                  width:42px;height:42px;flex-shrink:0;
+                  width:42px;height:42px;flex-shrink:0;margin-top:0;
                   background:var(--primary);color:white;
                   border:none;border-radius:var(--r-sm);
-                  font-size:22px;line-height:1;cursor:pointer;
+                  cursor:pointer;
                   display:flex;align-items:center;justify-content:center;
                   box-shadow:0 2px 8px rgba(30,58,95,0.25);
                   transition:background 0.15s;
@@ -2595,100 +2611,77 @@
 
             <!-- BULK SECTION -->
             <div class="bulk-section" id="prod-bulk-section">
-              <div class="ir">
+              <div class="ir" style="margin-bottom:8px;">
                 <div>
-                  <label class="fl">Buy Price ₹</label
-                  ><input
-                    id="p-buy"
-                    type="number"
-                    placeholder="1200"
-                    oninput="calcPrices()"
-                  />
+                  <label class="fl">Buy Price ₹</label>
+                  <input id="p-buy" type="number" placeholder="1200" oninput="calcPrices()"
+                    style="padding:8px 10px;font-size:12.5px;" />
                 </div>
                 <div>
-                  <label class="fl">Sell Price ₹</label
-                  ><input
-                    id="p-sell"
-                    type="number"
-                    placeholder="1400"
-                    oninput="calcPrices()"
-                  />
+                  <label class="fl">Sell Price ₹</label>
+                  <input id="p-sell" type="number" placeholder="1400" oninput="calcPrices()"
+                    style="padding:8px 10px;font-size:12.5px;" />
                 </div>
               </div>
-              <div class="ir">
+              <div class="ir" style="margin-bottom:8px;">
                 <div>
-                  <label class="fl">Qty</label
-                  ><input
-                    id="p-qty"
-                    type="number"
-                    placeholder="50"
-                    oninput="calcPrices()"
-                  />
+                  <label class="fl">Qty</label>
+                  <input id="p-qty" type="number" placeholder="50" oninput="calcPrices()"
+                    style="padding:8px 10px;font-size:12.5px;" />
                 </div>
                 <div>
                   <label class="fl">Bulk Unit</label>
-                  <div class="custom-sel-trigger" id="p-bulk-unit-trigger" onclick="openCustomSel('p-bulk-unit-sel','p-bulk-unit',this)">
+                  <div class="custom-sel-trigger" id="p-bulk-unit-trigger"
+                    onclick="openCustomSel('p-bulk-unit-sel','p-bulk-unit',this)"
+                    style="min-height:37px;padding:6px 10px;font-size:12.5px;">
                     <span class="custom-sel-val" id="p-bulk-unit-display">kg</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                   </div>
                   <input type="hidden" id="p-bulk-unit" value="kg" />
                 </div>
               </div>
-              <div id="p-bulk-unit-other-wrap" style="display: none" class="fg">
+              <div id="p-bulk-unit-other-wrap" style="display:none;margin-bottom:8px;" class="fg">
                 <label class="fl">Custom Unit लिखें</label>
-                <input
-                  id="p-bulk-unit-other"
-                  type="text"
-                  placeholder="जैसे: quintal, crate..."
-                />
+                <input id="p-bulk-unit-other" type="text" placeholder="जैसे: quintal, crate..."
+                  style="padding:8px 10px;font-size:12.5px;" />
               </div>
             </div>
 
             <!-- UNIT SECTION -->
-            <div
-              class="unit-section"
-              id="prod-unit-section"
-              style="display: none"
-            >
-              <div class="ir">
+            <div class="unit-section" id="prod-unit-section" style="display:none">
+              <div class="ir" style="margin-bottom:8px;">
                 <div>
-                  <label class="fl">Buy Price ₹</label
-                  ><input
-                    id="p-unit-buy"
-                    type="number"
-                    placeholder="per unit"
-                  />
+                  <label class="fl">Buy Price ₹</label>
+                  <input id="p-unit-buy" type="number" placeholder="per unit"
+                    style="padding:8px 10px;font-size:12.5px;" />
                 </div>
                 <div>
-                  <label class="fl">Sell Price ₹</label
-                  ><input
-                    id="p-unit-sell"
-                    type="number"
-                    placeholder="per unit"
-                  />
+                  <label class="fl">Sell Price ₹</label>
+                  <input id="p-unit-sell" type="number" placeholder="per unit"
+                    style="padding:8px 10px;font-size:12.5px;" />
                 </div>
               </div>
-              <div class="ir">
+              <div class="ir" style="margin-bottom:8px;">
                 <div>
-                  <label class="fl">Qty</label
-                  ><input id="p-unit-qty" type="number" placeholder="e.g. 1" />
+                  <label class="fl">Qty</label>
+                  <input id="p-unit-qty" type="number" placeholder="e.g. 1"
+                    style="padding:8px 10px;font-size:12.5px;" />
                 </div>
                 <div>
                   <label class="fl">Unit</label>
-                  <div class="custom-sel-trigger" id="p-unit-trigger" onclick="openCustomSel('p-unit-sel','p-unit',this)">
+                  <div class="custom-sel-trigger" id="p-unit-trigger"
+                    onclick="openCustomSel('p-unit-sel','p-unit',this)"
+                    style="min-height:37px;padding:6px 10px;font-size:12.5px;">
                     <span class="custom-sel-val" id="p-unit-display">kg</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                   </div>
                   <input type="hidden" id="p-unit" value="kg" />
                 </div>
               </div>
-              <div id="p-unit-other-wrap" style="display: none" class="fg">
+              <div id="p-unit-other-wrap" style="display:none;margin-bottom:8px;" class="fg">
                 <label class="fl">Custom Unit लिखें</label>
-                <input
-                  id="p-unit-other"
-                  type="text"
-                  placeholder="जैसे: bottle, strip..."
-                />
+                <input id="p-unit-other" type="text" placeholder="जैसे: bottle, strip..."
+                  style="padding:8px 10px;font-size:12.5px;" />
               </div>
             </div>
 
@@ -3703,6 +3696,7 @@
         document.getElementById("u-name").value = "";
         const nameInp = document.getElementById("u-name-input");
         if (nameInp) nameInp.value = "";
+        closeUdharSuggest();
         document.getElementById("u-amount").value = "";
         document.getElementById("u-item").value = "";
         renderUdhar();
@@ -5192,7 +5186,7 @@
             sheet.style.transform = "translateY(0)";
           });
         });
-        setTimeout(() => search?.focus({ preventScroll: true }), 320);
+        // Do NOT auto-focus — let user tap search manually to avoid keyboard popup
       }
 
       function closeSavedCustSheet() {
@@ -5256,22 +5250,68 @@
       }
 
       function selectSavedCust(name) {
-        // Fill the text input
         const inp = document.getElementById("u-name-input");
         if (inp) inp.value = name;
-        // Fill the hidden field
         const hidden = document.getElementById("u-name");
         if (hidden) hidden.value = name;
+        closeUdharSuggest();
         closeSavedCustSheet();
         toast("✅ " + name + " select हुआ");
       }
 
-      // ── Keep old functions as stubs so nothing breaks ──
+      // ── keep old functions as stubs so nothing breaks ──
       function openCustPicker() {}
       function closeCustPicker() {}
       function selectCustPickerName(name) { selectSavedCust(name); }
       function filterCustDropdown() {}
       function useCustPickerTyped() {}
+
+      // ── UDHAR NAME LIVE AUTOCOMPLETE ──
+      function onUdharNameInput(val) {
+        // Always sync hidden field
+        document.getElementById("u-name").value = val;
+        const box = document.getElementById("u-name-suggest");
+        if (!box) return;
+        if (!val || val.length < 1) { box.style.display = "none"; return; }
+        const fl = val.toLowerCase();
+        const allNames = [...new Set([
+          ...data.customers.map(c => c.name),
+          ...data.udhar.map(u => u.name),
+        ])].filter(n => n.toLowerCase().includes(fl)).sort().slice(0, 6);
+        if (!allNames.length) { box.style.display = "none"; return; }
+        box.innerHTML = allNames.map((n, i) => {
+          const initials = n.trim().split(" ").map(w => w[0]).join("").toUpperCase().slice(0,2);
+          const colors = ["#1e3a5f","#16653a","#5b21b6","#0f766e","#991b1b","#b45309"];
+          const bg = colors[n.charCodeAt(0) % colors.length];
+          return `<div class="u-suggest-opt" data-name="${n.replace(/"/g,'&quot;')}" style="
+            display:flex;align-items:center;gap:10px;
+            padding:9px 13px;cursor:pointer;
+            border-bottom:1px solid rgba(255,255,255,0.06);
+            transition:background 0.1s;color:#c8d8f0;font-size:13px;
+          ">
+            <div style="width:28px;height:28px;border-radius:50%;background:${bg};
+              color:white;display:flex;align-items:center;justify-content:center;
+              font-family:'Baloo 2',cursive;font-size:11px;font-weight:700;flex-shrink:0;">${initials}</div>
+            <span style="flex:1;font-weight:600;">${n}</span>
+          </div>`;
+        }).join("");
+        box.style.display = "block";
+        // Attach click handlers
+        box.querySelectorAll(".u-suggest-opt").forEach(el => {
+          el.addEventListener("mousedown", function(e) {
+            e.preventDefault(); // prevent blur before click
+            const name = el.dataset.name;
+            document.getElementById("u-name-input").value = name;
+            document.getElementById("u-name").value = name;
+            box.style.display = "none";
+          });
+        });
+      }
+
+      function closeUdharSuggest() {
+        const box = document.getElementById("u-name-suggest");
+        if (box) box.style.display = "none";
+      }
 
       // ═══════════════════════════════════════
       // ── CUSTOMER LIST TOGGLE ──
