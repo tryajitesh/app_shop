@@ -62,10 +62,10 @@
       input:-webkit-autofill:hover,
       input:-webkit-autofill:focus,
       input:-webkit-autofill:active {
-        -webkit-box-shadow: 0 0 0 30px white inset !important;
-        box-shadow: 0 0 0 30px white inset !important;
-        -webkit-text-fill-color: var(--text) !important;
-        transition: background-color 5000s ease-in-out 0s;
+        -webkit-box-shadow: 0 0 0 1000px white inset !important;
+        box-shadow: 0 0 0 1000px white inset !important;
+        -webkit-text-fill-color: #0f172a !important;
+        transition: background-color 99999s ease-in-out 0s !important;
       }
       html {
         height: 100%;
@@ -1789,63 +1789,51 @@
         display: inline-flex;
         align-items: center;
         gap: 4px;
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-        border: none;
+        background: #fef3c7;
+        border: 1.5px solid #fcd34d;
         border-radius: 8px;
-        padding: 4px 11px;
+        padding: 3px 10px;
         font-size: 11px;
         font-weight: 700;
-        color: white;
+        color: #92400e;
         cursor: pointer;
         transition: all 0.18s;
         font-family: "Baloo 2", cursive;
-        box-shadow: 0 2px 8px rgba(217, 119, 6, 0.30);
       }
       .restock-alert-badge:hover {
-        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-        box-shadow: 0 4px 12px rgba(217, 119, 6, 0.40);
-        transform: translateY(-1px);
+        background: #fde68a;
+        border-color: #f59e0b;
       }
       .restock-alert-badge.active {
-        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-        box-shadow: 0 2px 8px rgba(22, 163, 74, 0.30);
-        color: white;
+        background: #d1fae5;
+        border-color: #6ee7b7;
+        color: #065f46;
       }
-      /* ── Colourful Restock screen action buttons ── */
+      /* ── Restock action buttons — muted professional ── */
       .btn-autopull {
-        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-        color: white;
-        border: none;
+        background: #dbeafe;
+        color: #1e40af;
+        border: 1.5px solid #93c5fd;
         border-radius: 9px;
         font-weight: 700;
         font-family: "Baloo 2", cursive;
-        box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
-        transition: all 0.18s;
-        letter-spacing: 0.2px;
+        transition: all 0.15s;
       }
-      .btn-autopull:hover {
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
-        transform: translateY(-1px);
+      .btn-autopull:active {
+        background: #bfdbfe;
       }
-      .btn-autopull:active { transform: scale(0.96); }
       .btn-doneclear {
-        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-        color: white;
-        border: none;
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1.5px solid #fca5a5;
         border-radius: 9px;
         font-weight: 700;
         font-family: "Baloo 2", cursive;
-        box-shadow: 0 2px 10px rgba(220, 38, 38, 0.30);
-        transition: all 0.18s;
-        letter-spacing: 0.2px;
+        transition: all 0.15s;
       }
-      .btn-doneclear:hover {
-        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-        box-shadow: 0 4px 14px rgba(220, 38, 38, 0.40);
-        transform: translateY(-1px);
+      .btn-doneclear:active {
+        background: #fecaca;
       }
-      .btn-doneclear:active { transform: scale(0.96); }
 
       /* ── RESTOCK BUY LIST QTY — clickable button style ── */
       .buy-qty-btn {
@@ -2280,11 +2268,11 @@
           <div class="auth-title">नमस्ते! Login करें</div>
           <div class="fg">
             <label class="fl">Username</label
-            ><input id="l-user" type="text" placeholder="username डालें" />
+            ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="l-user" type="text" placeholder="username डालें" />
           </div>
           <div class="fg">
             <label class="fl">Password</label
-            ><input id="l-pass" type="password" placeholder="Password" />
+            ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="l-pass" type="password" placeholder="Password" />
           </div>
           <button class="btn btn-p fw" onclick="doLogin()">Login करें →</button>
           <div class="auth-note">पहली बार? Sign Up करें।</div>
@@ -2293,7 +2281,7 @@
           <div class="auth-title">नया Account बनाएं</div>
           <div class="fg">
             <label class="fl">आपका नाम</label
-            ><input
+            ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
               id="s-uname"
               type="text"
               placeholder="Roopesh Kumar Verma"
@@ -2301,11 +2289,11 @@
           </div>
           <div class="fg">
             <label class="fl">Username</label
-            ><input id="s-user" type="text" placeholder="roopesh123" />
+            ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="s-user" type="text" placeholder="roopesh123" />
           </div>
           <div class="fg">
             <label class="fl">Password (6+ characters)</label
-            ><input id="s-pass" type="password" placeholder="Password" />
+            ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="s-pass" type="password" placeholder="Password" />
           </div>
           <button class="btn btn-p fw" onclick="doSignup()">
             Account बनाएं ✓
@@ -2537,11 +2525,11 @@
               <label class="fl">ग्राहक का नाम *</label>
               <div style="display:flex;gap:8px;align-items:flex-start;">
                 <div style="flex:1;position:relative;">
-                  <input
+                  <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
                     id="u-name-input"
                     type="text"
                     placeholder="नाम लिखें..."
-                    autocomplete="off"
+                    autocomplete="new-password"
                     oninput="onUdharNameInput(this.value)"
                     onfocus="onUdharNameInput(this.value)"
                     onblur="setTimeout(closeUdharSuggest,200)"
@@ -2582,11 +2570,11 @@
             <div class="ir">
               <div>
                 <label class="fl">रकम (₹) *</label
-                ><input id="u-amount" type="number" placeholder="500" />
+                ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="u-amount" type="number" placeholder="500" />
               </div>
               <div>
                 <label class="fl">चीज़ (optional)</label
-                ><input id="u-item" type="text" placeholder="आटा, चीनी..." />
+                ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="u-item" type="text" placeholder="आटा, चीनी..." />
               </div>
             </div>
             <button class="btn btn-p fw" onclick="addUdhar()">
@@ -2595,7 +2583,7 @@
           </div>
           <div class="search-wrap">
             <span class="si">🔍</span
-            ><input
+            ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
               type="text"
               placeholder="नाम से खोजें..."
               oninput="renderUdhar(this.value)"
@@ -2620,7 +2608,7 @@
             <div class="ir" style="margin-bottom:8px;gap:8px;">
               <div style="flex:1;min-width:0;">
                 <label class="fl">Product का नाम *</label>
-                <input id="p-name" type="text" placeholder="जैसे: Basmati Chawal" style="padding:8px 10px;font-size:12.5px;" />
+                <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="p-name" type="text" placeholder="जैसे: Basmati Chawal" style="padding:8px 10px;font-size:12.5px;" />
               </div>
               <div style="flex:1;min-width:0;position:relative;">
                 <label class="fl">Category</label>
@@ -2634,7 +2622,7 @@
             <!-- Custom category input — shows only when Other is selected -->
             <div id="p-cat-other-wrap" style="display:none;margin-bottom:8px;background:var(--primary-l);border-radius:var(--r-sm);padding:10px 12px;border-left:3px solid var(--primary);">
               <label class="fl" style="color:var(--primary);margin-bottom:5px;">✏️ Custom Category लिखें</label>
-              <input id="p-cat-other" type="text" placeholder="जैसे: Beverages, Frozen Food..." style="padding:8px 10px;font-size:12.5px;background:white;" />
+              <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="p-cat-other" type="text" placeholder="जैसे: Beverages, Frozen Food..." style="padding:8px 10px;font-size:12.5px;background:white;" />
             </div>
 
             <!-- BULK / UNIT TABS -->
@@ -2660,19 +2648,19 @@
               <div class="ir" style="margin-bottom:8px;">
                 <div>
                   <label class="fl">Buy Price ₹</label>
-                  <input id="p-buy" type="number" placeholder="1200" oninput="calcPrices()"
+                  <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="p-buy" type="number" placeholder="1200" oninput="calcPrices()"
                     style="padding:8px 10px;font-size:12.5px;" />
                 </div>
                 <div>
                   <label class="fl">Sell Price ₹</label>
-                  <input id="p-sell" type="number" placeholder="1400" oninput="calcPrices()"
+                  <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="p-sell" type="number" placeholder="1400" oninput="calcPrices()"
                     style="padding:8px 10px;font-size:12.5px;" />
                 </div>
               </div>
               <div class="ir" style="margin-bottom:8px;">
                 <div>
                   <label class="fl">Qty</label>
-                  <input id="p-qty" type="number" placeholder="50" oninput="calcPrices()"
+                  <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="p-qty" type="number" placeholder="50" oninput="calcPrices()"
                     style="padding:8px 10px;font-size:12.5px;" />
                 </div>
                 <div>
@@ -2688,7 +2676,7 @@
               </div>
               <div id="p-bulk-unit-other-wrap" style="display:none;margin-bottom:8px;" class="fg">
                 <label class="fl">Custom Unit लिखें</label>
-                <input id="p-bulk-unit-other" type="text" placeholder="जैसे: quintal, crate..."
+                <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="p-bulk-unit-other" type="text" placeholder="जैसे: quintal, crate..."
                   style="padding:8px 10px;font-size:12.5px;" />
               </div>
             </div>
@@ -2698,19 +2686,19 @@
               <div class="ir" style="margin-bottom:8px;">
                 <div>
                   <label class="fl">Buy Price ₹</label>
-                  <input id="p-unit-buy" type="number" placeholder="per unit"
+                  <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="p-unit-buy" type="number" placeholder="per unit"
                     style="padding:8px 10px;font-size:12.5px;" />
                 </div>
                 <div>
                   <label class="fl">Sell Price ₹</label>
-                  <input id="p-unit-sell" type="number" placeholder="per unit"
+                  <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="p-unit-sell" type="number" placeholder="per unit"
                     style="padding:8px 10px;font-size:12.5px;" />
                 </div>
               </div>
               <div class="ir" style="margin-bottom:8px;">
                 <div>
                   <label class="fl">Qty</label>
-                  <input id="p-unit-qty" type="number" placeholder="e.g. 1"
+                  <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="p-unit-qty" type="number" placeholder="e.g. 1"
                     style="padding:8px 10px;font-size:12.5px;" />
                 </div>
                 <div>
@@ -2726,7 +2714,7 @@
               </div>
               <div id="p-unit-other-wrap" style="display:none;margin-bottom:8px;" class="fg">
                 <label class="fl">Custom Unit लिखें</label>
-                <input id="p-unit-other" type="text" placeholder="जैसे: bottle, strip..."
+                <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="p-unit-other" type="text" placeholder="जैसे: bottle, strip..."
                   style="padding:8px 10px;font-size:12.5px;" />
               </div>
             </div>
@@ -2740,7 +2728,7 @@
           </div>
           <div class="search-wrap">
             <span class="si">🔍</span
-            ><input
+            ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
               type="text"
               placeholder="Product खोजें..."
               oninput="renderProducts(this.value)"
@@ -2760,7 +2748,7 @@
             <div class="ir">
               <div>
                 <label class="fl">Cash (₹)</label
-                ><input
+                ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
                   id="s-cash"
                   type="number"
                   placeholder="0"
@@ -2769,7 +2757,7 @@
               </div>
               <div>
                 <label class="fl">Online (₹)</label
-                ><input
+                ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
                   id="s-online"
                   type="number"
                   placeholder="0"
@@ -2792,7 +2780,7 @@
             ></div>
             <div class="fg">
               <label class="fl">Note (optional)</label
-              ><input
+              ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
                 id="s-note"
                 type="text"
                 placeholder="जैसे: Festival day"
@@ -2838,16 +2826,16 @@
             <div class="card-hd">Item जोड़ें</div>
             <div class="fg">
               <label class="fl">Product का नाम *</label
-              ><input id="r-item" type="text" placeholder="Item का नाम" />
+              ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="r-item" type="text" placeholder="Item का नाम" />
             </div>
             <div class="ir">
               <div>
                 <label class="fl">कितना चाहिए?</label>
-                <input id="r-howmuch" type="text" placeholder="जैसे: 5kg, 2 bori..." autocomplete="off" />
+                <input id="r-howmuch" type="text" placeholder="जैसे: 5kg, 2 bori..." autocomplete="new-password" />
               </div>
               <div>
                 <label class="fl">Price (₹) optional</label
-                ><input id="r-price" type="number" placeholder="जैसे: 1200" />
+                ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="r-price" type="number" placeholder="जैसे: 1200" />
               </div>
             </div>
             <button class="btn btn-p fw" onclick="addRestock()">
@@ -2875,10 +2863,10 @@
               Buy List <span id="r-count" class="badge b-red">0</span>
             </div>
             <div style="display: flex; gap: 6px">
-              <button class="btn btn-sm btn-autopull" onclick="pullFromProducts()">
+              <button class="btn btn-autopull btn-sm" onclick="pullFromProducts()">
                 ⚡ Auto-Pull
               </button>
-              <button class="btn btn-sm btn-doneclear" onclick="clearDoneRestock()">
+              <button class="btn btn-doneclear btn-sm" onclick="clearDoneRestock()">
                 🗑 Done हटाएं
               </button>
             </div>
@@ -2900,11 +2888,11 @@
             <div class="ir">
               <div>
                 <label class="fl">नाम *</label
-                ><input id="c-name" type="text" placeholder="Customer का नाम" />
+                ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="c-name" type="text" placeholder="Customer का नाम" />
               </div>
               <div>
                 <label class="fl">WhatsApp No.</label
-                ><input id="c-phone" type="tel" placeholder="91XXXXXXXXXX" />
+                ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="c-phone" type="tel" placeholder="91XXXXXXXXXX" />
               </div>
             </div>
             <div class="fg">
@@ -2960,7 +2948,7 @@
         </div>
         <div class="fg">
           <label class="fl">नया नाम / Value</label
-          ><input id="rename-input" type="text" />
+          ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="rename-input" type="text" />
         </div>
         <button class="btn btn-p fw" onclick="doRename()">Save करें ✓</button>
       </div>
@@ -2990,7 +2978,7 @@
         <div class="fg">
           <label class="fl">Deposit जोड़ें (Payment मिला)</label>
           <div class="ir" style="margin-bottom: 8px">
-            <input
+            <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
               id="dep-amount"
               type="number"
               placeholder="₹ amount"
@@ -3028,15 +3016,15 @@
         </div>
         <div class="fg">
           <label class="fl">Product का नाम</label
-          ><input id="er-name" type="text" />
+          ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="er-name" type="text" />
         </div>
         <div class="ir">
           <div>
-            <label class="fl">Qty</label><input id="er-qty" type="number" />
+            <label class="fl">Qty</label><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="er-qty" type="number" />
           </div>
           <div>
             <label class="fl">Rate (₹) optional</label
-            ><input id="er-rate" type="number" placeholder="Optional" />
+            ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="er-rate" type="number" placeholder="Optional" />
           </div>
         </div>
         <button class="btn btn-p fw" onclick="saveEditRestock()">
@@ -3054,11 +3042,11 @@
           </button>
         </div>
         <div class="fg">
-          <label class="fl">नाम</label><input id="ec-name" type="text" />
+          <label class="fl">नाम</label><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="ec-name" type="text" />
         </div>
         <div class="fg">
           <label class="fl">WhatsApp No.</label
-          ><input id="ec-phone" type="tel" />
+          ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="ec-phone" type="tel" />
         </div>
         <div class="fg">
           <label class="fl">Type</label>
@@ -3087,7 +3075,7 @@
         </div>
         <div class="fg">
           <label class="fl">Product / Offer का नाम *</label
-          ><input
+          ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
             id="wa-product"
             type="text"
             placeholder="जैसे: Fresh Kaju आया नया!"
@@ -3096,11 +3084,11 @@
         <div class="ir">
           <div>
             <label class="fl">Price (₹)</label
-            ><input id="wa-price" type="text" placeholder="250/kg" />
+            ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="wa-price" type="text" placeholder="250/kg" />
           </div>
           <div>
             <label class="fl">Availability</label
-            ><input id="wa-qty" type="text" placeholder="Limited stock" />
+            ><input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="wa-qty" type="text" placeholder="Limited stock" />
           </div>
         </div>
         <div class="fg">
@@ -3191,7 +3179,7 @@
         <div id="wa-group-area" style="display: none">
           <div class="fg">
             <label class="fl">WhatsApp Group Link</label>
-            <input
+            <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
               id="wa-group-link"
               type="text"
               placeholder="https://chat.whatsapp.com/..."
@@ -3287,7 +3275,7 @@
         <div style="padding:10px 14px;flex-shrink:0;border-bottom:1px solid var(--border);">
           <div style="position:relative;">
             <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;">🔍</span>
-            <input id="scs-search" type="text" placeholder="नाम खोजें..." autocomplete="off"
+            <input id="scs-search" type="text" placeholder="नाम खोजें..." autocomplete="new-password"
               oninput="filterSavedCust(this.value)"
               style="width:100%;padding:9px 12px 9px 34px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:'Noto Sans',sans-serif;outline:none;background:var(--bg);"
             />
@@ -4628,7 +4616,7 @@
             const priceLabel = priceNum
               ? `₹${priceNum}${priceUnit ? " / " + priceUnit : ""}`
               : "";
-            // Show horizontally: ₹1200 / 50kg × 20kg  (all on one line)
+            // Show horizontally: ₹1200 / 50kg × 20kg
             let qtyLabel;
             if (r.howmuch && priceLabel) {
               qtyLabel = `<span style="display:inline-flex;align-items:center;gap:3px;flex-wrap:nowrap;white-space:nowrap"><span style="color:var(--text2);font-weight:400;font-size:10px">${priceLabel}</span><span style="color:var(--text2);font-size:10px">×</span><span style="color:var(--primary-mid);font-weight:800;font-size:12.5px">${r.howmuch}</span></span>`;
@@ -4677,14 +4665,14 @@
                 <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:5px;">Previous Bulk Price (₹)</label>
                 <div style="position:relative;">
                   <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:700;color:var(--primary-mid);">₹</span>
-                  <input id="qty-popup-price" type="number" placeholder="जैसे: 222"
+                  <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="qty-popup-price" type="number" placeholder="जैसे: 222"
                     style="width:100%;padding:11px 12px 11px 26px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-weight:700;color:var(--primary-mid);font-family:'Noto Sans',sans-serif;outline:none;"
                     value="${priceClean}" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" />
                 </div>
               </div>
               <div style="flex:1;">
                 <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:5px;">Qty</label>
-                <input id="qty-popup-inp" type="text" placeholder="जैसे: 5bori, 200kg..."
+                <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" id="qty-popup-inp" type="text" placeholder="जैसे: 5bori, 200kg..."
                   style="width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-weight:700;color:var(--text);font-family:'Noto Sans',sans-serif;outline:none;"
                   value="${r.howmuch || ""}" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" />
               </div>
@@ -5609,20 +5597,21 @@
       renderRestock();
       renderPurchaseHistory();
 
-      // ── DISABLE BROWSER AUTOFILL/SAVED-DATA BAR ABOVE KEYBOARD ──
-      function disableAutofill() {
+      // ── KILL BROWSER AUTOFILL/SAVED-DATA TOOLBAR ──
+      function killAutofillBar() {
         document.querySelectorAll('input, textarea').forEach(function(el) {
-          if (el.type !== 'hidden' && el.type !== 'file' && el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'date') {
-            el.setAttribute('autocomplete', 'off');
-            el.setAttribute('autocorrect', 'off');
-            el.setAttribute('autocapitalize', 'off');
-            el.setAttribute('spellcheck', 'false');
-          }
+          var t = (el.type || '').toLowerCase();
+          if (t === 'hidden' || t === 'file' || t === 'checkbox' || t === 'radio' || t === 'date') return;
+          el.setAttribute('autocomplete', 'new-password');
+          el.setAttribute('autocorrect', 'off');
+          el.setAttribute('autocapitalize', 'off');
+          el.setAttribute('spellcheck', 'false');
+          el.setAttribute('data-lpignore', 'true');
+          el.setAttribute('data-form-type', 'other');
         });
       }
-      disableAutofill();
-      const _autofillObserver = new MutationObserver(function() { disableAutofill(); });
-      _autofillObserver.observe(document.body, { childList: true, subtree: true });
+      killAutofillBar();
+      new MutationObserver(killAutofillBar).observe(document.body, { childList: true, subtree: true });
     </script>
   </body>
 </html>
