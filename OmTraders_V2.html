@@ -58,6 +58,15 @@
         padding: 0;
         -webkit-tap-highlight-color: transparent;
       }
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px white inset !important;
+        box-shadow: 0 0 0 30px white inset !important;
+        -webkit-text-fill-color: var(--text) !important;
+        transition: background-color 5000s ease-in-out 0s;
+      }
       html {
         height: 100%;
         overflow: hidden;
@@ -1780,26 +1789,63 @@
         display: inline-flex;
         align-items: center;
         gap: 4px;
-        background: var(--bg);
-        border: 1.5px solid var(--border);
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border: none;
         border-radius: 8px;
-        padding: 3px 10px;
+        padding: 4px 11px;
         font-size: 11px;
         font-weight: 700;
-        color: var(--text2);
+        color: white;
         cursor: pointer;
         transition: all 0.18s;
         font-family: "Baloo 2", cursive;
+        box-shadow: 0 2px 8px rgba(217, 119, 6, 0.30);
       }
       .restock-alert-badge:hover {
-        border-color: var(--amber);
-        color: var(--amber);
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        box-shadow: 0 4px 12px rgba(217, 119, 6, 0.40);
+        transform: translateY(-1px);
       }
       .restock-alert-badge.active {
-        background: var(--amber-l);
-        border-color: #fde68a;
-        color: var(--amber);
+        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        box-shadow: 0 2px 8px rgba(22, 163, 74, 0.30);
+        color: white;
       }
+      /* ── Colourful Restock screen action buttons ── */
+      .btn-autopull {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        color: white;
+        border: none;
+        border-radius: 9px;
+        font-weight: 700;
+        font-family: "Baloo 2", cursive;
+        box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
+        transition: all 0.18s;
+        letter-spacing: 0.2px;
+      }
+      .btn-autopull:hover {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
+        transform: translateY(-1px);
+      }
+      .btn-autopull:active { transform: scale(0.96); }
+      .btn-doneclear {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        color: white;
+        border: none;
+        border-radius: 9px;
+        font-weight: 700;
+        font-family: "Baloo 2", cursive;
+        box-shadow: 0 2px 10px rgba(220, 38, 38, 0.30);
+        transition: all 0.18s;
+        letter-spacing: 0.2px;
+      }
+      .btn-doneclear:hover {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        box-shadow: 0 4px 14px rgba(220, 38, 38, 0.40);
+        transform: translateY(-1px);
+      }
+      .btn-doneclear:active { transform: scale(0.96); }
 
       /* ── RESTOCK BUY LIST QTY — clickable button style ── */
       .buy-qty-btn {
@@ -2829,11 +2875,11 @@
               Buy List <span id="r-count" class="badge b-red">0</span>
             </div>
             <div style="display: flex; gap: 6px">
-              <button class="btn btn-o btn-sm" onclick="pullFromProducts()">
+              <button class="btn btn-sm btn-autopull" onclick="pullFromProducts()">
                 ⚡ Auto-Pull
               </button>
-              <button class="btn btn-o btn-sm" onclick="clearDoneRestock()">
-                Done हटाएं
+              <button class="btn btn-sm btn-doneclear" onclick="clearDoneRestock()">
+                🗑 Done हटाएं
               </button>
             </div>
           </div>
@@ -4274,7 +4320,7 @@
           ${inBL ? "✓ List" : "🛒 Restock"}
         </button>
         <button class="restock-alert-badge ${p.restock ? "active" : ""}" data-restock-alert="${p.id}" title="${p.restock ? "Restock Alert Active" : "Mark as Restock Alert"}">
-          ${p.restock ? "Added" : "Mark Restock"}
+          ${p.restock ? "✅ Alert On" : "⚠️ Mark Restock"}
         </button>
         <div class="menu-wrap">
           <button class="three-dot" onclick="toggleDD('ddp${p.id}')">⋮</button>
@@ -4582,10 +4628,10 @@
             const priceLabel = priceNum
               ? `₹${priceNum}${priceUnit ? " / " + priceUnit : ""}`
               : "";
-            // howmuch bold primary-mid on top, price grey small below
+            // Show horizontally: ₹1200 / 50kg × 20kg  (all on one line)
             let qtyLabel;
             if (r.howmuch && priceLabel) {
-              qtyLabel = `<span style="color:var(--primary-mid);font-weight:800;font-size:12.5px">${r.howmuch}</span><span style="color:var(--text2);font-weight:400;font-size:10px;display:block;margin-top:1px">${priceLabel}</span>`;
+              qtyLabel = `<span style="display:inline-flex;align-items:center;gap:3px;flex-wrap:nowrap;white-space:nowrap"><span style="color:var(--text2);font-weight:400;font-size:10px">${priceLabel}</span><span style="color:var(--text2);font-size:10px">×</span><span style="color:var(--primary-mid);font-weight:800;font-size:12.5px">${r.howmuch}</span></span>`;
             } else if (r.howmuch) {
               qtyLabel = `<span style="color:var(--primary-mid);font-weight:800;font-size:12.5px">${r.howmuch}</span>`;
             } else if (priceLabel) {
@@ -5562,6 +5608,21 @@
       updateHome();
       renderRestock();
       renderPurchaseHistory();
+
+      // ── DISABLE BROWSER AUTOFILL/SAVED-DATA BAR ABOVE KEYBOARD ──
+      function disableAutofill() {
+        document.querySelectorAll('input, textarea').forEach(function(el) {
+          if (el.type !== 'hidden' && el.type !== 'file' && el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'date') {
+            el.setAttribute('autocomplete', 'off');
+            el.setAttribute('autocorrect', 'off');
+            el.setAttribute('autocapitalize', 'off');
+            el.setAttribute('spellcheck', 'false');
+          }
+        });
+      }
+      disableAutofill();
+      const _autofillObserver = new MutationObserver(function() { disableAutofill(); });
+      _autofillObserver.observe(document.body, { childList: true, subtree: true });
     </script>
   </body>
 </html>
